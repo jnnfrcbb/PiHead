@@ -69,7 +69,7 @@ class SwitchEncoder(BasicEncoder):
 
 class EncoderWorker(threading.Thread):
     def __init__(self, encoder):
-        threading.Thread.__init(self)
+        threading.Thread.__init__(self)
         self.stopping = False
         self.encoder = encoder
         self.daemon = True
