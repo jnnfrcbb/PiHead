@@ -1,0 +1,2 @@
+controller_service /home/pi/PiHead/volume_encoder.ini
+controller_service /home/pi/PiHead/playback_encoder.ini
