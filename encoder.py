@@ -28,8 +28,8 @@ class BasicEncoder:
     def rotation_sequence(self):
 
         a_state = GPIO.input(self.a_pin)
-        B_state = GPIO.input(self.a_pin)
-        r_seq = (a_stae ^ b_state | b_state << 1)
+        b_state = GPIO.input(self.a_pin)
+        r_seq = (a_state ^ b_state | b_state << 1)
         return r_seq
 
     def get_delta(self):
@@ -40,9 +40,10 @@ class BasicEncoder:
             if delta==3:
                 delta = -1
             elif delta==2:
-                delta = int(maths.copysign(delta, self.last_delta))
+                delta = int(math.copysign(delta, self.last_delta))
 
-            self.last_delta = deltaself.r_seq = r_seq
+            self.last_delta = delta
+            self.r_seq = r_seq
 
         return delta
 
@@ -57,7 +58,7 @@ class BasicEncoder:
 
 class SwitchEncoder(BasicEncoder):
 
-    def __init__(self, a_pin, b_pin):
+    def __init__(self, a_pin, b_pin, sw_pin):
         BasicEncoder.__init__(self, a_pin, b_pin)
 
         self.sw_pin = sw_pin
@@ -75,7 +76,8 @@ class EncoderWorker(threading.Thread):
         self.delta = 0
         self.delay = 0.001
         self.lastSwitchState = False
-        self.upEvent = Falseself.downEvent = False
+        self.upEvent = False
+        self.downEvent = False
 
     def run(self):
         self.LastSwitchState = self.encoder.get_switchState()
@@ -112,7 +114,7 @@ class EncoderWorker(threading.Thread):
 def switch_demo():
     value = 0
 
-    encoder = EncoderWorker(SwitchEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_SW))
+    encoder = EncoderWorker(SwitchEncoder(PIN_A, PIN_B, PIN_SW))
     encoder.start()
 
     while 1:
