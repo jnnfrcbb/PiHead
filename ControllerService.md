@@ -5,6 +5,8 @@ controller_service [path]
 
 use  **/etc/xdg/lxsession/LXDE-pi/autostart** to run Controller Service automatically at startup
 
+---
+
 ## OpenAutoPro keystrokes:
 |Key|Input|
 |----|----|
@@ -83,6 +85,8 @@ use  **/etc/xdg/lxsession/LXDE-pi/autostart** to run Controller Service automati
 |F10|Brightness up|
 |Ctrl+F11|Toggle mute|
 |F12|Bring OpenAuto Pro to front|
+
+---
 
 ## Rotary encoder
 
