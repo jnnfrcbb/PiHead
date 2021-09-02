@@ -24,14 +24,14 @@ try:
 
         if clkState != clkLastState:
             if dtState !=clkState:
-                counter = 1
-            else:
                 counter = -1
+            else:
+                counter = 1
             print (counter)
         
         clkLastState = clkState
 
-        time.sleep(0.01)
+        time.sleep(0.05)
 
 except:
     print("An exception occurred")
