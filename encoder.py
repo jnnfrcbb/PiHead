@@ -17,7 +17,7 @@ class BasicEncoder:
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.a_pin,GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(self.a_pin,GPIO.in, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.a_pin,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
         self.last_delta = 0
         self.r_seq = self.rotation_sequence()
@@ -35,7 +35,7 @@ class BasicEncoder:
     def get_delta(self):
         delta = 0
         r_seq = self.rotation_sequence()
-        if r_seq ! self.r_seq
+        if r_seq != self.r_seq:
             delta = (r_seq - self.r_seq) % 4
             if delta==3:
                 delta = -1
@@ -53,7 +53,7 @@ class BasicEncoder:
         return cycles
 
     def get_switchstate(self):
-        reurn 0
+        return 0
 
 class SwitchEncoder(BasicEncoder):
 
@@ -61,10 +61,10 @@ class SwitchEncoder(BasicEncoder):
         BasicEncoder.__init__(self, a_pin, b_pin)
 
         self.sw_pin = sw_pin
-        GPIO.setup(self.sw_pin, GPIO.In, pull_up_down = GPIO.PUD_DOWN
+        GPIO.setup(self.sw_pin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
         
     def get_switchstate(self):
-        return GPIO.input(self.sw_pin))
+        return GPIO.input(self.sw_pin)
 
 class EncoderWorker(threading.Thread):
     def __init__(self, encoder):
@@ -79,9 +79,9 @@ class EncoderWorker(threading.Thread):
 
     def run(self):
         self.LastSwitchState = self.encoder.get_switchState()
-        while not self.stopping
+        while not self.stopping:
             delta = self.encoder.get_cycles()
-            with self.lock
+            with self.lock:
                 self.delta += delta 
 
                 self.switchstate = self.encoder.get_switchstate()
@@ -92,40 +92,40 @@ class EncoderWorker(threading.Thread):
                 self.lastSwitchState = self.switchstate
 
     def get_delta(self):
-        with self.lock
+        with self.lock:
             delta = self.delta
             self.delta = 0
         return delta
 
     def get_upEvent(self):
-        with self.lock
+        with self.lock:
             delta = self.upEvent
             self.upEvent = False
         return delta
 
     def get_downEvent(self):
-            with self.lock
+        with self.lock:
                 delta = self.downEvent
                 self.downEvent = False
-            return delta
+        return delta
 
     def switch_demo():
         value = 0
 
-        encoder = EncoderWorker(SwitchEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_SW)
+        encoder = EncoderWorker(SwitchEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_SW))
         encoder.start()
 
         while 1:
             delta = encoder.get_delta()
             if delta!=0:
                 value = value + delta
-                print "value", Value
+                print ("value", value)
 
             if encoder.get_upEvent():
-                print "up!"
+                print ("up!")
 
             if encoder.get_downEvent():
-                print "down!"
+                print ("down!")
 
 if __name__ == "__main__":
     switch_demo()
