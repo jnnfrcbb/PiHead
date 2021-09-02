@@ -1,11 +1,40 @@
-from encoder import PIN_A, PIN_B
 import RPi.GPIO as GPIO
+import time
+import threading
 
-PIN_A = 17
-PIN_B = 27
-PIN_SW = 22
+CLK = 16
+DT = 20
+SW = 21
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(PIN_A,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-GPIO.setup(PIN_B,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-GPIO.setup(PIN_SW,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(CLK,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(DT,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(SW,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+
+counter =0
+
+clkLastState = GPIO.input(CLK)
+dtLastState = GPIO.input(DT)
+
+try:
+
+    while True:
+        clkState = GPIO.input(CLK)
+        dtState = GPIO.input(DT)
+
+        if clkState != clkLastState:
+            if dtState !=clkState:
+                counter += 1
+            else:
+                counter -= 1
+            print (counter)
+        
+        clkLastState = clkState
+
+        time.sleep(0.01)
+
+except:
+    print("An exception occurred")
+
+finally:
+    GPIO.cleanup()
