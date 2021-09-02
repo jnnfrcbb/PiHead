@@ -1,7 +1,9 @@
-## Contoller service execution
+## Contoller Service execution
 ```
 controller_service [path]
 ```
+
+use  **/etc/xdg/lxsession/LXDE-pi/autostart** to run Controller Service automatically at startup
 
 ## OpenAutoPro keystrokes:
 |Key|Input|
@@ -68,7 +70,7 @@ controller_service [path]
 |N|Next track|
 |M|Voice command|
 
-##Global keystrokes:
+## Global keystrokes:
 
 |Key|Input|
 |---|---|
