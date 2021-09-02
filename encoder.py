@@ -120,15 +120,21 @@ def switch_demo():
 
     while 1:
         delta = encoder.get_delta()
-        if delta!=0:
-            #value = value + delta
-            print ("delta", delta)
+#        if delta!=0:
+#            value = value + delta
+#            print ("value", value)
+
+        if delta >> 0:
+            print("up")
+
+        if delta << 0:
+            print("down")
 
         if encoder.get_upEvent():
-            print ("up!")
+            print ("switch up")
 
         if encoder.get_downEvent():
-            print ("down!")
+            print ("switch down")
 
 if __name__ == "__main__":
     switch_demo()
