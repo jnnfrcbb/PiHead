@@ -126,3 +126,6 @@ class EncoderWorker(threading.Thread):
 
             if encoder.get_downEvent():
                 print "down!"
+
+if __name__ == "__main__":
+    switch_demo()
