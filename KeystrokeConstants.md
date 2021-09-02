@@ -1,3 +1,8 @@
+## Contoller service execution
+```
+controller_service [path]
+```
+
 ## OpenAutoPro keystrokes:
 |Key|Input|
 |----|----|
@@ -47,6 +52,8 @@
 
 ## Autobox (Apple CarPlay) keystrokes:
 
+|Key|Input|
+|---|---|
 |Up arrow|Navigate up|
 |Down arrow|Navigate down|
 |1|Scroll/rotate left|
@@ -63,6 +70,8 @@
 
 ##Global keystrokes:
 
+|Key|Input|
+|---|---|
 |F2|Toggle Android Auto night mode|
 |Ctrl+F3|Mode (toggle between active applications, projections and OpenAuto Pro interface)|
 |F6|Expand/Collapse TopBar|
