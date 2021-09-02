@@ -124,10 +124,10 @@ def switch_demo():
             value = value + delta
             print ("value", value)
 
-        if delta >> 0:
+        if delta > 0:
             print("up")
 
-        if delta << 0:
+        if delta < 0:
             print("down")
 
         if encoder.get_upEvent():
