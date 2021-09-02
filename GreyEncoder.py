@@ -24,9 +24,9 @@ try:
 
         if clkState != clkLastState:
             if dtState !=clkState:
-                counter += 1
+                counter = 1
             else:
-                counter -= 1
+                counter = -1
             print (counter)
         
         clkLastState = clkState
