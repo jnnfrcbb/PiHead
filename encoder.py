@@ -1,5 +1,5 @@
 import math
-import threading
+import threading.Thread as Thread
 import time
 import RPi.GPIO as GPIO
 
@@ -67,9 +67,9 @@ class SwitchEncoder(BasicEncoder):
     def get_switchstate(self):
         return GPIO.input(self.sw_pin)
 
-class EncoderWorker(threading.Thread):
+class EncoderWorker(Thread):
     def __init__(self, encoder):
-        threading.thread.__init(self)
+        Thread.__init(self)
         self.stopping = False
         self.encoder = encoder
         self.daemon = True
