@@ -109,23 +109,23 @@ class EncoderWorker(threading.Thread):
                 self.downEvent = False
         return delta
 
-    def switch_demo():
-        value = 0
+def switch_demo():
+    value = 0
 
-        encoder = EncoderWorker(SwitchEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_SW))
-        encoder.start()
+    encoder = EncoderWorker(SwitchEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_SW))
+    encoder.start()
 
-        while 1:
-            delta = encoder.get_delta()
-            if delta!=0:
-                value = value + delta
-                print ("value", value)
+    while 1:
+        delta = encoder.get_delta()
+        if delta!=0:
+            value = value + delta
+            print ("value", value)
 
-            if encoder.get_upEvent():
-                print ("up!")
+        if encoder.get_upEvent():
+            print ("up!")
 
-            if encoder.get_downEvent():
-                print ("down!")
+        if encoder.get_downEvent():
+            print ("down!")
 
 if __name__ == "__main__":
     switch_demo()
