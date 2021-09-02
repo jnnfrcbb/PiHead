@@ -31,7 +31,7 @@ try:
         
         clkLastState = clkState
 
-        time.sleep(0.05)
+        time.sleep(0.1)
 
 except:
     print("An exception occurred")
