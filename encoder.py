@@ -70,6 +70,7 @@ class SwitchEncoder(BasicEncoder):
 class EncoderWorker(threading.Thread):
     def __init__(self, encoder):
         threading.Thread.__init__(self)
+        self.lock = threading.Lock()
         self.stopping = False
         self.encoder = encoder
         self.daemon = True
@@ -80,7 +81,7 @@ class EncoderWorker(threading.Thread):
         self.downEvent = False
 
     def run(self):
-        self.LastSwitchState = self.encoder.get_switchState()
+        self.LastSwitchState = self.encoder.get_switchstate()
         while not self.stopping:
             delta = self.encoder.get_cycles()
             with self.lock:
