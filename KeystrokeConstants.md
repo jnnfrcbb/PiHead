@@ -1,4 +1,4 @@
-##OpenAutoPro keystrokes:
+##H2 OpenAutoPro keystrokes:
 |Key|Input|
 |----|----|
 |Up arrow|Navigate up|
