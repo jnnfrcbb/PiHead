@@ -48,7 +48,9 @@ with open("/boot/config.txt", "a+") as myFile:
 
 with open("/etc/rc.local", "a+") as myFile:
     if len(myFile) > 0:
-            myFile.write("\n")
+            myFile.write("\n")            
+    if not "#CarPiHat" in myFile:
+        myFile.write ("#CarPiHat \n")
     if not "/sbin/ip link set can0 up type can bitrate 100000" in myFile:
         myFile.write ("/sbin/ip link set can0 up type can bitrate 100000")
     myFile.close()
@@ -57,6 +59,8 @@ with open("/etc/rc.local", "a+") as myFile:
 with open("/etc/rc.local", "a+") as myFile:
     if len(myFile) > 0:
             myFile.write("\n")
+    if not "#CarPiHat" in myFile:
+        myFile.write ("#CarPiHat \n")
     if not "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s" in myFile:
         myFile.write ("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
     myFile.close()
@@ -64,6 +68,8 @@ with open("/etc/rc.local", "a+") as myFile:
 with open("/etc/modules", "a+") as myFile:
     if len(myFile) > 0:
             myFile.write("\n")
+    if not "#CarPiHat" in myFile:
+        myFile.write ("#CarPiHat \n")
     if not "rtc-ds1307" in myFile:
         myFile.write ("rtc-ds1307")
     myFile.close()
