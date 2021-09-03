@@ -17,9 +17,21 @@ myFile.close()
 
 
 #CARPIHAT
-
 ##CarPiHat CanBus interface
 os.system ("/sbin/ip link set can0 up type can bitrate 100000")
+
+myFile = open("/boot/config.txt", "w")
+fileData = myFile.read()
+fileMod = False
+if "#dtparam=spi=on" in fileData: 
+    fileData = fileData.replace("#dtparam=spi=on","dtparam=spi=on")
+    fileMod = True 
+if "#dtparam=i2c_arm=on" in fileData: 
+    fileData = fileData.replace("#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
+    fileMod = True
+if fileMod:
+    myFile.write(fileData)
+fileData.close()
 
 myFile = open("/boot/config.txt", "a+")
 fileData = myFile.read()
@@ -79,4 +91,4 @@ if not "dtoverlay=gpio-poweroff,gpiopin=25,active_low" in fileData:
     myFile.write("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 myFile.close()
 
-import CarPiHat
+import CarPiHat #run last
