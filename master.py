@@ -78,7 +78,7 @@ with open(fileString, "a+") as myFile:
         myFile.write("#CarPiHat\n")
     if not "/sbin/ip link set can0 up type can bitrate 100000" in fileData:
         myFile.write("/sbin/ip link set can0 up type can bitrate 100000")
-    if fileMod:
+    if fileMod is True:
         myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
     myFile.close()
 
@@ -93,7 +93,7 @@ with open(fileString, "a+") as myFile:
         myFile.write("#CarPiHat\n")
     if not "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s" in fileData:
         myFile.write("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-    if fileMod:
+    if fileMod is True:
         myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
     myFile.close()
 
