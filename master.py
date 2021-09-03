@@ -5,118 +5,68 @@
 
 import os
 
+def appendString(fileString,writingString,signOff=""):
+    if signOff is not "":
+        signOffRemoved = removeString(fileString,signOff)
+    with open(fileString, "a+") as myFile:
+        fileData = myFile.read()
+        IsMod = False
+        if len(fileData)> 0:
+            myFile.write("\n")
+        for s in writingString:
+            if not writingString(s) in fileData:
+                myFile.write(writingString(s))
+                IsMod = True 
+        myFile.close()
+        if signOffRemoved:
+            m = appendString(fileString,signOff)
+    return IsMod
+
+def changeString(fileString,beforeString,afterString):
+    with open(fileString, "r") as myFile:
+        fileData = myFile.read()
+        myFile.close()
+        IsMod = False
+        for s in beforeString:
+            if beforeString(s) in fileData:
+                fileData = fileData.replace(beforeString(s),afterString(s))
+                IsMod = True
+    if IsMod:
+        with open(fileString, 'w') as modFile:
+            modFile.write(fileData)
+            modFile.close()
+    return IsMod 
+
 def removeString(fileString,removedString):
     with open(fileString, "r") as myFile:
         fileData = myFile.read()
         myFile.close()
         IsMod = False
-        if removedString in fileData:
-            fileData = fileData.replace(removedString,"")
-            with open(fileString,"w") as modFile:
-                modFile.write(fileData)
-                modFile.close()
+        for s in removedString:
+            if removedString(s) in fileData:
+                fileData = fileData.replace(removedString(s),"")
                 IsMod = True
+    if IsMod:
+        with open(fileString,"w") as modFile:
+            modFile.write(fileData)
+            modFile.close()
     return IsMod
 
 #CONTROLLER_SERVICE
-fileString = "/etc/xdg/lxsession/LXDE-pi/autostart"
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "controller_service /home/pi/PiHead/volume_encoder.ini" in fileData:
-        myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
-    if not "controller_service /home/pi/PiHead/playback_encoder.ini" in fileData:
-        myFile.write("\ncontroller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
-    myFile.close()
+m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart",["controller_service /home/pi/PiHead/volume_encoder.ini", "controller_service /home/pi/PiHead/playback_encoder.ini"])
 
 #CARPIHAT
 ##CarPiHat CanBus interface
-os.system ("/sbin/ip link set can0 up type can bitrate 100000")
+m = changeString("/boot/config.txt", ["#dtparam=spi=on","#dtparam=i2c_arm=on"], ["dtparam=spi=on","dtparam=i2c_arm=on"])
+m = appendString("/boot/config.txt",["#CarPiHat","dtparam=spi=on","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23","dtoverlay=spi-bcm2835-overlay"])
+m = appendString("/etc/rc.local",["#CarPiHat", "/sbin/ip link set can0 up type can bitrate 100000"], "exit 0")
 
-fileString = "/boot/config.txt"
-with open(fileString, "r") as myFile:
-    fileData = myFile.read()
-    myFile.close()
-    fileMod = False
-    if "#dtparam=spi=on" in fileData: 
-        fileData = fileData.replace("#dtparam=spi=on","dtparam=spi=on")
-        fileMod = True 
-    if "#dtparam=i2c_arm=on" in fileData: 
-        fileData = fileData.replace("#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
-        fileMod = True
-    if fileMod is True:
-        with open(fileString, "w") as modFile:
-            modFile.write(fileData)
-            modFile.close()
+#CarPiHat real time clock
+m = appendString("/etc/rc.local",["#CarPiHat", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s"], "exit 0")
+m = appendString("/etc/modules",["#CarPiHat","rtc-ds1307"])
 
-fileString = "/boot/config.txt"
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "#CarPiHat" in fileData:
-        myFile.write("#CarPiHat\n")
-    if not "dtparam=spi=on" in fileData:
-        myFile.write("dtparam=spi=on \n")
-    if not "dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23" in fileData:
-        myFile.write("dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23 \n")
-    if not "dtoverlay=spi-bcm2835-overlay" in fileData:
-        myFile.write("dtoverlay=spi-bcm2835-overlay")
-    #if not "dtoverlay=spi0-cs,cs1_pin=24" in fileData:          #uncomment if reverse doesn't work when using CAN bus
-    #    myFile.write("dtoverlay=spi0-cs,cs1_pin=24 \n")
-    myFile.close()
+#Safe Shutdown
+m = appendString("/boot/config.txt",["#CarPiHat","dtoverlay=gpio-poweroff,gpiopin=25,active_low"])
 
-fileString = "/etc/rc.local"
-fileMod = removeString(fileString,"exit 0")
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "#CarPiHat" in fileData:
-        myFile.write("#CarPiHat\n")
-    if not "/sbin/ip link set can0 up type can bitrate 100000" in fileData:
-        myFile.write("/sbin/ip link set can0 up type can bitrate 100000")
-    if fileMod is True:
-        myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
-    myFile.close()
-
-##CarPiHat real time clock
-fileString = "/etc/rc.local"
-fileMod = removeString(fileString,"exit 0")
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "#CarPiHat" in fileData:
-        myFile.write("#CarPiHat\n")
-    if not "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s" in fileData:
-        myFile.write("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-    if fileMod is True:
-        myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
-    myFile.close()
-
-fileString = "/etc/modules"
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "#CarPiHat" in fileData:
-        myFile.write("#CarPiHat\n")
-    if not "rtc-ds1307" in fileData:
-        myFile.write("rtc-ds1307")
-    myFile.close()
-
-##CarPiHat safeshutdown
-fileString = "/boot/config.txt"
-with open(fileString, "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "#CarPiHat" in fileData:
-        myFile.write("#CarPiHat\n")
-    if not "dtoverlay=gpio-poweroff,gpiopin=25,active_low" in fileData:
-        myFile.write("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
-    myFile.close()
-
-import CarPiHat #run this last
+#Run CarPiHat service
+import CarPiHat
