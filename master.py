@@ -17,18 +17,6 @@ myFile.close()
 
 
 #CARPIHAT
-##CarPiHat safeshutdown
-import CarPiHat
-
-myFile = open("/boot/config.txt", "a+")
-fileData = myFile.read()
-if len(fileData)> 0:
-    myFile.write("\n")
-if not "#CarPiHat" in fileData:
-    myFile.write("#CarPiHat\n")
-if not "dtoverlay=gpio-poweroff,gpiopin=25,active_low" in fileData:
-    myFile.write("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
-myFile.close()
 
 ##CarPiHat CanBus interface
 os.system ("/sbin/ip link set can0 up type can bitrate 100000")
@@ -60,7 +48,6 @@ if not "/sbin/ip link set can0 up type can bitrate 100000" in fileData:
 myFile.close()
 
 ##CarPiHat real time clock
-
 myFile = open("/etc/rc.local", "a+")
 fileData = myFile.read()
 if len(fileData)> 0:
@@ -80,3 +67,17 @@ if not "#CarPiHat" in fileData:
 if not "rtc-ds1307" in fileData:
     myFile.write("rtc-ds1307")
 myFile.close()
+
+
+##CarPiHat safeshutdown
+myFile = open("/boot/config.txt", "a+")
+fileData = myFile.read()
+if len(fileData)> 0:
+    myFile.write("\n")
+if not "#CarPiHat" in fileData:
+    myFile.write("#CarPiHat\n")
+if not "dtoverlay=gpio-poweroff,gpiopin=25,active_low" in fileData:
+    myFile.write("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+myFile.close()
+
+import CarPiHat
