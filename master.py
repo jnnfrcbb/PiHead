@@ -4,7 +4,6 @@
 #add reference in /etc/rc.local
 
 import os
-from time import thread_time_ns
 
 def removeString(fileString,removedString):
     with open(fileString, "r") as myFile:
