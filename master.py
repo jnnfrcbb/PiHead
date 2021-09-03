@@ -8,7 +8,7 @@ import os
 def removeString(fileString,removedString):
     with open(fileString, "r") as myFile:
         fileData = myFile.read()
-        myFile().close
+        myFile.close()
         IsMod = False
         if removedString in fileData:
             fileData = fileData.replace(removedString,"")
