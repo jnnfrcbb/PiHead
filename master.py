@@ -22,6 +22,8 @@ import CarPiHat
 with open("/boot/config.txt", "a+") as myFile:
     if len(myFile) > 0:
             myFile.write("\n")
+    if not "#CarPiHat" in myFile:
+        myFile.write ("#CarPiHat \n")
     if not "dtoverlay=gpio-poweroff,gpiopin=25,active_low" in myFile:
         myFile.write ("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
     myFile.close()
@@ -32,6 +34,8 @@ os.system ("/sbin/ip link set can0 up type can bitrate 100000")
 with open("/boot/config.txt", "a+") as myFile:
     if len(myFile) > 0:
             myFile.write("\n")
+    if not "#CarPiHat" in myFile:
+        myFile.write ("#CarPiHat \n")
     if not "dtparam=spi=on" in myFile:
         myFile.write ("dtparam=spi=on \n")
     if not "dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23" in myFile:
