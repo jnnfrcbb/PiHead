@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 import threading
-import uinput
 
 CLK = 16
 DT = 20
@@ -11,8 +10,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(CLK,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(DT,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(SW,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-
-counter =0
 
 clkLastState = GPIO.input(CLK)
 dtLastState = GPIO.input(DT)
@@ -24,15 +21,11 @@ try:
         dtState = GPIO.input(DT)
 
         if clkState != clkLastState:
-            #if dtState !=clkState:
-            #    counter = -1
-            #else:
-            #    counter = 1
-            #print (counter)
+            if dtState !=clkState:
+                print("down")
+            else:
+                print("up")
         
-            with uinput.Device([uinput.KEY_F6]) as device:
-                device.emit_click(uinput.KEY_F6)
-
         clkLastState = clkState
 
         time.sleep(0.1)
