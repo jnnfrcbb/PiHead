@@ -5,10 +5,6 @@
 
 import os
 
-myFile = open("/boot/config.txt", "a+")
-myFile.write("\nTest")
-myFile.close() 
-
 #CONTROLLER_SERVICE
 #with open("/etc/xdg/lxsession/LXDE-pi/autostart", "a+") as myFile:
 #    fileData = myFile.read()
