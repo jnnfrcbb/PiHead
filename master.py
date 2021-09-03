@@ -3,9 +3,6 @@
 #can easily change the master script list and install to / update from pi using git
 #add reference in /etc/rc.local
 
-import RPi.GPIO as GPIO # import our GPIO module
-import time
-from subprocess import call
 import os
 
 def removeString(fileString,removedString):
