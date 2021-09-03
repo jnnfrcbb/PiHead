@@ -68,7 +68,6 @@ if not "rtc-ds1307" in fileData:
     myFile.write("rtc-ds1307")
 myFile.close()
 
-
 ##CarPiHat safeshutdown
 myFile = open("/boot/config.txt", "a+")
 fileData = myFile.read()
