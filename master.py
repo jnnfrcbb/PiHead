@@ -12,7 +12,6 @@ os.system ("controller_service /home/pi/PiHead/playback_encoder.ini")   #ENC2
 #CARPIHAT
 ##CarPiHat safeshutdown
 import CarPiHat
-dtoverlay=gpio-poweroff,gpiopin=25,active_low
 
 with open("/boot/config.txt", "a+") as myFile:
     if len(myFile) > 0:
