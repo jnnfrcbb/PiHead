@@ -10,16 +10,25 @@ myFile.write("\nTest")
 myFile.close() 
 
 #CONTROLLER_SERVICE
-with open("/etc/xdg/lxsession/LXDE-pi/autostart", "a+") as myFile:
-    fileData = myFile.read()
-    if len(fileData)> 0:
-        myFile.write("\n")
-    if not "controller_service /home/pi/PiHead/volume_encoder.ini" in fileData:
-        myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
-    if not "controller_service /home/pi/PiHead/playback_encoder.ini" in fileData:
-        myFile.write("controller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
-    myFile.close()
+#with open("/etc/xdg/lxsession/LXDE-pi/autostart", "a+") as myFile:
+#    fileData = myFile.read()
+#    if len(fileData)> 0:
+#        myFile.write("\n")
+#    if not "controller_service /home/pi/PiHead/volume_encoder.ini" in fileData:
+#        myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
+#    if not "controller_service /home/pi/PiHead/playback_encoder.ini" in fileData:
+#        myFile.write("controller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
+#    myFile.close()
 
+myFile = open("/boot/config.txt", "a+")
+fileData = myFile.read()
+if len(fileData)> 0:
+    myFile.write("\n")
+if not "controller_service /home/pi/PiHead/volume_encoder.ini" in fileData:
+    myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
+if not "controller_service /home/pi/PiHead/playback_encoder.ini" in fileData:
+    myFile.write("controller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
+myFile.close()
 
 
 #CARPIHAT
