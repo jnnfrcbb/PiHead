@@ -6,8 +6,13 @@
 import os
 
 #CONTROLLER_SERVICE
-os.system ("controller_service /home/pi/PiHead/volume_encoder.ini")     #ENC1
-os.system ("controller_service /home/pi/PiHead/playback_encoder.ini")   #ENC2
+with open("/etc/xdg/lxsession/LXDE-pi/autostart", "a+") as myFile:
+    if len(myFile)> 0:
+        myFile.write("\n")
+    if not "controller_service /home/pi/PiHead/volume_encoder.ini" in myFile:
+        myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
+    if not "controller_service /home/pi/PiHead/playback_encoder.ini" in myFile:
+        myFile.write("controller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
 
 #CARPIHAT
 ##CarPiHat safeshutdown
