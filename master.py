@@ -21,7 +21,7 @@ with open(fileString, "a+") as myFile:
 os.system ("/sbin/ip link set can0 up type can bitrate 100000")
 
 fileString = "/boot/config.txt"
-with open(fileString, "a") as myFile:
+with open(fileString, "r") as myFile:
     fileData = myFile.read()
     myFile.close()
     fileMod = False
@@ -37,7 +37,7 @@ with open(fileString, "a") as myFile:
             modFile.close()
 
 fileString = "/boot/config.txt"
-with open(fileString, "a+") as myFile: #then add new params
+with open(fileString, "a+") as myFile:
     fileData = myFile.read()
     if len(fileData)> 0:
         myFile.write("\n")
