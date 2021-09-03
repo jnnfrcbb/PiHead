@@ -12,9 +12,9 @@ def removeString(fileString,removedString):
         IsMod = False
         if removedString in fileData:
             fileData = fileData.replace(removedString,"")
-            with open(fileString,"w") as myFile:
-                myFile.write(fileData)
-                myFile.close()
+            with open(fileString,"w") as modFile:
+                modFile.write(fileData)
+                modFile.close()
                 IsMod = True
     return IsMod
 
