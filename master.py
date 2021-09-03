@@ -4,6 +4,22 @@
 #add reference in /etc/rc.local
 
 import os
+from time import thread_time_ns
+
+def removeString(fileString,removedString):
+    with open(fileString, "r") as myFile:
+        fileData = myFile.read()
+        myFile().close
+        IsMod = False
+        if removedString in fileData:
+            fileData = fileData.replace(removedString,"")
+            with open(fileString,"w") as myFile:
+                myFile.write(fileData)
+                myFile.close()
+                IsMod = True
+    return IsMod
+
+#CONTROLLER_SERVICE
 fileString = "/etc/xdg/lxsession/LXDE-pi/autostart"
 with open(fileString, "a+") as myFile:
     fileData = myFile.read()
@@ -14,7 +30,6 @@ with open(fileString, "a+") as myFile:
     if not "controller_service /home/pi/PiHead/playback_encoder.ini" in fileData:
         myFile.write("\ncontroller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
     myFile.close()
-
 
 #CARPIHAT
 ##CarPiHat CanBus interface
@@ -54,6 +69,7 @@ with open(fileString, "a+") as myFile:
     myFile.close()
 
 fileString = "/etc/rc.local"
+fileMod = removeString(fileString,"exit 0")
 with open(fileString, "a+") as myFile:
     fileData = myFile.read()
     if len(fileData)> 0:
@@ -62,10 +78,13 @@ with open(fileString, "a+") as myFile:
         myFile.write("#CarPiHat\n")
     if not "/sbin/ip link set can0 up type can bitrate 100000" in fileData:
         myFile.write("/sbin/ip link set can0 up type can bitrate 100000")
+    if fileMod:
+        myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
     myFile.close()
 
 ##CarPiHat real time clock
 fileString = "/etc/rc.local"
+fileMod = removeString(fileString,"exit 0")
 with open(fileString, "a+") as myFile:
     fileData = myFile.read()
     if len(fileData)> 0:
@@ -74,6 +93,8 @@ with open(fileString, "a+") as myFile:
         myFile.write("#CarPiHat\n")
     if not "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s" in fileData:
         myFile.write("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
+    if fileMod:
+        myFile.write("\nexit 0") #re-add the "exit 0" at the end if it was removed
     myFile.close()
 
 fileString = "/etc/modules"
