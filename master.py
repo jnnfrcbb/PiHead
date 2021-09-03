@@ -32,7 +32,7 @@ with open(fileString, "a") as myFile:
         fileData = fileData.replace("#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
         fileMod = True
     if fileMod is True:
-        with open(fileString, "w+") as modFile:
+        with open(fileString, "w") as modFile:
             modFile.write(fileData)
             modFile.close()
 
