@@ -13,6 +13,7 @@ with open("/etc/xdg/lxsession/LXDE-pi/autostart", "a+") as myFile:
         myFile.write("controller_service /home/pi/PiHead/volume_encoder.ini")       #ENC1
     if not "controller_service /home/pi/PiHead/playback_encoder.ini" in myFile:
         myFile.write("controller_service /home/pi/PiHead/playback_encoder.ini")     #ENC2
+    myFile.close()
 
 #CARPIHAT
 ##CarPiHat safeshutdown
