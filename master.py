@@ -119,4 +119,4 @@ with open(fileString, "a+") as myFile:
         myFile.write("dtoverlay=gpio-poweroff,gpiopin=25,active_low")
     myFile.close()
 
-import CarPiHat #run last
+import CarPiHat #run this last
