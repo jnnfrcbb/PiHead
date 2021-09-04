@@ -22,7 +22,7 @@ def appendString(fileString,writingString,signOff=""):
             m = appendString(fileString,signOff)
     return IsMod
 
-def changeString(fileString,beforeString,afterString):
+def replaceString(fileString,beforeString,afterString):
     with open(fileString, "r") as myFile:
         fileData = myFile.read()
         myFile.close()
@@ -61,7 +61,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart",["controller_service /ho
 #CARPIHAT
 ##CarPiHat CanBus interface
 os.system ("/sbin/ip link set can0 up type can bitrate 100000")
-m = changeString("/boot/config.txt", ["#dtparam=spi=on","#dtparam=i2c_arm=on"], ["dtparam=spi=on","dtparam=i2c_arm=on"])
+m = replaceString("/boot/config.txt", ["#dtparam=spi=on","#dtparam=i2c_arm=on"], ["dtparam=spi=on","dtparam=i2c_arm=on"])
 m = appendString("/boot/config.txt",["#CarPiHat","dtparam=spi=on","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23","dtoverlay=spi-bcm2835-overlay"])
 
 #CarPiHat real time clock
