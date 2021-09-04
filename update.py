@@ -1,6 +1,7 @@
 import os
 import socket
 import time
+from argparse import ArgumentParser
 
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
@@ -26,10 +27,14 @@ def updateRepo(repoAddress):
         updated = os.system(url)
     return updated
 
-if internet():
-    p = updateRepo("jnnfrcbb/PiHead")
-    print (p)
-    #os.system("reboot")
-else:
-    time.sleep(30)
+while c < 5:
+    if internet():
+        p = updateRepo("jnnfrcbb/PiHead")
+        print (p)
+        #os.system("reboot")
+    else:
+        time.sleep(30)
+    c=c+1
+
+exit
 
