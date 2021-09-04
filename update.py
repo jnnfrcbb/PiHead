@@ -1,7 +1,6 @@
 import os
 import socket
 import time
-from argparse import ArgumentParser
 
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
