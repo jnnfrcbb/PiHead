@@ -70,4 +70,5 @@ m = appendString("/etc/modules",["#CarPiHat","rtc-ds1307"])
 
 #Safe Shutdown
 m = appendString("/boot/config.txt",["#CarPiHat","dtoverlay=gpio-poweroff,gpiopin=25,active_low"])
-os.system("python /home/pi/carPiHat.py &")
+m = appendString("/etc/rc.local","python /home/pi/carPiHat.py &","exit 0")
+#os.system("python /home/pi/carPiHat.py &")
