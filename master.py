@@ -59,26 +59,30 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 
 #CARPIHAT
 ##CarPiHat CanBus interface
-#os.system ("/sbin/ip link set can0 up type can bitrate 100000")
-m = appendString("/etc/rc.local","#CarPiHat")
-m = appendString("/etc/rc.local","/sbin/ip link set can0 up type can bitrate 100000","exit 0")
+os.system ("/sbin/ip link set can0 up type can bitrate 100000")
+###m = appendString("/etc/rc.local","#CarPiHat")
+###m = appendString("/etc/rc.local","/sbin/ip link set can0 up type can bitrate 100000","exit 0")
+
 m = replaceString("/boot/config.txt", "#dtparam=spi=on", "dtparam=spi=on")
 m = replaceString("/boot/config.txt", "#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
+
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtparam=spi=on")
 m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
 m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
-#CarPiHat real time clock
-#os.system("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-m = appendString("/etc/rc.local","#CarPiHat")
-m = appendString("/etc/rc.local","echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s","exit 0")
+##CarPiHat real time clock
+os.system("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
+###m = appendString("/etc/rc.local","#CarPiHat")
+###m = appendString("/etc/rc.local","echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s","exit 0")
+
 m = appendString("/etc/modules","#CarPiHat")
 m = appendString("/etc/modules","rtc-ds1307")
 
-#Safe Shutdown
+##Safe Shutdown
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+
 m = appendString("/etc/rc.local","#CarPiHat")
 m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
-#os.system("python /home/pi/PiHead/carPiHat.py &")
+###os.system("python /home/pi/PiHead/carPiHat.py &")
