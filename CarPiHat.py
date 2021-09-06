@@ -18,9 +18,10 @@ GPIO.output(EN_POWER_PIN, 1) # latch our power. We are now in charge of switchin
 ignLowCounter = 0
 
 while 1:
-	if GPIO.input(IGN_PIN) != 1: 				# if our 12V switched is not disabled
+	if GPIO.input(IGN_PIN) != 1:				# if our 12V switched is not disabled
 		time.sleep(1)							# wait a second
 		ignLowCounter += 1						# increment our counter
+		print(ignLowCounter)
 		if ignLowCounter > IGN_LOW_TIME:		# if it has been switched off for >10s
 			print("Shutting Down")
 			call("sudo shutdown -h now", shell=True)	# tell the Pi to shut down
