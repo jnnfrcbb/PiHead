@@ -11,11 +11,11 @@ def appendString(fileString,writingString,signOff=""):
     with open(fileString, "a+") as myFile:
         fileData = myFile.read()
         IsMod = False
-        if len(fileData)> 0:
-            myFile.write("\n")
-            if not writingString in fileData:
-                myFile.write(writingString)
-                IsMod = True 
+        if not writingString in fileData:            
+            if len(fileData)> 0:
+                myFile.write("\n")
+            myFile.write(writingString)
+            IsMod = True 
         myFile.close()
         if signOff is not "":
             if signOffRemoved:
@@ -85,4 +85,3 @@ m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_l
 
 m = appendString("/etc/rc.local","#CarPiHat")
 m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
-###os.system("python /home/pi/PiHead/carPiHat.py &")
