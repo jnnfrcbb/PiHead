@@ -3,28 +3,28 @@
 ## GPIO Pins
 
 
-| No | Name | Function | | No | Name | Function |
-|---|---|---|---|---|---|---|
-| 1 | 3.3V  |   |   | 2 | 5V |   |
-| 3 | GPIO 2  | I2C SDA |   | 4 | 5V |   |
-| 5 | GPIO 3  | I2C SCL |   | 6 | GND |   |
-| 7 | GPIO 4  | 1 Wire  |   | 8 | GPIO 14 | 12V Input |
-| 9 | GND  |   |   | 10 | GPIO 15 | Free |
-| 11 | GPIO 17 | 12V Input  |   | 12 | GPIO 18 | Free |
-| 13 | GPIO 27 | 12V Output  |   | 14 | GND |   |
-| 15 | GPIO 22 | 12V Output  |   | 16 | GPIO 23 | CAN INT |
-| 17 | 3.3V  |   |   | 18 | GPIO 24 | ??  |
-| 19 | GPIO 10 | CAN MOSI |   | 20 | GND |   |
-| 21 | GPIO 9 | CAN MISO |   | 22 | GPIO 25 | PSU Latch |
-| 23 | GPIO 11 | CAN SCLK |   | 24 | GPIO 8 | CAN CS |
-| 25 | GND |   |   | 26 | GPIO 7 | Reverse |
-| 27 | Reserved |  |   | 28 | Reserved  |   |
-| 29 | GPIO 5 | Free |   | 30 | GND |   |
-| 31 | GPIO 6 | Free (ENC2 DT) |   | 32 | GPIO 12 | 12V Switched |
-| 33 | GPIO 13 | Illumination |   | 34 | GND  |   |
-| 35 | GPIO 19 | Free (ENC2 CLK) |   | 36 | GPIO 16 | Free (ENC1 DT) |
-| 37 | GPIO 26 | Free (ENC2 SW) |   | 38 | GPIO 20 | Free (ENC1 CLK) |
-| 39 | GND |   |   | 40 | GPIO 21 | Free (ENC1 SW) |
+| Row | No | Name | Function | | No | Name | Function |
+|---|---|---|---|---|---|---|---|
+| 1 | 1 | 3.3V  |   |   | 2 | 5V |   |
+| 2 | 3 | GPIO 2  | I2C SDA |   | 4 | 5V |   |
+| 3 | 5 | GPIO 3  | I2C SCL |   | 6 | GND |   |
+| 4 | 7 | GPIO 4  | 1 Wire  |   | 8 | GPIO 14 | 12V Input |
+| 5 | 9 | GND  |   |   | 10 | GPIO 15 | Free |
+| 6 | 11 | GPIO 17 | 12V Input  |   | 12 | GPIO 18 | Free |
+| 7 | 13 | GPIO 27 | 12V Output  |   | 14 | GND |   |
+| 8 | 15 | GPIO 22 | 12V Output  |   | 16 | GPIO 23 | CAN INT |
+| 9 | 17 | 3.3V  |   |   | 18 | GPIO 24 | ??  |
+| 10 | 19 | GPIO 10 | CAN MOSI |   | 20 | GND |   |
+| 11 | 21 | GPIO 9 | CAN MISO |   | 22 | GPIO 25 | PSU Latch |
+| 12 | 23 | GPIO 11 | CAN SCLK |   | 24 | GPIO 8 | CAN CS |
+| 13 | 25 | GND |   |   | 26 | GPIO 7 | Reverse |
+| 14 | 27 | Reserved |  |   | 28 | Reserved  |   |
+| 15 | 29 | GPIO 5 | Free |   | 30 | GND |   |
+| 16 | 31 | GPIO 6 | Free (ENC2 DT) |   | 32 | GPIO 12 | 12V Switched |
+| 17 | 33 | GPIO 13 | Illumination |   | 34 | GND  |   |
+| 18 | 35 | GPIO 19 | Free (ENC2 CLK) |   | 36 | GPIO 16 | Free (ENC1 DT) |
+| 19 | 37 | GPIO 26 | Free (ENC2 SW) |   | 38 | GPIO 20 | Free (ENC1 CLK) |
+| 20 | 39 | GND |   |   | 40 | GPIO 21 | Free (ENC1 SW) |
 
 
 
