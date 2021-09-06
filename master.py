@@ -4,6 +4,10 @@
 #add reference in /etc/rc.local
 
 import os
+import RPi.GPIO as GPIO
+from subprocess import call
+import time
+
 
 def appendString(fileString,writingString,signOff=""):
     if signOff is not "":
@@ -83,5 +87,28 @@ m = appendString("/etc/modules","rtc-ds1307")
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
-m = appendString("/etc/rc.local","#CarPiHat")
-m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
+#m = appendString("/etc/rc.local","#CarPiHat")
+#m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
+
+GPIO.setmode("GPIO.BCM")
+
+IGN_PIN = 12
+EN_POWER_PIN = 25
+IGN_LOW_TIME = 10
+
+GPIO.setup(IGN_PIN, GPIO.IN)
+GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
+GPIO.output(EN_POWER_PIN, 1)
+
+ignLowCounter = 0
+
+while ignLowCounter < (IGN_LOW_TIME + 1):
+    if GPIO.input(IGN_PIN) !=1:
+        time.sleep(1)
+        ignLowCounter += 1
+        print(ignLowCounter)
+        if ignLowCounter > IGN_LOW_TIME:
+            print("Shutting Down")
+            call("sudo shutdown -h now", shell=True)
+    else:
+        ignLowCounter = 0
