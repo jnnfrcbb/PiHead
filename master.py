@@ -53,7 +53,7 @@ def removeString(fileString,removedString):
     return IsMod
 
 #UPDATE SERVICE
-import update
+#import update
 
 #CONTROLLER_SERVICE
 m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart",["controller_service /home/pi/PiHead/volume_encoder.ini", "controller_service /home/pi/PiHead/playback_encoder.ini"])
