@@ -90,7 +90,7 @@ m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_l
 #m = appendString("/etc/rc.local","#CarPiHat")
 #m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
 
-GPIO.setmode("GPIO.BCM")
+GPIO.setmode(GPIO.BCM)
 
 IGN_PIN = 12
 EN_POWER_PIN = 25
