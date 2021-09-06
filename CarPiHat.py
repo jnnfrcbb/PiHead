@@ -17,7 +17,7 @@ GPIO.output(EN_POWER_PIN, 1) # latch our power. We are now in charge of switchin
 
 ignLowCounter = 0
 
-while 1:
+while ignLowCounter < IGN_LOW_TIME:
 	if GPIO.input(IGN_PIN) != 1:				# if our 12V switched is not disabled
 		time.sleep(1)							# wait a second
 		ignLowCounter += 1						# increment our counter
