@@ -17,8 +17,9 @@ def appendString(fileString,writingString,signOff=""):
                 myFile.write(writingString)
                 IsMod = True 
         myFile.close()
-        if signOffRemoved:
-            m = appendString(fileString,signOff)
+        if signOff is not "":
+            if signOffRemoved:
+                m = appendString(fileString,signOff)
     return IsMod
 
 def replaceString(fileString,beforeString,afterString):
