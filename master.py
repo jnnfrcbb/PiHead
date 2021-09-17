@@ -12,24 +12,24 @@ import time
 def appendString(fileString,writingString,signOff=""):
     if signOff is not "":
         signOffRemoved = removeString(fileString,signOff)
-    with open(fileString, "a+") as myFile:
-        fileData = myFile.read()
+    with open(fileString, "a+") as editFile:
+        fileData = editFile.read()
         IsMod = False
         if not writingString in fileData:            
             if len(fileData)> 0:
-                myFile.write("\n")
-            myFile.write(writingString)
+                editFile.write("\n")
+            editFile.write(writingString)
             IsMod = True 
-        myFile.close()
+        editFile.close()
         if signOff is not "":
             if signOffRemoved:
                 m = appendString(fileString,signOff)
     return IsMod
 
 def replaceString(fileString,beforeString,afterString):
-    with open(fileString, "r") as myFile:
-        fileData = myFile.read()
-        myFile.close()
+    with open(fileString, "r") as editFile:
+        fileData = editFile.read()
+        editFile.close()
         IsMod = False
         if beforeString in fileData:
             fileData = fileData.replace(beforeString,afterString)
@@ -41,9 +41,9 @@ def replaceString(fileString,beforeString,afterString):
     return IsMod 
 
 def removeString(fileString,removedString):
-    with open(fileString, "r") as myFile:
-        fileData = myFile.read()
-        myFile.close()
+    with open(fileString, "r") as editFile:
+        fileData = editFile.read()
+        editFile.close()
         IsMod = False
         if removedString in fileData:
             fileData = fileData.replace(removedString,"")
@@ -111,4 +111,5 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
+        print("Shutdown aborted")
         ignLowCounter = 0
