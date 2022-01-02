@@ -87,8 +87,8 @@ m = appendString("/etc/modules","rtc-ds1307")
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
-#m = appendString("/etc/rc.local","#CarPiHat")
-#m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
+###m = appendString("/etc/rc.local","#CarPiHat")
+###m = appendString("/etc/rc.local","python /home/pi/PiHead/carPiHat.py &","exit 0")
 
 GPIO.setmode(GPIO.BCM)
 
