@@ -2,9 +2,9 @@ import os
 import time
 import shutil
 
-source = "/home/pi/PiHead/main.py"
+source = "/home/pi/PiHead/code.py"
 destinationFolder = "/media/pi/CIRCUITPY/"
-destinationFile = "main.py"
+destinationFile = "code.py"
 
 ##code option 1
 while not os.path.exists(destinationFolder):
