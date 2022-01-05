@@ -7,9 +7,9 @@ import time
 import neopixel
 
 #setup RGB strip
-pixelCount = 8
-pixels = neopixel.NeoPixel(board.D2, pixelCount, brightness=0.5)
-pixels.fill((255, 165, 0))
+pixelCount = 10
+pixels = neopixel.NeoPixel(board.D2, pixelCount, brightness=0.05)
+pixels.fill((255, 15, 0))
 
 #setup analog inputs
 analog0in = AnalogIn(board.D0)

@@ -62,12 +62,6 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/playback_encoder.ini")
 
 
-###############
-## RGB SETUP ##
-###############
-os.system("sudo python /home/pi/PiHead/rgb_strip.py &")
-
-
 ###################
 ## TRINKET SETUP ##
 ###################
