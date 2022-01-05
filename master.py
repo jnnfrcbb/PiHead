@@ -64,7 +64,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ###############
 ## RGP SETUP ##
 ###############
-os.system("python /home/pi/PiHead/rgb_strip.py &")
+os.system("sudo python /home/pi/PiHead/rgb_strip.py &")
 
 
 ###################

@@ -5,5 +5,5 @@ import neopixel
 
 pixelCount = 8
 
-pixels = neopixel.NeoPixel(board.D18, 8) ##number = pixel count
+pixels = neopixel.NeoPixel(board.D18, pixelCount, brightness=0.5)
 pixels.fill((255, 165, 0))
