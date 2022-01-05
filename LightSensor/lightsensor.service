@@ -1,0 +1,20 @@
+[Unit]
+ Description=Pi Lightsensor Service
+ ConditionPathExists=/opt/lightsensor/service_lightsensor.py
+ ConditionPathExists=/opt/lightsensor/lightsensor_env.sh
+ ConditionPathExists=/sys/class/backlight/rpi_backlight/brightness
+
+
+[Service]
+ Type=simple
+ ExecStart=/usr/bin/python3 /opt/lightsensor/service_lightsensor.py
+ ExecStartPost=/bin/touch /tmp/auto_brightness_active
+ ExecStop=/bin/rm /tmp/auto_brightness_active
+ Restart=on-failure
+ StartLimitInterval=60
+ RestartSec=5
+ StartLimitBurst=3
+
+[Install]
+ WantedBy=multi-user.target
+ 

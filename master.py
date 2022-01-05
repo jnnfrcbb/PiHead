@@ -7,6 +7,7 @@ import os
 import RPi.GPIO as GPIO
 from subprocess import call
 import time
+import shutil
 
 def appendString(fileString,writingString,signOff=""):
     if signOff is not "":
@@ -71,6 +72,25 @@ os.system("sudo python /home/pi/PiHead/rgb_strip.py &")
 ## TRINKET SETUP ##
 ###################
 os.system("python /home/pi/PiHead/trinket_setup.py &")
+
+
+########################
+## LIGHT SENSOR SETUP ##
+########################
+destFolder = "/opt/lightsensor/"
+sourceFolder = "/home/pi/PiHead/LightSensor/"
+files=["lightsensor_default_env.sh", "lightsensor_env.sh", "lightsensor.service", "service_lightsensor.py"]
+
+if not os.path.isdir(destFolder):
+    os.system("sudo mkdir -p "+ destFolder)
+    for i in files:
+        shutil.copy2(sourceFolder + files[i], destFolder + files[i])
+    os.system("chmod +x service_lightsensor.py")
+    os.system("chmod +x lightsensor_default_env.sh")
+    os.system("chmod +x lightsensor_env.sh")
+    os.system("sudo cp lightsensor.service /etc/systemd/system")
+    os.system("sudo systemctl enable lightsensor.service")
+    os.system("sudo systemctl start lightsensor.service")
 
 
 ##############
