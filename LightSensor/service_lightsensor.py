@@ -4,6 +4,15 @@ import smbus
 import os
 import subprocess
 from time import sleep
+import RPi.GPIO as GPIO
+
+## For auto day/night mode switching ##
+# configure BCM mode so all numbers are GPIO pin number, not board pin number
+GPIO.setmode(GPIO.BCM)
+# setup GPIO15 to be an output
+GPIO.setup(15, GPIO.OUT)
+## use a jumper cable to connect output pin to OAP night mode detection pin
+
 
 
 # Originally Used in Crankshaft.
@@ -111,8 +120,10 @@ while True:
     if step <= get_var('TSL2561_DAYNIGHT_ON_STEP'):
       print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger night")
       os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
+      GPIO.output(15, 1) ## output signal on GPIO15 to say night mode should activate
     else:
       if step > get_var('TSL2561_DAYNIGHT_ON_STEP'):
         print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger day")
         os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
+        GPIO.output(15, 0) ## output signal on GPIO15 to say day mode should activate
   sleep (get_var('TSL2561_CHECK_INTERVAL'))
