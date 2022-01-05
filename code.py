@@ -9,7 +9,7 @@ import neopixel
 #setup RGB strip
 pixelCount = 10
 pixels = neopixel.NeoPixel(board.D2, pixelCount, brightness=0.05)
-pixels.fill((255, 15, 0))
+pixels.fill((255, 50, 10))
 
 #setup analog inputs
 analog0in = AnalogIn(board.D0)
