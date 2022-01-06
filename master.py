@@ -55,6 +55,14 @@ def removeString(fileString,removedString):
     return IsMod
 
 
+REMOTE_PIN = 22
+
+#################
+## TURN ON AMP ##
+#################
+GPIO.output(REMOTE_PIN, 1)
+
+
 ########################
 ## CONTROLLER_SERVICE ##
 ########################
@@ -130,6 +138,7 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
         ignLowCounter += 1
         print(ignLowCounter)
         if ignLowCounter > IGN_LOW_TIME:
+            GPIO.output(REMOTE_PIN, 0)
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
