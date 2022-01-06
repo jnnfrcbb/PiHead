@@ -33,7 +33,7 @@ Volume = GPIO 16 (B), 20 (G), 21 (Y)
 
 RGB data = GPIO 18
 
-RGB colours = GND: grey; D: white; V: green
+RGB colours = GND: grey (to black); D: white (to white); V: green (to purple)
 
 ---
 
