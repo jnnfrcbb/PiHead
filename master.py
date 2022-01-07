@@ -72,6 +72,13 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/playback_encoder.ini")
 
 
+##############################
+## HOTKEY FOR DISPLAY POWER ##
+##############################
+
+
+
+
 ###################
 ## TRINKET SETUP ##
 ###################
@@ -117,7 +124,10 @@ m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c
 m = appendString("/etc/modules","#CarPiHat")
 m = appendString("/etc/modules","rtc-ds1307")
 
-## Safe Shutdown ##
+
+###################
+## SAFE SHUTDOWN ##
+###################
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 

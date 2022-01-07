@@ -8,21 +8,19 @@ import neopixel
 
 #setup RGB strip
 pixelCount = 10
-pixels = neopixel.NeoPixel(board.D2, pixelCount, brightness=0.05)
-pixels.fill((255, 50, 10))
+pixels = neopixel.NeoPixel(board.D2, pixelCount, brightness=0.75)
+pixels.fill((255, 50, 0))
 
 #setup analog inputs
 analog0in = AnalogIn(board.D0)
 analog1in = AnalogIn(board.D1)
 
 #setup keyboard
-kbd = Keyboard()##usb_hid.devices)
+kbd = Keyboard()#usb_hid.devices)
 
 #setup voltage reader
 def getVoltage(pin):
     return (pin.value * 3.3) / 65536
-
-#i = 0
 
 while True:
 
@@ -36,10 +34,10 @@ while True:
       kbd.send(Keycode.H)  #HOME
     elif VD0 < 0.7:
       print("BUTTON: SOURCE")
-      kbd.send(Keycode.CONTROL, Keycode.F3) #SWITCH MODE
+      kbd.send(Keycode.M)  #VOICE
     elif VD0 < 1.1:
       print("BUTTON: ATT")
-      kbd.send(Keycode.M)  #VOICE
+      kbd.send(Keycode.CONTROL, Keycode.F3) #SWITCH MODE      
     elif VD0 < 1.4:
       print("BUTTON: LIST")
       kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
@@ -60,7 +58,7 @@ while True:
       kbd.send(Keycode.B)  #PLAY/PAUSE
     elif VD0 < 2.8:
       print("BUTTON: MODE")
-      kbd.send(Keycode.A) #todo: display on or off - use F19 or something?
+      kbd.send(Keycode.A) #todo: run python script to turn screen off and on / alternatively: switch day-night mode
   elif VD1 < 1:
     #print("SHIFT: TRUE")
     if VD0 < 1.6:
@@ -69,9 +67,5 @@ while True:
     elif VD0 < 1.9:
       print("BUTTON: SHIFTDOWN")
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
-
-  #print (i)
-
-  #i = i + 1
 
   time.sleep(0.25)
