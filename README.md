@@ -27,13 +27,15 @@
 | 20 | 39 | GND |   |   | 40 | GPIO 21 | Free (ENC1 SW) |
 
 
-Playback = GPIO 6 (B), 19 (G), 26 (Y)
+Playback: GPIO 6 (B), 19 (G), 26 (Y)
 
-Volume = GPIO 16 (B), 20 (G), 21 (Y)
+Volume: GPIO 16 (B), 20 (G), 21 (Y)
 
-RGB data = GPIO 18
+RGB data: GPIO 18
 
-RGB colours = GND: grey (to black); D: white (to white); V: green (to purple)
+RGB colours: GND = grey (to black); DATA = white (to white); VCC = green (to purple)
+
+Light Sensor: VCC = blue = 4; GND = green = 3; SCL = yellow = 1; SDA = orange = 2
 
 ---
 
