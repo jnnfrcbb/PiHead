@@ -58,7 +58,7 @@ while True:
       kbd.send(Keycode.B)  #PLAY/PAUSE
     elif VD0 < 2.8:
       print("BUTTON: MODE")
-      kbd.send(Keycode.A) #todo: run python script to turn screen off and on / alternatively: switch day-night mode
+      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #todo: run python script to turn screen off and on / alternatively: switch day-night mode
   elif VD1 < 1:
     #print("SHIFT: TRUE")
     if VD0 < 1.6:
