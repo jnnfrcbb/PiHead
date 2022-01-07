@@ -75,8 +75,10 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ##############################
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
+m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>","<chainQuitKey>C-g</chainQuitKey> \r <keybind key=""C+F12""><action name=""bl_toggle""><command>sudo python /home/pi/PiHead/bl_toggle.py</command></action></keybind>")
 
-
+#"<chainQuitKey>C-g</chainQuitKey"
+#"<keybind key=""C+F12""><action name=""bl_toggle""><command>[LAUNCH COMMAND]</command></action></keybind>"
 
 
 ###################
