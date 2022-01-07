@@ -31,7 +31,7 @@ def replaceString(fileString,beforeString,afterString):
         fileData = editFile.read()
         editFile.close()
         IsMod = False
-        if beforeString in fileData:
+        if beforeString in fileData and not afterString in fileData:
             fileData = fileData.replace(beforeString,afterString)
             IsMod = True
     if IsMod:
@@ -75,7 +75,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ##############################
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
-m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>","<chainQuitKey>C-g</chainQuitKey> \r <keybind key=""C+F12""><action name=""bl_toggle""><command>sudo python /home/pi/PiHead/bl_toggle.py</command></action></keybind>")
+m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>","<chainQuitKey>C-g</chainQuitKey> \r <keybind key=""C-F12""><action name=""bl_toggle""><command>bash sudo python /home/pi/PiHead/bl_toggle.py</command></action></keybind>")
 
 #"<chainQuitKey>C-g</chainQuitKey"
 #"<keybind key=""C+F12""><action name=""bl_toggle""><command>[LAUNCH COMMAND]</command></action></keybind>"
