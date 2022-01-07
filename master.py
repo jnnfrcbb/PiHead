@@ -111,8 +111,7 @@ m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,i
 m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
 ## CarPiHat real time clock ##
-os.system("echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-
+m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s", "exit 0")
 m = appendString("/etc/modules","#CarPiHat")
 m = appendString("/etc/modules","rtc-ds1307")
 
