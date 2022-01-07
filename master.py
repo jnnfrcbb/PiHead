@@ -57,6 +57,8 @@ def removeString(fileString,removedString):
 
 REMOTE_PIN = 22
 
+GPIO.setmode(GPIO.BCM)
+
 #################
 ## TURN ON AMP ##
 #################
@@ -118,8 +120,6 @@ m = appendString("/etc/modules","rtc-ds1307")
 ## Safe Shutdown ##
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
-
-GPIO.setmode(GPIO.BCM)
 
 IGN_PIN = 12
 EN_POWER_PIN = 25
