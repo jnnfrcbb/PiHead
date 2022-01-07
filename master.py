@@ -151,5 +151,5 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
-        print("Shutdown aborted")
+        #print("Shutdown aborted")
         ignLowCounter = 0
