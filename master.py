@@ -62,6 +62,7 @@ GPIO.setmode(GPIO.BCM)
 #################
 ## TURN ON AMP ##
 #################
+GPIO.setup(REMOTE_PIN, GPIO.OUT)
 GPIO.output(REMOTE_PIN, 1)
 
 
