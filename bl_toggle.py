@@ -7,9 +7,9 @@ print(bl_Status)
 if bl_Status == 0:
     print("backlight on >> off")
     backlight = open('/sys/class/backlight/rpi_backlight/bl_power', 'w')
-    backlight.write('255') # turn off
+    backlight.write('1') # turn off
     backlight.close()
-elif bl_Status == 255:
+elif bl_Status == 1:
     print("backlight off >> on")
     backlight = open('/sys/class/backlight/rpi_backlight/bl_power', 'w')
     backlight.write('0') # turn on
