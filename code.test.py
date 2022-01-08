@@ -1,6 +1,7 @@
 import board
 from analogio import AnalogIn
 import time
+import adafruit_dotstar as dotstar
 
 #setup onboard led
 led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
