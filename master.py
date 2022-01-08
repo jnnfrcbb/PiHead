@@ -62,7 +62,7 @@ GPIO.setmode(GPIO.BCM)
 #################
 ## TURN ON AMP ##
 #################
-GPIO.setup(REMOTE_PIN, GPIO.OUT)
+GPIO.setup(REMOTE_PIN,GPIO.OUT)
 GPIO.output(REMOTE_PIN, 1)
 
 
@@ -76,7 +76,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ##############################
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
-m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>","<chainQuitKey>C-g</chainQuitKey>\r    <keybind key=""C-F12"">\r      <action name=""bl_toggle"">\r        <command>bl_toggle.sh</command>\r      </action>\r    </keybind>")
+m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-F12"><action name="bl_toggle"><command>bl_toggle.sh</command></action>\</keybind>')
 
 
 ###################
