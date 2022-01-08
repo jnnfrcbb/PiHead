@@ -54,6 +54,7 @@ def removeString(fileString,removedString):
             modFile.close()
     return IsMod
 
+
 #########################
 ## GENERAL PREPARATION ##
 #########################
