@@ -15,11 +15,11 @@ def appendString(fileString,writingString,signOff=""):
     with open(fileString, "a+") as editFile:
         fileData = editFile.read()
         IsMod = False
-        if not writingString in fileData:            
+        if not writingString in fileData:
             if len(fileData)> 0:
                 editFile.write("\n")
             editFile.write(writingString)
-            IsMod = True 
+            IsMod = True
         editFile.close()
         if signOff is not "":
             if signOffRemoved:
@@ -38,7 +38,7 @@ def replaceString(fileString,beforeString,afterString):
         with open(fileString, 'w') as modFile:
             modFile.write(fileData)
             modFile.close()
-    return IsMod 
+    return IsMod
 
 def removeString(fileString,removedString):
     with open(fileString, "r") as editFile:
@@ -54,14 +54,23 @@ def removeString(fileString,removedString):
             modFile.close()
     return IsMod
 
-
-REMOTE_PIN = 22
-
+#########################
+## GENERAL PREPARATION ##
+#########################
 GPIO.setmode(GPIO.BCM)
+
+
+#####################
+## SET PERMISSIONS ##
+#####################
+os.system("sudo chmod a+rw /boot/config.txt")
+os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
+
 
 #################
 ## TURN ON AMP ##
 #################
+REMOTE_PIN=22
 GPIO.setup(REMOTE_PIN,GPIO.OUT)
 GPIO.output(REMOTE_PIN, 1)
 
@@ -76,13 +85,13 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ##############################
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
-#m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-b"><action name="bl_toggle"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
+m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-b"><action name="bl_toggle"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
 
 
 ###################
 ## TRINKET SETUP ##
 ###################
-os.system("python /home/pi/PiHead/trinket_setup.py &")
+os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 
 
 ########################
@@ -94,14 +103,16 @@ files=["lightsensor_default_env.sh", "lightsensor_env.sh", "lightsensor.service"
 
 if not os.path.isdir(destFolder):
     os.system("sudo mkdir -p "+ destFolder)
+    os.system("sudo chmod a+rw " + destFolder)
     for i in files:
         shutil.copy2(sourceFolder + files[i], destFolder + files[i])
-    os.system("chmod +x service_lightsensor.py")
-    os.system("chmod +x lightsensor_default_env.sh")
-    os.system("chmod +x lightsensor_env.sh")
-    os.system("sudo cp lightsensor.service /etc/systemd/system")
+    os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
+    os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
+    os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
+    os.system("sudo cp " + destFolder + "lightsensor.service /etc/systemd/system")
     os.system("sudo systemctl enable lightsensor.service")
     os.system("sudo systemctl start lightsensor.service")
+    #print(os.system("sudo systemctl status lightsensor.service"))
 
 
 ##############
@@ -119,7 +130,7 @@ m = appendString("/boot/config.txt","dtparam=spi=on")
 m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
 m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
-## CarPiHat real time clock ##
+# CarPiHat real time clock ##
 m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s", "exit 0")
 m = appendString("/etc/modules","#CarPiHat")
 m = appendString("/etc/modules","rtc-ds1307")
@@ -133,7 +144,7 @@ m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_l
 
 IGN_PIN = 12
 EN_POWER_PIN = 25
-IGN_LOW_TIME = 10
+IGN_LOW_TIME = 5
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
@@ -151,5 +162,5 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
-        #print("Shutdown aborted")
+        print("Shutdown aborted")
         ignLowCounter = 0
