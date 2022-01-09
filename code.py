@@ -14,7 +14,6 @@ led[0] = (255,0,0)
 #setup RGB strip
 rgbCount = 10
 rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
-rgb.fill((255, 35, 0))
 
 led[0] = (0,255,0)
 
@@ -36,6 +35,8 @@ def getVoltage(pin):
 led[0] = (0,0,0)
 
 while True:
+
+  rgb.fill((255, 35, 0))
 
   VD0 = getVoltage(analog0in) #AD
   VD1 = getVoltage(analog1in) #SHIFT
