@@ -108,14 +108,23 @@ if not os.path.isdir(destFolder):
     os.system("sudo chmod a+rw " + destFolder)
     for i in files:
         shutil.copy2(sourceFolder + files[i], destFolder + files[i])
+#        if i != 2:
+#            os.system("sudo chmod +x " + destFolder + files[i])
     os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
     os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
     os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
     os.system("sudo cp " + destFolder + "lightsensor.service /etc/systemd/system")
     os.system("sudo systemctl enable lightsensor.service")
     os.system("sudo systemctl start lightsensor.service")
-    #print(os.system("sudo systemctl status lightsensor.service"))
-
+#elif os.path.isdir(destFolder):
+#    print("exists")
+#    for f in files:
+#        print("file")
+#        os.remove(destFolder + files[f])
+#        shutil.copy2(sourceFolder + files[f], destFolder + files[f])
+#        if f != 2:
+#            os.system("sudo chmod +x " + destFolder + files[f]
+#    os.system("sudo systemctl start lightsensor.service")
 
 ##############
 ## CARPIHAT ##
