@@ -35,7 +35,7 @@ led[0] = (0,0,255)
 def getVoltage(pin):
     return int((pin.value * 3.3) / 65536)
 
-#led[0] = (255,255,255)
+led[0] = (255,255,255)
 
 while True:
 
