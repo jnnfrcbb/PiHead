@@ -27,7 +27,7 @@ analog1in = AnalogIn(board.D1)
 led[0] = (0,255,0)
 
 #setup keyboard
-#kbd = Keyboard() #usb_hid.devices)
+kbd = Keyboard() #usb_hid.devices)
 
 led[0] = (0,0,255)
 
