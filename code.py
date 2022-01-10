@@ -21,13 +21,13 @@ led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
 led[0] = (255,0,0)
 
 #setup analog inputs
-analog0in = AnalogIn(board.D0)
-analog1in = AnalogIn(board.D1)
+#analog0in = AnalogIn(board.D0)
+#analog1in = AnalogIn(board.D1)
 
 led[0] = (0,255,0)
 
 #setup keyboard
-kbd = Keyboard()#usb_hid.devices)
+#kbd = Keyboard()#usb_hid.devices)
 
 led[0] = (0,0,255)
 
@@ -38,7 +38,6 @@ led[0] = (0,0,255)
 #led[0] = (255,255,255)
 
 while True:
-
 
   rgb.fill((255, 35, 0))
 
@@ -115,6 +114,6 @@ while True:
 #  if bButton == True:
 #    led[0] = (Rgb, rGb, rgB)
 
-#  led[0] = (0,0,0)
+  led[0] = (0,0,0)
 
   time.sleep(0.25)
