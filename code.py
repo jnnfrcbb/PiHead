@@ -58,8 +58,8 @@ while True:
 
   bButton = False
 
-#  if VD1 > 1:
-#    #print("SHIFT: FALSE")
+  if VD1 > 1:
+    print("SHIFT: FALSE")
 #    if VD0 < 0.1:
 #      print("BUTTON: OFF")
 #      kbd.send(Keycode.H)  #HOME
@@ -100,8 +100,8 @@ while True:
 #      print("BUTTON: MODE")
 #      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
 #      bButton = True
-#  elif VD1 < 1:
-#    #print("SHIFT: TRUE")
+  elif VD1 < 1:
+    print("SHIFT: TRUE")
 #    if VD0 < 1.6:
 #      print("BUTTON: SHIFTUP")
 #      kbd.send(Keycode.J)  #LAUNCH MEDIA
