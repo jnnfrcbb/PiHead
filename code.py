@@ -33,7 +33,7 @@ led[0] = (0,0,255)
 
 #setup voltage reader
 def getVoltage(pin):
-    return (pin.value * 3.3) / 65536
+    return int((pin.value * 3.3) / 65536)
 
 #led[0] = (255,255,255)
 
@@ -58,7 +58,7 @@ while True:
 
   bButton = False
 
-  if int(VD1) > 1:
+  if VD1 > 1:
     print("SHIFT: FALSE")
 #    if VD0 < 0.1:
 #      print("BUTTON: OFF")
