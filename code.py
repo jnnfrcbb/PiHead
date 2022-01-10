@@ -7,36 +7,40 @@ import time
 import neopixel
 import adafruit_dotstar as dotstar
 
+#setup RGB strip
+
+Rgb = 255
+rGb = 35
+rgB = 0
+
+rgbCount = 10
+rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
+rgb.fill((Rgb, rGb, rgB))
+
 #setup onboard led
 led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
 led[0] = (255,0,0)
-
-#setup RGB strip
-rgbCount = 10
-rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
-rgb.fill((255, 35, 0))
-led[0] = (0,255,0)
 
 #setup analog inputs
 analog0in = AnalogIn(board.D0)
 analog1in = AnalogIn(board.D1)
 
-led[0] = (0,0,255)
+led[0] = (0,255,0)
 
 #setup keyboard
 kbd = Keyboard()#usb_hid.devices)
 
-led[0] = (255,255,255)
+led[0] = (0,0,255)
 
 #setup voltage reader
 def getVoltage(pin):
     return (pin.value * 3.3) / 65536
 
-led[0] = (0,0,0)
+led[0] = (255,255,255)
 
 while True:
 
-  rgb.fill((255, 35, 0))
+  rgb.fill((Rgb, rGb, rgB))
 
   VD0 = getVoltage(analog0in) #AD
   VD1 = getVoltage(analog1in) #SHIFT
@@ -97,8 +101,8 @@ while True:
       bButton = True
 
   if bButton == True:
-    led[0] = (255,35,0)
-
-  time.sleep(0.25)
+    led[0] = (Rgb, rGb, rgB)
 
   led[0] = (0,0,0)
+
+  time.sleep(0.25)
