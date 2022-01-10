@@ -60,7 +60,7 @@ while True:
 
   if VD1 > 1:
     print("SHIFT: FALSE")
-  else:
+  elif VD0 < 0:
     print("SHIFT: TRUE")
 #    if VD0 < 0.1:
 #      print("BUTTON: OFF")
