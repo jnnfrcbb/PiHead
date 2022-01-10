@@ -1,6 +1,6 @@
 import board
 from analogio import AnalogIn
-import usb_hid
+#import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 import time
@@ -46,8 +46,6 @@ while True:
   VD1 = getVoltage(analog1in) #SHIFT
 
   bButton = False
-
-  print(VD0)
 
   if VD1 > 1:
     print("SHIFT: FALSE")
