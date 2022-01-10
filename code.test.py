@@ -1,11 +1,11 @@
 import board
-#from analogio import AnalogIn
-##import usb_hid
-#from adafruit_hid.keyboard import Keyboard
-#from adafruit_hid.keycode import Keycode
+from analogio import AnalogIn
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keycode import Keycode
 import time
 import neopixel
-#import adafruit_dotstar as dotstar
+import adafruit_dotstar as dotstar
 
 #setup RGB strip
 #Rgb = 255
@@ -14,20 +14,7 @@ import neopixel
 
 rgbCount = 10
 rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
-
-while True:
-
-  rgb.fill((255, 35, 0))
-
-  time.sleep (0.5)
-  
-  rgb.fill((0, 255,35))
-
-  time.sleep (0.5)
-  
-  rgb.fill((35, 0, 255))
-
-  time.sleep (0.5)
+#rgb.fill((255, 35, 0))
 
 #setup onboard led
 #led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
@@ -50,7 +37,20 @@ while True:
 
 #led[0] = (255,255,255)
 
-#while True:
+while True:
+
+
+  rgb.fill((255, 35, 0))
+
+  time.sleep (0.5)
+  
+  rgb.fill((0, 255,35))
+
+  time.sleep (0.5)
+  
+  rgb.fill((35, 0, 255))
+
+  time.sleep (0.5)
 
 #  rgb.fill((Rgb, rGb, rgB))
 
@@ -117,4 +117,4 @@ while True:
 
 #  led[0] = (0,0,0)
 
-#  time.sleep(0.25)
+  time.sleep(0.25)
