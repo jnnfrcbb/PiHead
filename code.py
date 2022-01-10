@@ -17,8 +17,8 @@ rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
 #rgb.fill((255, 35, 0))
 
 #setup onboard led
-#led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
-#led[0] = (255,0,0)
+led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
+led[0] = (255,0,0)
 
 #setup analog inputs
 #analog0in = AnalogIn(board.D0)
