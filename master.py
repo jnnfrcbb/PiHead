@@ -7,7 +7,6 @@ import os
 import RPi.GPIO as GPIO
 from subprocess import call
 import time
-import shutil
 
 def appendString(fileString,writingString,signOff=""):
     if signOff is not "":
@@ -99,22 +98,42 @@ os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 ########################
 ## LIGHT SENSOR SETUP ##
 ########################
-destFolder = "/opt/lightsensor/"
 sourceFolder = "/home/pi/PiHead/LightSensor/"
+destFolder = "/opt/lightsensor/"
 files=["lightsensor_default_env.sh", "lightsensor_env.sh", "lightsensor.service", "service_lightsensor.py"]
+
+#if not os.path.isdir(destFolder):
+#    os.system("sudo mkdir -p "+ destFolder)
+#    os.system("sudo chmod a+rw " + destFolder)
+#    for i in files:
+#        shutil.copy2(sourceFolder + files[i], destFolder + files[i])
+#    os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
+#    os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
+#    os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
+#    os.system("sudo cp " + destFolder + "lightsensor.service /etc/systemd/system")
+#    os.system("sudo systemctl enable lightsensor.service")
+#    os.system("sudo systemctl start lightsensor.service")
 
 if not os.path.isdir(destFolder):
     os.system("sudo mkdir -p "+ destFolder)
     os.system("sudo chmod a+rw " + destFolder)
-    for i in files:
-        shutil.copy2(sourceFolder + files[i], destFolder + files[i])
-    os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
-    os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
-    os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
-    os.system("sudo cp " + destFolder + "lightsensor.service /etc/systemd/system")
+    bNew = True
+    
+for i in files:
+    os.system("sudo cp -f " + sourceFolder + files[i] + " " + destFolder)
+
+os.system("sudo cp -f " + destFolder + "lightsensor.service /etc/systemd/system")
+
+os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
+os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
+os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
+
+if bNew == True:
     os.system("sudo systemctl enable lightsensor.service")
     os.system("sudo systemctl start lightsensor.service")
-    #print(os.system("sudo systemctl status lightsensor.service"))
+else:
+    os.system("systemctl daemon-reload")
+    os.system("systemctl restart lightsensor.service")
 
 
 ##############

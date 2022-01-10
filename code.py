@@ -8,14 +8,12 @@ import neopixel
 import adafruit_dotstar as dotstar
 
 #setup RGB strip
-Rgb = 255
-rGb = 35
-rgB = 0
-
+red = 255
+green = 35
+blue = 0
 rgbCount = 10
-rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
-#rgb.fill((255, 35, 0))
-rgb.fill((Rgb, rGb, rgB))
+rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.33)
+rgb.fill((red, green, blue))
 
 #setup onboard led
 led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
@@ -40,12 +38,14 @@ led[0] = (255,255,255)
 
 while True:
 
-  rgb.fill((Rgb, rGb, rgB))
+  rgb.fill((red, green, blue))
 
   VD0 = getVoltage(analog0in) #AD
   VD1 = getVoltage(analog1in) #SHIFT
 
   bButton = False
+
+  print(VD0)
 
   if VD1 > 1:
     print("SHIFT: FALSE")
@@ -105,7 +105,7 @@ while True:
       bButton = True
 
   if bButton == True:
-    led[0] = (255, 35, 0)
+    led[0] = (red, green, blue)
 
   led[0] = (0,0,0)
 
