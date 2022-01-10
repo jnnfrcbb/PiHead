@@ -32,8 +32,8 @@ kbd = Keyboard() #usb_hid.devices)
 led[0] = (0,0,255)
 
 #setup voltage reader
-#def getVoltage(pin):
-#    return (pin.value * 3.3) / 65536
+def getVoltage(pin):
+    return (pin.value * 3.3) / 65536
 
 #led[0] = (255,255,255)
 
