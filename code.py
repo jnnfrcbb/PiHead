@@ -100,7 +100,7 @@ while True:
 #      print("BUTTON: MODE")
 #      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
 #      bButton = True
-  elif VD1 < 1:
+  else:
     print("SHIFT: TRUE")
 #    if VD0 < 1.6:
 #      print("BUTTON: SHIFTUP")
