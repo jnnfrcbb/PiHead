@@ -3,18 +3,31 @@ import board
 ##import usb_hid
 #from adafruit_hid.keyboard import Keyboard
 #from adafruit_hid.keycode import Keycode
-#import time
+import time
 import neopixel
 #import adafruit_dotstar as dotstar
 
 #setup RGB strip
-Rgb = 255
-rGb = 35
-rgB = 0
+#Rgb = 255
+#rGb = 35
+#rgB = 0
 
 rgbCount = 10
 rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.5)
-rgb.fill((Rgb, rGb, rgB))
+
+while True:
+
+  rgb.fill((255, 35, 0))
+
+  time.sleep (0.5)
+  
+  rgb.fill((0, 255,35))
+
+  time.sleep (0.5)
+  
+  rgb.fill((35, 0, 255))
+
+  time.sleep (0.5)
 
 #setup onboard led
 #led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
