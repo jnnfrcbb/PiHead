@@ -33,7 +33,7 @@ led[0] = (0,0,255)
 
 #setup voltage reader
 def getVoltage(pin):
-    return int((pin.value * 3.3) / 65536)
+    return float((pin.value * 3.3) / 65536)
 
 led[0] = (255,255,255)
 
@@ -63,7 +63,7 @@ while True:
     if VD0 < 0.1:
       print("BUTTON: OFF")
       #kbd.send(Keycode.H)  #HOME
-      bButton = True
+      #bButton = True
   elif VD1 < 1:
     print("SHIFT: TRUE")
 #    elif VD0 < 0.7:
