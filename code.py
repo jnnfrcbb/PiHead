@@ -8,7 +8,6 @@ import neopixel
 import adafruit_dotstar as dotstar
 
 #setup RGB strip
-
 Rgb = 255
 rGb = 35
 rgB = 0
