@@ -42,11 +42,11 @@ while True:
   rgb.fill((255, 35, 0))
 
   time.sleep (0.5)
-  
+
   rgb.fill((0, 255,35))
 
   time.sleep (0.5)
-  
+
   rgb.fill((35, 0, 255))
 
   time.sleep (0.5)
