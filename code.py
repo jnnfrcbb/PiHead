@@ -62,7 +62,7 @@ while True:
     print("SHIFT: FALSE")
     if VD0 < 0.1:
       print("BUTTON: OFF")
-      kbd.send(Keycode.H)  #HOME
+      #kbd.send(Keycode.H)  #HOME
       bButton = True
   elif VD1 < 1:
     print("SHIFT: TRUE")
