@@ -74,10 +74,16 @@ os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 #################
 
 REMOTE_PIN=22
-OBD_PIN=27
 
 GPIO.setup(REMOTE_PIN,GPIO.OUT)
 GPIO.output(REMOTE_PIN, 1)
+
+
+########################
+## TURN ON OBD READER ##
+########################
+
+OBD_PIN=27
 
 GPIO.setup(OBD_PIN,GPIO.OUT)
 GPIO.output(OBD_PIN, 1)
