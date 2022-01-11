@@ -57,12 +57,14 @@ def removeString(fileString,removedString):
 #########################
 ## GENERAL PREPARATION ##
 #########################
+
 GPIO.setmode(GPIO.BCM)
 
 
 #####################
 ## SET PERMISSIONS ##
 #####################
+
 os.system("sudo chmod a+rw /boot/config.txt")
 os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 
@@ -70,14 +72,21 @@ os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 #################
 ## TURN ON AMP ##
 #################
+
 REMOTE_PIN=22
+OBD_PIN=27
+
 GPIO.setup(REMOTE_PIN,GPIO.OUT)
 GPIO.output(REMOTE_PIN, 1)
+
+GPIO.setup(OBD_PIN,GPIO.OUT)
+GPIO.output(OBD_PIN, 1)
 
 
 ########################
 ## CONTROLLER_SERVICE ##
 ########################
+
 m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/volume_encoder.ini")
 m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/playback_encoder.ini")
 
@@ -85,6 +94,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ##############################
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
+
 m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-b"><action name="bl_toggle"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
 os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 
@@ -92,12 +102,14 @@ os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 ###################
 ## TRINKET SETUP ##
 ###################
+
 os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 
 
 ########################
 ## LIGHT SENSOR SETUP ##
 ########################
+
 sourceFolder = "/home/pi/PiHead/LightSensor/"
 destFolder = "/opt/lightsensor/"
 files=["lightsensor_default_env.sh", "lightsensor_env.sh", "lightsensor.service", "service_lightsensor.py"]
@@ -160,6 +172,7 @@ m = appendString("/etc/modules","rtc-ds1307")
 ###################
 ## SAFE SHUTDOWN ##
 ###################
+
 m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
@@ -180,6 +193,7 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
         print(ignLowCounter)
         if ignLowCounter > IGN_LOW_TIME:
             GPIO.output(REMOTE_PIN, 0)
+            GPIO.output(OBD_PIN, 0)
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
