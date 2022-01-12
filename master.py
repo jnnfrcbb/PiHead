@@ -76,7 +76,7 @@ os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 REMOTE_PIN=22
 
 GPIO.setup(REMOTE_PIN,GPIO.OUT)
-GPIO.output(REMOTE_PIN, 1)
+#GPIO.output(REMOTE_PIN, 1)
 
 
 ########################
@@ -86,7 +86,7 @@ GPIO.output(REMOTE_PIN, 1)
 OBD_PIN=27
 
 GPIO.setup(OBD_PIN,GPIO.OUT)
-GPIO.output(OBD_PIN, 1)
+#GPIO.output(OBD_PIN, 1)
 
 
 ########################
