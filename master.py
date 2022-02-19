@@ -133,28 +133,28 @@ files=["lightsensor_default_env.sh", "lightsensor_env.sh", "lightsensor.service"
 #    os.system("sudo systemctl enable lightsensor.service")
 #    os.system("sudo systemctl start lightsensor.service")
 
-if os.path.isdir(destFolder):
-    os.system("sudo chmod -R a+rw " + destFolder)
-else:
-    os.system("sudo mkdir -p "+ destFolder)
-    os.system("sudo chmod a+rw " + destFolder)
-    bNew = True
+#if os.path.isdir(destFolder):
+#    os.system("sudo chmod -R a+rw " + destFolder)
+#else:
+#    os.system("sudo mkdir -p "+ destFolder)
+#    os.system("sudo chmod a+rw " + destFolder)
+#    bNew = True
     
-for i in files:
-    os.system("sudo cp -f " + sourceFolder + files[i] + " " + destFolder)
+#for i in files:
+#    os.system("sudo cp -f " + sourceFolder + files[i] + " " + destFolder)
 
-os.system("sudo cp -f " + destFolder + "lightsensor.service /etc/systemd/system")
+#os.system("sudo cp -f " + destFolder + "lightsensor.service /etc/systemd/system")
 
-os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
-os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
-os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
+#os.system("sudo chmod +x " + destFolder + "service_lightsensor.py")
+#os.system("sudo chmod +x " + destFolder + "lightsensor_default_env.sh")
+#os.system("sudo chmod +x " + destFolder + "lightsensor_env.sh")
 
-if bNew == True:
-    os.system("sudo systemctl enable lightsensor.service")
-    os.system("sudo systemctl start lightsensor.service")
-else:
-    os.system("systemctl daemon-reload")
-    os.system("systemctl restart lightsensor.service")
+#if bNew == True:
+#    os.system("sudo systemctl enable lightsensor.service")
+#    os.system("sudo systemctl start lightsensor.service")
+#else:
+#    os.system("systemctl daemon-reload")
+#    os.system("systemctl restart lightsensor.service")
 
 
 ##############
