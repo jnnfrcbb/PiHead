@@ -117,23 +117,35 @@ while True:
 #    file.close()
 #    step = 5
 #  elif Luxrounded > get_var('LUX_LEVEL_5') and Luxrounded <= get_var('LUX_LEVEL_6'):
-#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_5')) + " &")
+#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_6')) + " &")
 #    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
 #    file.write( str(get_var('DISP_BRIGHTNESS_6')))
 #    file.close()
 #    step = 6
 #  elif Luxrounded > get_var('LUX_LEVEL_6') and Luxrounded <= get_var('LUX_LEVEL_7'):
-#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_5')) + " &")
+#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_7')) + " &")
 #    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
 #    file.write( str(get_var('DISP_BRIGHTNESS_7')))
 #    file.close()
 #    step = 7
-#  elif Luxrounded > get_var('LUX_LEVEL_7'):
-#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_6')) + " &")
+#  elif Luxrounded > get_var('LUX_LEVEL_7') and Luxrounded <= get_var('LUX_LEVEL_8'):
+#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_8')) + " &")
 #    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-#    file.write(str(get_var('DISP_BRIGHTNESS_8')))
+#    file.write( str(get_var('DISP_BRIGHTNESS_8')))
 #    file.close()
 #    step = 8
+#  elif Luxrounded > get_var('LUX_LEVEL_8') and Luxrounded <= get_var('LUX_LEVEL_9'):
+#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_9')) + " &")
+#    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+#    file.write( str(get_var('DISP_BRIGHTNESS_9')))
+#    file.close()
+#    step = 9
+#  elif Luxrounded > get_var('LUX_LEVEL_9'):
+#    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_10')) + " &")
+#    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+#    file.write(str(get_var('DISP_BRIGHTNESS_10')))
+#    file.close()
+#    step = 10
 
   if Luxrounded <= get_var('LUX_LEVEL_1'):
     step = 1
@@ -149,8 +161,12 @@ while True:
     step = 6
   elif Luxrounded > get_var('LUX_LEVEL_6') and Luxrounded <= get_var('LUX_LEVEL_7'):
     step = 7
-  elif Luxrounded > get_var('LUX_LEVEL_7'):
+  elif Luxrounded > get_var('LUX_LEVEL_7') and Luxrounded <= get_var('LUX_LEVEL_8'):
     step = 8
+  elif Luxrounded > get_var('LUX_LEVEL_8') and Luxrounded <= get_var('LUX_LEVEL_9'):
+    step = 9
+  elif Luxrounded > get_var('LUX_LEVEL_9'):
+    step = 10
 
   file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
   brightLevel = str(get_var('DISP_BRIGHTNESS_' + step))
