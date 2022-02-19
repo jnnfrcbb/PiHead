@@ -109,12 +109,18 @@ while True:
     file.write( str(get_var('DISP_BRIGHTNESS_4')))
     file.close()
     step = 4
-  elif Luxrounded >= get_var('LUX_LEVEL_5'):
+  elif Luxrounded >= get_var('LUX_LEVEL_4') and Luxrounded < get_var('LUX_LEVEL_5'):
     #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_5')) + " &")
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(get_var('DISP_BRIGHTNESS_5')))
+    file.write( str(get_var('DISP_BRIGHTNESS_5')))
     file.close()
-    step = 5
+    step = 4
+  elif Luxrounded >= get_var('LUX_LEVEL_5'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_6')) + " &")
+    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+    file.write(str(get_var('DISP_BRIGHTNESS_6')))
+    file.close()
+    step = 6
 
   if daynight_gpio == 0:
     if step <= get_var('TSL2561_DAYNIGHT_ON_STEP'):
