@@ -135,4 +135,4 @@ while True:
   if bButton == True:
     led[0] = (red, green, blue)
 
-  time.sleep(0.25)
+  time.sleep(0.1)
