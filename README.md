@@ -10,7 +10,7 @@
 | 3 | 5 | GPIO 3  | I2C SCL |   | 6 | GND |   |
 | 4 | 7 | GPIO 4  | 1 Wire  |   | 8 | GPIO 14 | 12V Input |
 | 5 | 9 | GND  |   |   | 10 | GPIO 15 | Free (Sensor day/night signal) |
-| 6 | 11 | GPIO 17 | 12V Input  |   | 12 | GPIO 18 | Free (RGB) |
+| 6 | 11 | GPIO 17 | 12V Input  |   | 12 | GPIO 18 | Free |
 | 7 | 13 | GPIO 27 | 12V Output (OBD signal)  |   | 14 | GND |   |
 | 8 | 15 | GPIO 22 | 12V Output (Amp signa)  |   | 16 | GPIO 23 | CAN INT |
 | 9 | 17 | 3.3V  |   |   | 18 | GPIO 24 | ??  |
