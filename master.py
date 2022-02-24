@@ -77,7 +77,7 @@ os.system("sudo chmod -R a+rw /usr/share/openautopro")
 REMOTE_PIN=22
 
 GPIO.setup(REMOTE_PIN,GPIO.OUT)
-#GPIO.output(REMOTE_PIN, 1)
+GPIO.output(REMOTE_PIN, 1)
 
 
 ########################
@@ -87,7 +87,7 @@ GPIO.setup(REMOTE_PIN,GPIO.OUT)
 OBD_PIN=27
 
 GPIO.setup(OBD_PIN,GPIO.OUT)
-#GPIO.output(OBD_PIN, 1)
+GPIO.output(OBD_PIN, 1)
 
 
 ########################
