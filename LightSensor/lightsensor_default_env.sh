@@ -14,11 +14,11 @@ DAYNIGHT_PIN=0
 BRIGHTNESS_FILE=/sys/class/backlight/rpi_backlight/brightness
 
 # brightness values
-BR_MIN=30
+BR_MIN=25
 BR_MAX=255
 BR_STEP=25
 BR_DAY=255
-BR_NIGHT=30
+BR_NIGHT=25
 
 # Custom brightness control
 # Note: this command is called after every brightness change - can slow down for example the brightness
@@ -35,23 +35,23 @@ CUSTOM_BRIGHTNESS_COMMAND=
 # Check interval sensor 5,10,15,20,25,30
 TSL2561_CHECK_INTERVAL=5
 # Switch to night on this level or lower (0 = disabled / 1-10)
-TSL2561_DAYNIGHT_ON_STEP=4
+TSL2561_DAYNIGHT_ON_STEP=5
 # Switch levels for brightness sensor in lux
-LUX_LEVEL_1=5
-LUX_LEVEL_2=20
-LUX_LEVEL_3=80
-LUX_LEVEL_4=180
-LUX_LEVEL_5=250
-LUX_LEVEL_6=300
-LUX_LEVEL_7=350
-LUX_LEVEL_8=400
-LUX_LEVEL_9=450
-LUX_LEVEL_10=500
+LUX_LEVEL_1=0.1     #5
+LUX_LEVEL_2=0.5      #20
+LUX_LEVEL_3=1      #80
+LUX_LEVEL_4=20     #180
+LUX_LEVEL_5=50     #250
+LUX_LEVEL_6=100     #300
+LUX_LEVEL_7=150     #350
+LUX_LEVEL_8=200     #400
+LUX_LEVEL_9=300     #450
+LUX_LEVEL_10=400    #500
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS_1=20 #30
-DISP_BRIGHTNESS_2=50 #90
-DISP_BRIGHTNESS_3=80 #150
-DISP_BRIGHTNESS_4=110 #210
+DISP_BRIGHTNESS_1=25 #30
+DISP_BRIGHTNESS_2=40 #90
+DISP_BRIGHTNESS_3=70 #150
+DISP_BRIGHTNESS_4=105 #210
 DISP_BRIGHTNESS_5=135 #255
 DISP_BRIGHTNESS_6=160
 DISP_BRIGHTNESS_7=185
