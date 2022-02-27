@@ -28,11 +28,11 @@ def get_var(varname):
     try:
         CMD = 'echo $(source /opt/lightsensor/lightsensor_env.sh; echo $%s)' % varname
         p = subprocess.Popen(CMD, stdout=subprocess.PIPE, shell=True, executable='/bin/bash')
-        return int(p.stdout.readlines()[0].strip())
+        return float(p.stdout.readlines()[0].strip()) #int
     except:
         CMD = 'echo $(source /opt/lightsensor/lightsensor_default_env.sh; echo $%s)' % varname
         p = subprocess.Popen(CMD, stdout=subprocess.PIPE, shell=True, executable='/bin/bash')
-        return int(p.stdout.readlines()[0].strip())
+        return float(p.stdout.readlines()[0].strip()) #int
 # ---------------------------------
 # the addresss of TSL2561 can be
 # 0x29, 0x39 or 0x49
