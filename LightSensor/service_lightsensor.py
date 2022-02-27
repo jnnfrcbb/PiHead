@@ -7,14 +7,16 @@ import subprocess
 from time import sleep
 import RPi.GPIO as GPIO
 
+outPin = 15
+
 ## For auto day/night mode switching ##
 # configure BCM mode so all numbers are GPIO pin number, not board pin number
 GPIO.setmode(GPIO.BCM)
-# setup GPIO15 to be an output
-GPIO.setup(15, GPIO.OUT)
+# setup GPIO to be an output
+GPIO.setup(outPin, GPIO.OUT)
 ## use a jumper cable to connect output pin to OAP night mode detection pin
 
-
+step = 7
 
 # Originally Used in Crankshaft.
 # Kudos to the guys at Crankshaft for giving me a headstart for controlling the  brightness using the TSL2561
@@ -85,7 +87,8 @@ while True:
     print ("Lux = {}\n".format(Luxrounded))
     os.system("echo {} > /tmp/tsl2561".format(Luxrounded))
     lastvalue = Luxrounded
-    #Set display brigthness
+    
+#  #Set display brigthness
 #  if Luxrounded <= get_var('LUX_LEVEL_1'):
 #    #os.system("xbacklight -set " + str(get_var('DISP_BRIGHTNESS_1')) + " &")
 #    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
@@ -148,48 +151,47 @@ while True:
 #    step = 10
 
   if Luxrounded <= get_var('LUX_LEVEL_1'):
+    #os.system("xbacklight -set " + str(get_var('DISP_BRIGHTNESS_1')) + " &")
     step = 1
   elif Luxrounded > get_var('LUX_LEVEL_1') and Luxrounded <= get_var('LUX_LEVEL_2'):
     step = 2
   elif Luxrounded > get_var('LUX_LEVEL_2') and Luxrounded <= get_var('LUX_LEVEL_3'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_3')) + " &")
     step = 3
   elif Luxrounded > get_var('LUX_LEVEL_3') and Luxrounded <= get_var('LUX_LEVEL_4'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_4')) + " &")
     step = 4
   elif Luxrounded > get_var('LUX_LEVEL_4') and Luxrounded <= get_var('LUX_LEVEL_5'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_5')) + " &")
     step = 5
   elif Luxrounded > get_var('LUX_LEVEL_5') and Luxrounded <= get_var('LUX_LEVEL_6'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_6')) + " &")
     step = 6
   elif Luxrounded > get_var('LUX_LEVEL_6') and Luxrounded <= get_var('LUX_LEVEL_7'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_7')) + " &")
     step = 7
   elif Luxrounded > get_var('LUX_LEVEL_7') and Luxrounded <= get_var('LUX_LEVEL_8'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_8')) + " &")
     step = 8
   elif Luxrounded > get_var('LUX_LEVEL_8') and Luxrounded <= get_var('LUX_LEVEL_9'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_9')) + " &")
     step = 9
   elif Luxrounded > get_var('LUX_LEVEL_9'):
+    #os.system("xbacklight -set  " + str(get_var('DISP_BRIGHTNESS_10')) + " &")
     step = 10
 
   file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-  brightLevel = str(get_var('DISP_BRIGHTNESS_' + step))
-  file.write(brightLevel)
+  file.write(str(get_var(str('DISP_BRIGHTNESS_' + step))))
   file.close()
-    
-  writeValue(Luxrounded,brightLevel,step)
 
   if daynight_gpio == 0:
     if step <= get_var('TSL2561_DAYNIGHT_ON_STEP'):
       print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger night")
       os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
-      GPIO.output(15, 1) ## output signal on GPIO15 to say night mode should activate
+      GPIO.output(outPin, 1) ## output signal on GPIO to say night mode should activate
     else:
       if step > get_var('TSL2561_DAYNIGHT_ON_STEP'):
         print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger day")
         os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
-        GPIO.output(15, 0) ## output signal on GPIO15 to say day mode should activate
+        GPIO.output(outPin, 0) ## output signal on GPIO to say day mode should activate
   sleep (get_var('TSL2561_CHECK_INTERVAL'))
-
-  def writeValue(newLux,newBrightness,newStep):
-    file = open("log.txt", "w")
-    fileData = "Lux:" + newLux + " Step: " + newStep + "Value: " + newBrightness
-    file.write(fileData)
-    file.close()
-
