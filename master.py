@@ -117,10 +117,10 @@ os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 ## LIGHT SENSOR SETUP ##
 ########################
 
+#os.system("sudo systemctl enable lightsensor.service")
 os.system("sudo systemctl disable lightsensor.service")
 
 os.system("sudo python /home/pi/PiHead/lightsensor.py &")
-
 #os.system("sudo python /home/pi/PiHead/ls_update.py &")
 
 
