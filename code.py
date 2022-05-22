@@ -8,7 +8,7 @@ import neopixel
 import adafruit_dotstar as dotstar
 
 red = 255
-green = 35
+green = 75 #35
 blue = 0
 
 #####################
@@ -17,7 +17,7 @@ blue = 0
 
 rgbCount = 10
 
-rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.33)
+rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.25) #0.33)
 rgb.fill((red, green, blue))
 
 
