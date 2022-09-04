@@ -25,22 +25,23 @@ LUX_LEVEL_9=300     #450
 LUX_LEVEL_10=400    #500
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS_1=25 #30
-DISP_BRIGHTNESS_2=40 #90
-DISP_BRIGHTNESS_3=70 #150
-DISP_BRIGHTNESS_4=105 #210
-DISP_BRIGHTNESS_5=135 #255
-DISP_BRIGHTNESS_6=160
-DISP_BRIGHTNESS_7=185
-DISP_BRIGHTNESS_8=210
-DISP_BRIGHTNESS_9=235
+DISP_BRIGHTNESS_0=23 #30
+DISP_BRIGHTNESS_1=46 #30
+DISP_BRIGHTNESS_2=69 #90
+DISP_BRIGHTNESS_3=92 #150
+DISP_BRIGHTNESS_4=115 #210
+DISP_BRIGHTNESS_5=138 #255
+DISP_BRIGHTNESS_6=161
+DISP_BRIGHTNESS_7=184
+DISP_BRIGHTNESS_8=207
+DISP_BRIGHTNESS_9=230
 DISP_BRIGHTNESS_10=255
 
 # Check interval sensor 5,10,15,20,25,30
 TSL2561_CHECK_INTERVAL=5
 
-# Switch to night on this level or lower (0 = disabled / 1-10)
-TSL2561_DAYNIGHT_ON_STEP=5
+# Switch to night on this level or lower (-1 = disabled / 0-10)
+TSL2561_DAYNIGHT_ON_STEP=4
 
 
 #day/night switching--------------------------------------------------------------
@@ -104,30 +105,33 @@ while True:
         lastvalue = Luxrounded
 
     if Luxrounded <= LUX_LEVEL_1:
+        step = 0
+        new_brightness = DISP_BRIGHTNESS_0
+    elif Luxrounded > LUX_LEVEL_1 and Luxrounded <= LUX_LEVEL_2:
         step = 1
         new_brightness = DISP_BRIGHTNESS_1
-    elif Luxrounded > LUX_LEVEL_1 and Luxrounded <= LUX_LEVEL_2:
+    elif Luxrounded > LUX_LEVEL_2 and Luxrounded <= LUX_LEVEL_3:
         step = 2
         new_brightness = DISP_BRIGHTNESS_2
-    elif Luxrounded > LUX_LEVEL_2 and Luxrounded <= LUX_LEVEL_3:
+    elif Luxrounded > LUX_LEVEL_3 and Luxrounded <= LUX_LEVEL_4:
         step = 3
         new_brightness = DISP_BRIGHTNESS_3
-    elif Luxrounded > LUX_LEVEL_3 and Luxrounded <= LUX_LEVEL_4:
+    elif Luxrounded > LUX_LEVEL_4 and Luxrounded <= LUX_LEVEL_5:
         step = 4
         new_brightness = DISP_BRIGHTNESS_4
-    elif Luxrounded > LUX_LEVEL_4 and Luxrounded <= LUX_LEVEL_5:
+    elif Luxrounded > LUX_LEVEL_5 and Luxrounded <= LUX_LEVEL_6:
         step = 5
         new_brightness = DISP_BRIGHTNESS_5
-    elif Luxrounded > LUX_LEVEL_5 and Luxrounded <= LUX_LEVEL_6:
+    elif Luxrounded > LUX_LEVEL_6 and Luxrounded <= LUX_LEVEL_7:
         step = 6
         new_brightness = DISP_BRIGHTNESS_6
-    elif Luxrounded > LUX_LEVEL_6 and Luxrounded <= LUX_LEVEL_7:
+    elif Luxrounded > LUX_LEVEL_7 and Luxrounded <= LUX_LEVEL_8:
         step = 7
         new_brightness = DISP_BRIGHTNESS_7
-    elif Luxrounded > LUX_LEVEL_7 and Luxrounded <= LUX_LEVEL_8:
+    elif Luxrounded > LUX_LEVEL_8 and Luxrounded <= LUX_LEVEL_9:
         step = 8
         new_brightness = DISP_BRIGHTNESS_8
-    elif Luxrounded > LUX_LEVEL_8 and Luxrounded <= LUX_LEVEL_9:
+    elif Luxrounded > LUX_LEVEL_9 and Luxrounded <= LUX_LEVEL_10:
         step = 9
         new_brightness = DISP_BRIGHTNESS_9
     elif Luxrounded > LUX_LEVEL_9:
