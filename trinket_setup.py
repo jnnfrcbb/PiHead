@@ -7,4 +7,4 @@ destinationFolder = "/media/pi/CIRCUITPY/"
 while not os.path.isdir(destinationFolder):
     time.sleep(0.25)
 
-os.system("sudo cp -f " + source + " " + destinationFolder)
+os.system("cp -f " + source + " " + destinationFolder)

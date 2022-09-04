@@ -12,7 +12,7 @@
 | 5 | 9 | GND  |   |   | 10 | GPIO 15 | Free (Sensor day/night signal) |
 | 6 | 11 | GPIO 17 | 12V Input  |   | 12 | GPIO 18 | Free |
 | 7 | 13 | GPIO 27 | 12V Output (OBD signal)  |   | 14 | GND |   |
-| 8 | 15 | GPIO 22 | 12V Output (Amp signa)  |   | 16 | GPIO 23 | CAN INT |
+| 8 | 15 | GPIO 22 | 12V Output (Amp signal)  |   | 16 | GPIO 23 | CAN INT |
 | 9 | 17 | 3.3V  |   |   | 18 | GPIO 24 | ??  |
 | 10 | 19 | GPIO 10 | CAN MOSI |   | 20 | GND |   |
 | 11 | 21 | GPIO 9 | CAN MISO |   | 22 | GPIO 25 | PSU Latch |
