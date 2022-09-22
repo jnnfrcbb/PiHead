@@ -10,14 +10,31 @@ import adafruit_dotstar as dotstar
 red = 255
 green = 75 #35
 blue = 0
+fpanelBrightness = 0.25 #0.33
+doorBrightness = 0.25
 
-#####################
-## SETUP RGB STRIP ##
-#####################
+#################################
+## SETUP FRONT PANEL RGB STRIP ##
+#################################
 
 rgbCount = 10
 
-rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.25) #0.33)
+#rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=0.25) #0.33)
+rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=fpanelBrightness) #0.33)
+rgb.fill((red, green, blue))
+
+
+#################################
+## SETUP DOOR RGB STRIPS ##
+#################################
+
+rgbCount = 10
+
+rgb = neopixel.NeoPixel(board.D3, rgbCount, brightness=doorBrightness)
+rgb.fill((red, green, blue))
+
+
+rgb = neopixel.NeoPixel(board.D4, rgbCount, brightness=doorBrightness)
 rgb.fill((red, green, blue))
 
 
