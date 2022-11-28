@@ -10,7 +10,7 @@ import adafruit_dotstar as dotstar
 red = 255
 green = 75 #35
 blue = 0
-fpanelBrightness = 0.25 #0.33
+fpanelBrightness = 0.15 #0.33
 doorBrightness = 0.25
 
 #################################
