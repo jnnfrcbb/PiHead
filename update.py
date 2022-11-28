@@ -26,6 +26,7 @@ def updateRepo(repoAddress):
         updated = os.system(url)
     return updated
 
+c=0
 while c < 5:
     if internet():
         p = updateRepo("jnnfrcbb/PiHead")

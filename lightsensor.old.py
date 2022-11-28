@@ -25,11 +25,11 @@ LUX_LEVEL_9=300     #450
 LUX_LEVEL_10=400    #500
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS_0=15 #30
-DISP_BRIGHTNESS_1=36 #30
-DISP_BRIGHTNESS_2=59 #90
-DISP_BRIGHTNESS_3=82 #150
-DISP_BRIGHTNESS_4=105 #210
+DISP_BRIGHTNESS_0=23 #30
+DISP_BRIGHTNESS_1=46 #30
+DISP_BRIGHTNESS_2=69 #90
+DISP_BRIGHTNESS_3=92 #150
+DISP_BRIGHTNESS_4=115 #210
 DISP_BRIGHTNESS_5=138 #255
 DISP_BRIGHTNESS_6=161
 DISP_BRIGHTNESS_7=184
@@ -38,10 +38,10 @@ DISP_BRIGHTNESS_9=230
 DISP_BRIGHTNESS_10=255
 
 # Check interval sensor 5,10,15,20,25,30
-CHECK_INTERVAL=5
+TSL2561_CHECK_INTERVAL=5
 
 # Switch to night on this level or lower (-1 = disabled / 0-10)
-DAYNIGHT_STEP=4
+TSL2561_DAYNIGHT_ON_STEP=4
 
 
 #day/night switching--------------------------------------------------------------
@@ -104,51 +104,37 @@ while True:
         os.system("echo {} > /tmp/tsl2561".format(Luxrounded))
         lastvalue = Luxrounded
 
-    #Average----------------------------------------------------------------------
-
-    LOOP_INT = 0
-    LUX_TOT = 0
-
-    while LOOP_INT < CHECK_INTERVAL:
-        LUX_TOT = LUX_TOT + Luxrounded
-        LOOP_INT+=1
-        sleep(1)
-
-    AVG_LUX = LUX_TOT / CHECK_INTERVAL
-
-    #Set brightness level---------------------------------------------------------
-
-    if AVG_LUX <= LUX_LEVEL_1:
+    if Luxrounded <= LUX_LEVEL_1:
         step = 0
         new_brightness = DISP_BRIGHTNESS_0
-    elif AVG_LUX > LUX_LEVEL_1 and AVG_LUX <= LUX_LEVEL_2:
+    elif Luxrounded > LUX_LEVEL_1 and Luxrounded <= LUX_LEVEL_2:
         step = 1
         new_brightness = DISP_BRIGHTNESS_1
-    elif AVG_LUX > LUX_LEVEL_2 and AVG_LUX <= LUX_LEVEL_3:
+    elif Luxrounded > LUX_LEVEL_2 and Luxrounded <= LUX_LEVEL_3:
         step = 2
         new_brightness = DISP_BRIGHTNESS_2
-    elif AVG_LUX > LUX_LEVEL_3 and AVG_LUX <= LUX_LEVEL_4:
+    elif Luxrounded > LUX_LEVEL_3 and Luxrounded <= LUX_LEVEL_4:
         step = 3
         new_brightness = DISP_BRIGHTNESS_3
-    elif AVG_LUX > LUX_LEVEL_4 and AVG_LUX <= LUX_LEVEL_5:
+    elif Luxrounded > LUX_LEVEL_4 and Luxrounded <= LUX_LEVEL_5:
         step = 4
         new_brightness = DISP_BRIGHTNESS_4
-    elif AVG_LUX > LUX_LEVEL_5 and AVG_LUX <= LUX_LEVEL_6:
+    elif Luxrounded > LUX_LEVEL_5 and Luxrounded <= LUX_LEVEL_6:
         step = 5
         new_brightness = DISP_BRIGHTNESS_5
-    elif AVG_LUX > LUX_LEVEL_6 and AVG_LUX <= LUX_LEVEL_7:
+    elif Luxrounded > LUX_LEVEL_6 and Luxrounded <= LUX_LEVEL_7:
         step = 6
         new_brightness = DISP_BRIGHTNESS_6
-    elif AVG_LUX > LUX_LEVEL_7 and AVG_LUX <= LUX_LEVEL_8:
+    elif Luxrounded > LUX_LEVEL_7 and Luxrounded <= LUX_LEVEL_8:
         step = 7
         new_brightness = DISP_BRIGHTNESS_7
-    elif AVG_LUX > LUX_LEVEL_8 and AVG_LUX <= LUX_LEVEL_9:
+    elif Luxrounded > LUX_LEVEL_8 and Luxrounded <= LUX_LEVEL_9:
         step = 8
         new_brightness = DISP_BRIGHTNESS_8
-    elif AVG_LUX > LUX_LEVEL_9 and AVG_LUX <= LUX_LEVEL_10:
+    elif Luxrounded > LUX_LEVEL_9 and Luxrounded <= LUX_LEVEL_10:
         step = 9
         new_brightness = DISP_BRIGHTNESS_9
-    elif AVG_LUX > LUX_LEVEL_9:
+    elif Luxrounded > LUX_LEVEL_9:
         step = 10
         new_brightness = DISP_BRIGHTNESS_10
 
@@ -157,14 +143,14 @@ while True:
     file.close()
 
     if DAYNIGHT_GPIO == 0:
-        if step <= DAYNIGHT_STEP:
-            print("Lux = {} | ".format(AVG_LUX) + "Level " + str(step) + " -> trigger night")
+        if step <= TSL2561_DAYNIGHT_ON_STEP:
+            print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger night")
             os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
             GPIO.output(OUT_PIN, 1) ## output signal on GPIO to say night mode should activate
         else:
-            if step > DAYNIGHT_STEP:
-                print("Lux = {} | ".format(AVG_LUX) + "Level " + str(step) + " -> trigger day")
+            if step > TSL2561_DAYNIGHT_ON_STEP:
+                print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger day")
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(OUT_PIN, 0) ## output signal on GPIO to say day mode should activate
 
-    ##sleep (CHECK_INTERVAL)
+    sleep (TSL2561_CHECK_INTERVAL)
