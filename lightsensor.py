@@ -95,6 +95,7 @@ def getLux():
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
 
+
 # Function for calculating brightness level and step
 def getStep(luxValue):
     for luxLevel in LUX_LEVEL:
