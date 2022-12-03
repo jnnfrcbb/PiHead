@@ -8,9 +8,9 @@ import neopixel
 import adafruit_dotstar as dotstar
 
 red = 255
-green = 75 #35
+green = 40
 blue = 0
-fpanelBrightness = 0.15 #0.33
+fpanelBrightness = 0.3
 doorBrightness = 0.25
 
 #################################
