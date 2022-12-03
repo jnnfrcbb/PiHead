@@ -115,20 +115,20 @@ def appendValue(luxValue):
     os.system("echo {} > /tmp/tsl2561".format(luxValue))
 
 # Function for calculating brightness level and step
-def getBrightness(luxValue):
+def getStep(luxValue):
     for int in LUX_LEVEL:
         luxIndex = LUX_LEVEL.index(int)
         if luxIndex == 0:
             if luxValue < int:
-                ret=int
+                ret=luxIndex
                 break
         elif luxIndex == len(LUX_LEVEL)-1:
             if luxValue > int:
-                ret=int
+                ret=luxIndex
                 break
         else:
             if luxValue >= LUX_LEVEL[luxIndex-1] and luxValue < int:
-                ret=int
+                ret=luxIndex
                 break
     print ("brightness: " + str(ret))
     return ret
@@ -139,7 +139,7 @@ def getBrightness(luxValue):
 while True:
 
     AVG_LUX = getLux()
-    step = getBrightness(AVG_LUX)
+    step = getStep(AVG_LUX)
 
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(DISP_BRIGHTNESS[step]))
