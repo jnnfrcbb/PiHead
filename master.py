@@ -70,24 +70,18 @@ os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 os.system("sudo chmod -R a+rw /usr/share/openautopro")
 
 
-#################
-## TURN ON AMP ##
-#################
-
-REMOTE_PIN=22
-
-GPIO.setup(REMOTE_PIN,GPIO.OUT)
-GPIO.output(REMOTE_PIN, 1)
-
-
 ########################
-## TURN ON OBD READER ##
+## LIGHT SENSOR SETUP ##
 ########################
 
-OBD_PIN=27
+os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
-GPIO.setup(OBD_PIN,GPIO.OUT)
-GPIO.output(OBD_PIN, 1)
+
+###################
+## TRINKET SETUP ##
+###################
+
+os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 
 
 ########################
@@ -106,18 +100,24 @@ m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQui
 os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 
 
-###################
-## TRINKET SETUP ##
-###################
+#################
+## TURN ON AMP ##
+#################
 
-os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
+REMOTE_PIN=22
+
+GPIO.setup(REMOTE_PIN,GPIO.OUT)
+GPIO.output(REMOTE_PIN, 1)
 
 
 ########################
-## LIGHT SENSOR SETUP ##
+## TURN ON OBD READER ##
 ########################
 
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+OBD_PIN=27
+
+GPIO.setup(OBD_PIN,GPIO.OUT)
+GPIO.output(OBD_PIN, 1)
 
 
 ##############
