@@ -130,6 +130,7 @@ def getBrightness(luxValue):
             if luxValue >= LUX_LEVEL[luxIndex-1] and luxValue < int:
                 ret=int
                 break
+    print ("brightness: " + str(ret))
     return ret
 
 
