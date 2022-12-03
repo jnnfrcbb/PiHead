@@ -46,7 +46,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Number of readings to average over
-AVG_COUNT=5
+AVG_COUNT=10
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -85,9 +85,6 @@ def getLux():
     
     #check if we have any stored values
     if len(READ_VALUES) > 0:
-
-        #check if lux value has changed - if yes, delete oldest reading and add new one
-        #if READ_VALUES[len(READ_VALUES)-1] != luxRounded:
         
         #make sure we've got a full set of readings to average over
         if len(READ_VALUES) == AVG_COUNT:
@@ -110,8 +107,6 @@ def appendValue(luxValue):
     
     #add new lux value
     READ_VALUES.append(luxValue)
-
-    print ("Lux = {}\n".format(luxValue))
     os.system("echo {} > /tmp/tsl2561".format(luxValue))
 
 # Function for calculating brightness level and step
@@ -145,4 +140,4 @@ while True:
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
-    sleep(1)
+    sleep(0.5)
