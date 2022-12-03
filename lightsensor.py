@@ -116,21 +116,13 @@ def appendValue(luxValue):
 
 # Function for calculating brightness level and step
 def getStep(luxValue):
-    for int in LUX_LEVEL:
-        luxIndex = LUX_LEVEL.index(int)
-        if luxIndex == 0:
-            if luxValue < int:
-                ret=luxIndex
-                break
-        elif luxIndex == len(LUX_LEVEL)-1:
-            if luxValue > int:
-                ret=luxIndex
-                break
+    for luxLevel in LUX_LEVEL:
+        if luxValue > luxLevel:
+            next
         else:
-            if luxValue >= LUX_LEVEL[luxIndex-1] and luxValue < int:
-                ret=luxIndex
-                break
-    print ("brightness: " + str(ret))
+            ret = LUX_LEVEL.index(luxLevel)
+            break
+    print ("step: " + str(ret))
     return ret
 
 
