@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS = [10, 30, 50, 70, 90, 120, 150, 180, 205, 230, 255]
+DISP_BRIGHTNESS = [5, 20, 40, 65, 90, 120, 150, 180, 205, 230, 255]
 
 
 #day/night switching--------------------------------------------------------------
@@ -96,7 +96,7 @@ def getLux():
     return sum(READ_VALUES)/len(READ_VALUES)
 
 
-# Function for calculating brightness level and step
+# Function for calculating step
 def getStep(luxValue):
     for luxLevel in LUX_LEVEL:
         if luxValue <= luxLevel:
