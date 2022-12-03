@@ -141,7 +141,7 @@ while True:
     step = getBrightness(AVG_LUX)
 
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(DISP_BRIGHTNESS(step)))
+    file.write(str(DISP_BRIGHTNESS[step]))
     file.close()
 
     if DAYNIGHT_PIN != -1:
