@@ -87,16 +87,16 @@ def getLux():
     if len(READ_VALUES) > 0:
 
         #check if lux value has changed - if yes, delete oldest reading and add new one
-        if READ_VALUES[len(READ_VALUES)-1] != luxRounded:
+        #if READ_VALUES[len(READ_VALUES)-1] != luxRounded:
         
-            #make sure we've got a full set of readings to average over
-            if len(READ_VALUES) == AVG_COUNT:
-        
-                #if so, delete oldest reading (otherwise, let it work up to avg_count)
-                READ_VALUES.pop(0)
+        #make sure we've got a full set of readings to average over
+        if len(READ_VALUES) == AVG_COUNT:
+    
+            #if so, delete oldest reading (otherwise, let it work up to avg_count)
+            READ_VALUES.pop(0)
             
-            #add new reading
-            appendValue(luxRounded)
+        #add new reading
+        appendValue(luxRounded)
 
     else:
 
@@ -120,7 +120,6 @@ def getStep(luxValue):
         if luxValue <= luxLevel:
             ret = LUX_LEVEL.index(luxLevel)
             break
-    print ("step: " + str(ret))
     return ret
 
 
