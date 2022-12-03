@@ -16,6 +16,30 @@ LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 # Set this display brightness by switch levels
 DISP_BRIGHTNESS = [10, 30, 50, 70, 90, 120, 150, 180, 205, 230, 255]
 
+# Switch levels for brightness sensor in lux
+LUX_LEVEL_1=0.1     #5
+LUX_LEVEL_2=0.5     #20
+LUX_LEVEL_3=1       #80
+LUX_LEVEL_4=20      #180
+LUX_LEVEL_5=50      #250
+LUX_LEVEL_6=100     #300
+LUX_LEVEL_7=150     #350
+LUX_LEVEL_8=200     #400
+LUX_LEVEL_9=300     #450
+LUX_LEVEL_10=400    #500
+
+# Set this display brightness by switch levels
+DISP_BRIGHTNESS_0=23 #30
+DISP_BRIGHTNESS_1=46 #30
+DISP_BRIGHTNESS_2=69 #90
+DISP_BRIGHTNESS_3=92 #150
+DISP_BRIGHTNESS_4=115 #210
+DISP_BRIGHTNESS_5=138 #255
+DISP_BRIGHTNESS_6=161
+DISP_BRIGHTNESS_7=184
+DISP_BRIGHTNESS_8=207
+DISP_BRIGHTNESS_9=230
+DISP_BRIGHTNESS_10=255
 
 #day/night switching--------------------------------------------------------------
 
