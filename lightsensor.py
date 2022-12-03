@@ -82,32 +82,18 @@ def getLux():
 
     #round lux value
     luxRounded = round(Lux,1)
-    
-    #check if we have any stored values
-    if len(READ_VALUES) > 0:
-        
-        #make sure we've got a full set of readings to average over
-        if len(READ_VALUES) == AVG_COUNT:
-    
-            #if so, delete oldest reading (otherwise, let it work up to avg_count)
-            READ_VALUES.pop(0)
-            
-        #add new reading
-        appendValue(luxRounded)
 
-    else:
+    #check if we havet a full set of readings to average over
+    if len(READ_VALUES) == AVG_COUNT:
+        #if so, delete oldest reading (otherwise, let it work up to avg_count)
+        READ_VALUES.pop(0)
 
-        #add new reading
-        appendValue(luxRounded)
+    #add new lux value
+    READ_VALUES.append(luxRounded)
+    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
-
-def appendValue(luxValue):
-    
-    #add new lux value
-    READ_VALUES.append(luxValue)
-    os.system("echo {} > /tmp/tsl2561".format(luxValue))
 
 # Function for calculating brightness level and step
 def getStep(luxValue):
