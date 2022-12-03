@@ -92,7 +92,7 @@ def getLux():
             #make sure we've got a full set of readings to average over
             if len(READ_VALUES) == AVG_COUNT:
         
-                #if so, delete oldest reading (otherwise, wlet it ork up to avg_count)
+                #if so, delete oldest reading (otherwise, let it work up to avg_count)
                 READ_VALUES.pop(0)
             
             #add new reading
@@ -117,16 +117,17 @@ def appendValue(luxValue):
 # Function for calculating brightness level and step
 def getBrightness(luxValue):
     for int in LUX_LEVEL:
-        if int == 0:
-            if luxValue < LUX_LEVEL[int]:
+        luxIndex = LUX_LEVEL.index(int)
+        if luxIndex == 0:
+            if luxValue < int:
                 ret=int
                 break
-        elif int == len(LUX_LEVEL)-1:
-            if luxValue > LUX_LEVEL[int]:
+        elif luxIndex == len(LUX_LEVEL)-1:
+            if luxValue > int:
                 ret=int
                 break
         else:
-            if luxValue >= LUX_LEVEL[int-1] and luxValue < LUX_LEVEL[int]:
+            if luxValue >= LUX_LEVEL[luxIndex-1] and luxValue < int:
                 ret=int
                 break
     return ret
