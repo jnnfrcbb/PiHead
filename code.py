@@ -1,6 +1,5 @@
 import board
 from analogio import AnalogIn
-#import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 import time
@@ -89,9 +88,6 @@ while True:
     elif VD0 < 0.7:
       print("BUTTON: SOURCE")
       kbd.send(Keycode.M)  #VOICE
-    elif VD0 < 0.7:
-      print("BUTTON: SOURCE")
-      kbd.send(Keycode.M)  #VOICE
     elif VD0 < 1.1:
       print("BUTTON: ATT")
       kbd.send(Keycode.CONTROL, Keycode.F3) #SWITCH MODE
@@ -118,7 +114,7 @@ while True:
       kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
   elif VD1 < 1:
     print("SHIFT: TRUE")
-    if VD0 < 1.6:
+    if VD0 >= 1.4 and VD0 < 1.6:
       print("BUTTON: SHIFTUP")
       kbd.send(Keycode.J)  #LAUNCH MEDIA
     elif VD0 < 1.9:      
