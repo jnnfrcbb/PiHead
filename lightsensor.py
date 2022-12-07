@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS = [5, 20, 40, 65, 90, 120, 150, 180, 205, 230, 255]
+DISP_BRIGHTNESS = [10, 20, 40, 65, 90, 115, 140, 165, 195, 225, 255]
 
 
 #day/night switching--------------------------------------------------------------
