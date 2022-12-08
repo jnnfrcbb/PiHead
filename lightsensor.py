@@ -19,7 +19,7 @@ DISP_BRIGHTNESS = [10, 20, 40, 65, 90, 115, 140, 165, 195, 225, 255]
 
 #day/night switching--------------------------------------------------------------
 
-#GPIO pin to output day/night signal (-1 = GDPI output disabled)
+#GPIO pin to output day/night signal (-1 = GPIO output disabled)
 DAYNIGHT_PIN = 15     
 
 #Switch to night on this level or lower
