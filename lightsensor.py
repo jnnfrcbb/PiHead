@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS = [10, 20, 40, 65, 90, 115, 140, 165, 195, 225, 255]
+DISP_BRIGHTNESS = [15, 25, 40, 65, 90, 115, 140, 165, 195, 225, 255]
 
 
 #day/night switching--------------------------------------------------------------
@@ -46,7 +46,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Number of readings to average over
-AVG_COUNT=5
+AVG_COUNT=10
 
 #Setup empty list for lux values
 READ_VALUES=[]
