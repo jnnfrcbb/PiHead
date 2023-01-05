@@ -46,7 +46,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Number of readings to average over
-AVG_COUNT=10
+AVG_COUNT=20
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -127,4 +127,4 @@ while True:
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
-    sleep(1)
+    sleep(0.5)
