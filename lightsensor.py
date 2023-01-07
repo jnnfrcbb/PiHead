@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS = [15, 25, 40, 65, 90, 115, 140, 165, 195, 225, 255]
+DISP_BRIGHTNESS = [17, 27, 40, 65, 90, 115, 140, 165, 195, 225, 255]
 
 
 #day/night switching--------------------------------------------------------------
@@ -46,7 +46,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Number of readings to average over
-AVG_COUNT=20
+AVG_COUNT=40
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -127,4 +127,4 @@ while True:
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
-    sleep(0.5)
+    sleep(0.25)
