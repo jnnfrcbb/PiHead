@@ -122,4 +122,4 @@ while True:
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
 
-  time.sleep(0.3)
+  time.sleep(0.2)
