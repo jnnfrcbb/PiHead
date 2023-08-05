@@ -100,6 +100,14 @@ m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQui
 os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 
 
+##################
+## SPLASH SETUP ##
+##################
+
+m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash1.h264","/home/pi/PiHead/Media/splash1.h264")
+m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash2.h264","/home/pi/PiHead/Media/splash2.h264")
+
+
 #################
 ## TURN ON AMP ##
 #################
