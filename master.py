@@ -65,7 +65,7 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-os.system("sudo chmod a+rw /boot/config.txt")
+#os.system("sudo chmod a+rw /boot/config.txt")
 os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 os.system("sudo chmod -R a+rw /usr/share/openautopro")
 
@@ -81,7 +81,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## TRINKET SETUP ##
 ###################
 
-os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
+#os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 
 
 ########################
@@ -125,28 +125,29 @@ GPIO.output(OBD_PIN, 1)
 ##############
 
 ## CarPiHat CanBus interface ##
-os.system ("/sbin/ip link set can0 up type can bitrate 100000")
+#m = appendString("/etc/rc.local", "/sbin/ip link set can0 up type can bitrate 100000")
 
-m = replaceString("/boot/config.txt", "#dtparam=spi=on", "dtparam=spi=on")
-m = replaceString("/boot/config.txt", "#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
+#m = replaceString("/boot/config.txt", "#dtparam=spi=on", "dtparam=spi=on")
+#m = replaceString("/boot/config.txt", "#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtparam=spi=on")
-m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
-m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
+#m = appendString("/boot/config.txt","#CarPiHat")
+#m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
+#m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
 # CarPiHat real time clock ##
-m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s", "exit 0")
-m = appendString("/etc/modules","#CarPiHat")
-m = appendString("/etc/modules","rtc-ds1307")
+#m = removeString("/etc/rc.local","exit 0")
+#m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
+#m = appendString("/etc/rc.local","exit 0")
+#m = appendString("/etc/modules","#CarPiHat")
+#m = appendString("/etc/modules","rtc-ds1307")
 
 
 ###################
 ## SAFE SHUTDOWN ##
 ###################
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+#m = appendString("/boot/config.txt","#CarPiHat")
+#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
 IGN_PIN = 12
 EN_POWER_PIN = 25
