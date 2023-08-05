@@ -32,7 +32,6 @@ if DAYNIGHT_PIN != -1:
 
 
 #I2C setup------------------------------------------------------------------------
-
 BUS = 1
 TSL2561_ADDR = 0x39     #the addresss of TSL2561 can be 0x29, 0x39 or 0x49
 
