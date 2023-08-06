@@ -112,10 +112,10 @@ m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/o
 ## TURN ON AMP ##
 #################
 
-REMOTE_PIN=22
+AMP_PIN=22
 
-GPIO.setup(REMOTE_PIN,GPIO.OUT)
-GPIO.output(REMOTE_PIN, 1)
+GPIO.setup(AMP_PIN,GPIO.OUT)
+GPIO.output(AMP_PIN, 1)
 
 
 ########################
@@ -174,11 +174,11 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
         ignLowCounter += 1
         print(ignLowCounter)
         if ignLowCounter > IGN_LOW_TIME:
-            GPIO.output(REMOTE_PIN, 0)
+            GPIO.output(AMP_PIN, 0)
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
         print("Shutdown aborted")
         ignLowCounter = 0
         GPIO.output(OBD_PIN, 1)
-        GPIO.output(REMOTE_PIN, 1)
+        GPIO.output(AMP_PIN, 1)
