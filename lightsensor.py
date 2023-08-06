@@ -98,6 +98,7 @@ def getLux():
 # Function for calculating step
 def getStep(luxValue):
     for luxLevel in LUX_LEVEL:
+        ret = 0
         if luxValue <= luxLevel:
             ret = LUX_LEVEL.index(luxLevel)
             break
