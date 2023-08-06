@@ -7,6 +7,8 @@ import os
 from time import sleep
 import RPi.GPIO as GPIO
 
+#set default----------------------------------------------------------------------
+step = 5
 
 #constants------------------------------------------------------------------------
 
@@ -97,8 +99,8 @@ def getLux():
 
 # Function for calculating step
 def getStep(luxValue):
+    ret = step
     for luxLevel in LUX_LEVEL:
-        ret = 5
         if luxValue <= luxLevel:
             ret = LUX_LEVEL.index(luxLevel)
             break
