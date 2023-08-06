@@ -29,21 +29,14 @@ led[0] = (red,green,blue)
 rgbCount = 10
 
 rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=fpanelBrightness)
-rgb.fill(red, green, blue)
+rgb.fill((red, green, blue))
 
 
-#################################
-## SETUP DOOR RGB STRIPS ##
-#################################
+####################
+## SETUP KEYBOARD ##
+####################
 
-#rgbCount = 10
-
-#rgb = neopixel.NeoPixel(board.D3, rgbCount, brightness=doorBrightness)
-#rgb.fill(red, green, blue)
-
-
-#rgb = neopixel.NeoPixel(board.D4, rgbCount, brightness=doorBrightness)
-#rgb.fill(red, green, blue)
+kbd = Keyboard() #usb_hid.devices)
 
 
 #########################
@@ -52,13 +45,6 @@ rgb.fill(red, green, blue)
 
 analog0in = AnalogIn(board.D0)
 analog1in = AnalogIn(board.D1)
-
-
-####################
-## SETUP KEYBOARD ##
-####################
-
-kbd = Keyboard() #usb_hid.devices)
 
 
 ##########################
@@ -121,4 +107,4 @@ while True:
       print("BUTTON: SHIFTDOWN")
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
-  time.sleep(0.2)
+  time.sleep(0.175)
