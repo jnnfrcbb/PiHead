@@ -65,7 +65,7 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-#os.system("sudo chmod a+rw /boot/config.txt")
+os.system("sudo chmod a+rw /boot/config.txt")
 os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
 os.system("sudo chmod -R a+rw /usr/share/openautopro")
 
@@ -74,7 +74,7 @@ os.system("sudo chmod -R a+rw /usr/share/openautopro")
 ## LIGHT SENSOR SETUP ##
 ########################
 
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+#os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 ###################
