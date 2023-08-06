@@ -107,4 +107,4 @@ while True:
       print("BUTTON: SHIFTDOWN")
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
-  time.sleep(0.175)
+  time.sleep(0.25)
