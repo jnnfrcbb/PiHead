@@ -125,7 +125,8 @@ GPIO.output(AMP_PIN, 1)
 OBD_PIN=27
 
 GPIO.setup(OBD_PIN,GPIO.OUT)
-GPIO.output(OBD_PIN, 1)
+
+os.system("sudo python /home/pi/PiHead/obd_on.py " + OBD_PIN + " &")
 
 
 ##############
@@ -169,7 +170,7 @@ ignLowCounter = 0
 
 while ignLowCounter < (IGN_LOW_TIME + 1):
     if GPIO.input(IGN_PIN) !=1:
-        GPIO.output(OBD_PIN, 0)
+        os.system("sudo python /home/pi/PiHead/obd_off.py " + OBD_PIN + " &")
         time.sleep(1)
         ignLowCounter += 1
         print(ignLowCounter)
@@ -180,5 +181,5 @@ while ignLowCounter < (IGN_LOW_TIME + 1):
     else:
         print("Shutdown aborted")
         ignLowCounter = 0
-        GPIO.output(OBD_PIN, 1)
-        GPIO.output(AMP_PIN, 1)
+        GPIO.output(AMP_PIN, 1)        
+        os.system("sudo python /home/pi/PiHead/obd_on.py " + OBD_PIN + " &")
