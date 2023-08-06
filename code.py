@@ -36,14 +36,14 @@ rgb.fill(red, green, blue)
 ## SETUP DOOR RGB STRIPS ##
 #################################
 
-rgbCount = 10
+#rgbCount = 10
 
-rgb = neopixel.NeoPixel(board.D3, rgbCount, brightness=doorBrightness)
-rgb.fill(red, green, blue)
+#rgb = neopixel.NeoPixel(board.D3, rgbCount, brightness=doorBrightness)
+#rgb.fill(red, green, blue)
 
 
-rgb = neopixel.NeoPixel(board.D4, rgbCount, brightness=doorBrightness)
-rgb.fill(red, green, blue)
+#rgb = neopixel.NeoPixel(board.D4, rgbCount, brightness=doorBrightness)
+#rgb.fill(red, green, blue)
 
 
 #########################
