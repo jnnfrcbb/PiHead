@@ -74,7 +74,7 @@ os.system("sudo chmod -R a+rw /usr/share/openautopro")
 ## LIGHT SENSOR SETUP ##
 ########################
 
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+os.system("sudo python /home/pi/PiHead/lightsensor.new.py &")
 
 
 ###################
