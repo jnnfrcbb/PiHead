@@ -8,7 +8,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 #Default brightness level
-DEF_BRIGHT = 125
+BRIGHT_LEVEL = 150
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
