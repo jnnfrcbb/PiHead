@@ -39,7 +39,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 AVG_TIME=10
 
 #Number of readings to average over
-AVG_COUNT=40
+AVG_COUNT=20
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -91,7 +91,7 @@ def getLux():
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
     
-    if NEW_BRIGHT != BRIGHT_LEVEL:
+    if NEW_BRIGHT < (BRIGHT_LEVEL - 5) or NEW_BRIGHT > (BRIGHT_LEVEL + 4):# != BRIGHT_LEVEL:
 
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
         file.write(str(NEW_BRIGHT))
