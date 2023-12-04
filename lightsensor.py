@@ -102,11 +102,11 @@ def writeBrightness(NEW_BRIGHT):
 
         if DAYNIGHT_PIN != -1:
             if NEW_BRIGHT <= DAYNIGHT:
-                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger night")
+                print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger night")
                 os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
             else:
-                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger day")
+                print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger day")
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
