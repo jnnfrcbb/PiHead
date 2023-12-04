@@ -96,9 +96,9 @@ def writeBrightness(NEW_BRIGHT):
     
     #if NEW_BRIGHT != BRIGHT_LEVEL:
 
-        file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-        file.write(str(NEW_BRIGHT))
-        file.close()
+        #file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+        #file.write(str(NEW_BRIGHT))
+        #file.close()
 
         if DAYNIGHT_PIN != -1:
             if NEW_BRIGHT <= DAYNIGHT:
