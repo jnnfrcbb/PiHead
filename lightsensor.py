@@ -114,6 +114,6 @@ def writeBrightness(NEW_BRIGHT):
 
 while True:
 
-    writeBrightness(round(.0255*(((getLux/400)*100)**2),1))
+    writeBrightness(round(.0255*(((int(getLux)/400)*100)**2),1))
 
     sleep(AVG_TIME/AVG_COUNT)
