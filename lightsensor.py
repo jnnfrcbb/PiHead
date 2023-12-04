@@ -8,7 +8,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 #Default brightness level
-BRIGHT_LEVEL = 150
+DEF_BRIGHT = 125
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
@@ -39,7 +39,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 AVG_TIME=10
 
 #Number of readings to average over
-AVG_COUNT=20
+AVG_COUNT=40
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -91,7 +91,6 @@ def getLux():
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
     
-    #if NEW_BRIGHT < (BRIGHT_LEVEL - 5) or NEW_BRIGHT > (BRIGHT_LEVEL + 4):#
     if NEW_BRIGHT != BRIGHT_LEVEL:
 
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
@@ -105,7 +104,7 @@ def writeBrightness(NEW_BRIGHT):
                 GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
             else:
                 #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger day")
-                os.system("sudo rm /tmp/night_mode_enabled >/dev/poolnull 2>&1")
+                os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
         BRIGHT_LEVEL = NEW_BRIGHT
