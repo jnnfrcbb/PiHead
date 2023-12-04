@@ -91,7 +91,8 @@ def getLux():
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
     
-    if NEW_BRIGHT < (BRIGHT_LEVEL - 5) or NEW_BRIGHT > (BRIGHT_LEVEL + 4):# != BRIGHT_LEVEL:
+    #if NEW_BRIGHT < (BRIGHT_LEVEL - 5) or NEW_BRIGHT > (BRIGHT_LEVEL + 4):#
+    if NEW_BRIGHT != BRIGHT_LEVEL:
 
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
         file.write(str(NEW_BRIGHT))
