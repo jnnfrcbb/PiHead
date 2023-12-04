@@ -7,6 +7,9 @@ import os
 from time import sleep
 import RPi.GPIO as GPIO
 
+#Permissions
+os.system("sudo chmod a+rw /sys/class/backlight/rpi_backlight/brightness")
+
 #Default brightness level
 BRIGHT_LEVEL = 125
 
