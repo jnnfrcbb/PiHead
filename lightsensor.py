@@ -97,16 +97,16 @@ def writeBrightness(NEW_BRIGHT):
     #if NEW_BRIGHT != BRIGHT_LEVEL:
 
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-        file.write(NEW_BRIGHT)
+        file.write(str(NEW_BRIGHT))
         file.close()
 
         if DAYNIGHT_PIN != -1:
             if NEW_BRIGHT <= DAYNIGHT:
-                print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
+                #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
                 os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
             else:
-                print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
+                #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
