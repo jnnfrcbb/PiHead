@@ -8,7 +8,6 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 #Default brightness level
-global BRIGHT_LEVEL
 BRIGHT_LEVEL = 125
 
 #Switch to night mode on this level or lower
@@ -92,7 +91,7 @@ def getLux():
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
     
-    if NEW_BRIGHT != BRIGHT_LEVEL:
+    #if NEW_BRIGHT != BRIGHT_LEVEL:
 
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
         file.write(str(NEW_BRIGHT))
@@ -108,13 +107,19 @@ def writeBrightness(NEW_BRIGHT):
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
                 GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
     
-        BRIGHT_LEVEL = NEW_BRIGHT
+        #BRIGHT_LEVEL = NEW_BRIGHT
 
 
 #START LOOPING--------------------------------------------------------------------
 
 while True:
 
-    writeBrightness(round(.0255*(((getLux()/400)*100)**2),1))
+    NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),1)
+
+    if NEW_LEVEL != BRIGHT_LEVEL:
+
+        writeBrightness(NEW_LEVEL)
+
+        BRIGHT_LEVEL = NEW_LEVEL
 
     sleep(AVG_TIME/AVG_COUNT)
