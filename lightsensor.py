@@ -86,7 +86,7 @@ def getLux():
     os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
     #return average of stored readings
-    return sum(READ_VALUES)/len(READ_VALUES)
+    return round(sum(READ_VALUES)/len(READ_VALUES),1)
 
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
@@ -112,7 +112,7 @@ def writeBrightness(NEW_BRIGHT):
 
 while True:
 
-    NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),1)
+    NEW_LEVEL = .0255*(((getLux()/400)*100)**2)
 
     if NEW_LEVEL != BRIGHT_LEVEL:
         writeBrightness(NEW_LEVEL)
