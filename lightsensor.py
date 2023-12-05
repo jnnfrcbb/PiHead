@@ -130,15 +130,8 @@ while True:
 
     print(NEW_BRIGHT)
 
-#NEW_LEVEL = getLux()
-
-#    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
-
-#    NEW_LEVEL = 255*((getLux()/400)**CURVE)
-    
-    #if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
-#    if NEW_LEVEL != BRIGHT_LEVEL:
-#        writeBrightness(NEW_LEVEL)
-#        BRIGHT_LEVEL = NEW_LEVEL
+    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+    file.write(str(NEW_BRIGHT))
+    file.close()
 
     sleep(AVG_TIME/AVG_COUNT)
