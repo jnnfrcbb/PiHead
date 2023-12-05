@@ -105,6 +105,9 @@ def writeBrightness(NEW_BRIGHT):
 
     print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
+    br = str(NEW_BRIGHT)
+    print(br)
+
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(NEW_BRIGHT))
     file.close()
@@ -125,7 +128,7 @@ def writeBrightness(NEW_BRIGHT):
 #while True:
 
 
-writeBrightness(getLux())
+writeBrightness(round(getLux(),1))
 #NEW_LEVEL = getLux()
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
