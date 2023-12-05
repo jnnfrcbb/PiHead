@@ -50,50 +50,50 @@ AVG_COUNT=20
 READ_VALUES=[]
 
 # Function for getting and averaging lux
-#def getLux():
-#    # read global brightness read low byte
-#    LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8C)
-#    # read high byte
-#    MSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8D)
-#    Ambient = (MSB << 8) + LSB
-#    # read infra red read low byte
-#    LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8E)
-#    # read high byte
-#    MSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8F)
-#    Infrared = (MSB << 8) + LSB
-#    # Calc factor Infrared/Ambient
-#    Ratio = 0
-#    Lux = 0
-#    if Ambient != 0:
-#        Ratio = float(Infrared)/float(Ambient)
-#        # Calc lux based on data sheet TSL2561T T, FN, and CL Package
-#    if 0 < Ratio <= 0.50:
-#        Lux = 0.0304*float(Ambient) - 0.062*float(Ambient)*(Ratio**1.4)
-#    elif 0.50 < Ratio <= 0.61:
-#        Lux = 0.0224*float(Ambient) - 0.031*float(Infrared)
-#    elif 0.61 < Ratio <= 0.80:
-#        Lux = 0.0128*float(Ambient) - 0.0153*float(Infrared)
-#    elif 0.80 < Ratio <= 1.3:
-#        Lux = 0.00146*float(Ambient) - 0.00112*float(Infrared)
-#    else:
-#        Lux = 0
+def getLux():
+    # read global brightness read low byte
+    LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8C)
+    # read high byte
+    MSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8D)
+    Ambient = (MSB << 8) + LSB
+    # read infra red read low byte
+    LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8E)
+    # read high byte
+    MSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8F)
+    Infrared = (MSB << 8) + LSB
+    # Calc factor Infrared/Ambient
+    Ratio = 0
+    Lux = 0
+    if Ambient != 0:
+        Ratio = float(Infrared)/float(Ambient)
+        # Calc lux based on data sheet TSL2561T T, FN, and CL Package
+    if 0 < Ratio <= 0.50:
+        Lux = 0.0304*float(Ambient) - 0.062*float(Ambient)*(Ratio**1.4)
+    elif 0.50 < Ratio <= 0.61:
+        Lux = 0.0224*float(Ambient) - 0.031*float(Infrared)
+    elif 0.61 < Ratio <= 0.80:
+        Lux = 0.0128*float(Ambient) - 0.0153*float(Infrared)
+    elif 0.80 < Ratio <= 1.3:
+        Lux = 0.00146*float(Ambient) - 0.00112*float(Infrared)
+    else:
+        Lux = 0
 
-#    #round lux value
-#    luxRounded = round(Lux,1)
+    #round lux value
+    luxRounded = round(Lux,1)
 
-#    print("LuxRounded: " + str(luxRounded))
+    print("LuxRounded: " + str(luxRounded))
 
-#    #check if we have a full set of readings to average over
-#    if len(READ_VALUES) == AVG_COUNT:
-#        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
-#        READ_VALUES.pop(0)
+    #check if we have a full set of readings to average over
+    if len(READ_VALUES) == AVG_COUNT:
+        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
+        READ_VALUES.pop(0)
 
-#    #add new lux value
-#    READ_VALUES.append(luxRounded)
-#    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
-#
-#    #return average of stored readings
-#    return float(sum(READ_VALUES)/len(READ_VALUES))
+    #add new lux value
+    READ_VALUES.append(luxRounded)
+    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
+
+    #return average of stored readings
+    return float(sum(READ_VALUES)/len(READ_VALUES))
 
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
@@ -119,7 +119,7 @@ def writeBrightness(NEW_BRIGHT):
 
 #while True:
 
-NEW_LEVEL = 75
+NEW_LEVEL = getLux()
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
 
