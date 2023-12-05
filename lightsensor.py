@@ -7,6 +7,8 @@ import os
 from time import sleep
 import RPi.GPIO as GPIO
 
+#INIT VALUES----------------------------------------------------------------------
+
 #Default brightness level
 BRIGHT_LEVEL = 125
 
@@ -16,13 +18,14 @@ DAYNIGHT = 125
 #GPIO pin to output day/night signal (-1 = GPIO output disabled)
 DAYNIGHT_PIN = 15     
 
+#Curve value for brightness (1 = linear lux:brightness ratio)
+CURVE = 2.5
+
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
-#Curve value for brightness (1 = linear lux:brightness ratio; 2 = )
-CURVE = 2.5
 
 #I2C SETUP------------------------------------------------------------------------
 BUS = 1
