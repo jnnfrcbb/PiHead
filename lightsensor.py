@@ -28,26 +28,26 @@ if DAYNIGHT_PIN != -1:
 
 
 #I2C SETUP------------------------------------------------------------------------
-#BUS = 1
-#TSL2561_ADDR = 0x39     #the addresss of TSL2561 can be 0x29, 0x39 or 0x49
+BUS = 1
+TSL2561_ADDR = 0x39     #the addresss of TSL2561 can be 0x29, 0x39 or 0x49
 
-#i2cBus = smbus.SMBus(BUS)
+i2cBus = smbus.SMBus(BUS)
 
 # Start messure with 402 ms
 # (scale factor 1)
-#i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
+i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 
 
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Time to average readings over in seconds
-#AVG_TIME=10
+AVG_TIME=10
 
 #Number of readings to average over
-#AVG_COUNT=20
+AVG_COUNT=20
 
 #Setup empty list for lux values
-#READ_VALUES=[]
+READ_VALUES=[]
 
 # Function for getting and averaging lux
 #def getLux():
@@ -130,4 +130,4 @@ NEW_LEVEL = 25
 writeBrightness(NEW_LEVEL)
 #        BRIGHT_LEVEL = NEW_LEVEL
 
-#    sleep(AVG_TIME/AVG_COUNT)
+sleep(AVG_TIME/AVG_COUNT)
