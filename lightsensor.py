@@ -114,4 +114,4 @@ while True:
         else:
             GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
-    sleep(1)#AVG_TIME/AVG_COUNT)
+    sleep(AVG_TIME/AVG_COUNT)
