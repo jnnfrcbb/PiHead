@@ -95,11 +95,7 @@ def getLux():
     os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
     #return average of stored readings
-    AVG_LUX = sum(READ_VALUES)/len(READ_VALUES)
-    if AVG_LUX < MIN_BRIGHT:
-        AVG_LUX = MIN_BRIGHT
-
-    return AVG_LUX
+    return sum(READ_VALUES)/len(READ_VALUES)
 
 
 #START LOOPING--------------------------------------------------------------------
@@ -107,6 +103,9 @@ def getLux():
 while True:
 
     NEW_BRIGHT = round(255*((getLux()/400)**CURVE))
+
+    if NEW_BRIGHT < MIN_BRIGHT:
+        NEW_BRIGHT = MIN_BRIGHT
 
     print(NEW_BRIGHT)
 
