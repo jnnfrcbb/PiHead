@@ -22,7 +22,7 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 1#2.5
+CURVE = 2.5
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
@@ -102,21 +102,23 @@ def getLux():
 
 while True:
 
-    NEW_BRIGHT = round(255*((getLux()/400)**CURVE))
+    NEW_BRIGHT = (round(255*((getLux()/400)**CURVE)))    
 
     if NEW_BRIGHT < MIN_BRIGHT:
         NEW_BRIGHT = MIN_BRIGHT
-
+    
     print(NEW_BRIGHT)
+    
+    if NEW_BRIGHT != BRIGHT_LEVEL:
+        
+        file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+        file.write(str(NEW_BRIGHT))
+        file.close()
 
-    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(NEW_BRIGHT))
-    file.close()
-
-    if DAYNIGHT_PIN != -1:
-        if NEW_BRIGHT <= DAYNIGHT:
-            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
-        else:
-            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
+        if DAYNIGHT_PIN != -1:
+            if NEW_BRIGHT <= DAYNIGHT:
+                GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
+            else:
+                GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
     sleep(AVG_TIME/AVG_COUNT)
