@@ -99,14 +99,16 @@ def getLux():
     if AVG_LUX < MIN_BRIGHT:
         AVG_LUX = MIN_BRIGHT
 
-    return AVG_LUX
+    return round(AVG_LUX)
 
 
 #START LOOPING--------------------------------------------------------------------
 
 while True:
 
-    NEW_BRIGHT = round(255*((getLux()/400)**CURVE))
+    NEW_BRIGHT = 255*((getLux()/400)**CURVE)
+
+    print(NEW_BRIGHT)
 
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(NEW_BRIGHT))
