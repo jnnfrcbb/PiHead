@@ -173,8 +173,8 @@ if OBD == True:
 
 if SAFE_SHUTDOWN == True:
 
-    m = appendString("/boot/config.txt","#CarPiHat")
-    m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+    #m = appendString("/boot/config.txt","#CarPiHat")
+    #m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
     IGN_PIN = 12
     EN_POWER_PIN = 25
