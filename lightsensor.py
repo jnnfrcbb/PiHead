@@ -123,8 +123,8 @@ while True:
 
     NEW_LEVEL = 255*((getLux()/400)**CURVE)
     
-    if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
-    #if NEW_LEVEL != BRIGHT_LEVEL:
+    #if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
+    if NEW_LEVEL != BRIGHT_LEVEL:
         writeBrightness(NEW_LEVEL)
         BRIGHT_LEVEL = NEW_LEVEL
 
