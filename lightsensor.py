@@ -105,8 +105,8 @@ NEW_BRIGHT = round(255*((getLux()/400)**CURVE))
 
 print(NEW_BRIGHT)
 
-if NEW_BRIGHT < 0.5:
-        NEW_BRIGHT = 0.5
+if NEW_BRIGHT < 1:
+        NEW_BRIGHT = 1
 
 print(NEW_BRIGHT)
 
