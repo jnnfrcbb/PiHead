@@ -58,12 +58,12 @@ def removeString(fileString,removedString):
 ## SWITCHES ##
 ##############
 
-#BACKLIGHT = True
-#AMP = False
-#OBD = False
+BACKLIGHT = True
+AMP = False
+OBD = False
 #CANBUS = False
 #RTC = False 
-#SAFE_SHUTDOWN = True
+SAFE_SHUTDOWN = True
 
 
 #########################
@@ -125,22 +125,22 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## TURN ON AMP ##
 #################
 
-#if AMP == True:
-#    AMP_PIN=22
+if AMP == True:
+    AMP_PIN=22
 
-#    GPIO.setup(AMP_PIN,GPIO.OUT)
-#    GPIO.output(AMP_PIN, 1)
+    GPIO.setup(AMP_PIN,GPIO.OUT)
+    GPIO.output(AMP_PIN, 1)
 
 
 ########################
 ## TURN ON OBD READER ##
 ########################
 
-#if OBD == True:
-#    OBD_PIN=27
+if OBD == True:
+    OBD_PIN=27
 
-#    GPIO.setup(OBD_PIN,GPIO.OUT)
-#    GPIO.output(OBD_PIN, 1)
+    GPIO.setup(OBD_PIN,GPIO.OUT)
+    GPIO.output(OBD_PIN, 1)
 
 
 ##############
@@ -171,33 +171,33 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## SAFE SHUTDOWN ##
 ###################
 
-#if SAFE_SHUTDOWN == True:
+if SAFE_SHUTDOWN == True:
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+    m = appendString("/boot/config.txt","#CarPiHat")
+    m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
-IGN_PIN = 12
-EN_POWER_PIN = 25
-IGN_LOW_TIME = 5
+    IGN_PIN = 12
+    EN_POWER_PIN = 25
+    IGN_LOW_TIME = 5
 
-GPIO.setup(IGN_PIN, GPIO.IN)
-GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
-GPIO.output(EN_POWER_PIN, 1)
+    GPIO.setup(IGN_PIN, GPIO.IN)
+    GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
+    GPIO.output(EN_POWER_PIN, 1)
 
-ignLowCounter = 0
+    ignLowCounter = 0
 
-while ignLowCounter < (IGN_LOW_TIME + 1):
-    if GPIO.input(IGN_PIN) !=1:
-        GPIO.output(OBD_PIN, 0)
-        time.sleep(1)
-        ignLowCounter += 1
-        print(ignLowCounter)
-        if ignLowCounter > IGN_LOW_TIME:
-            GPIO.output(AMP_PIN, 0)
-            print("Shutting Down")
-            call("sudo shutdown -h now", shell=True)
-    else:
-        print("Shutdown aborted")
-        ignLowCounter = 0
-        GPIO.output(AMP_PIN, 1)
-        GPIO.output(OBD_PIN, 1)
+    while ignLowCounter < (IGN_LOW_TIME + 1):
+        if GPIO.input(IGN_PIN) !=1:
+            if OBD == True: GPIO.output(OBD_PIN, 0)
+            time.sleep(1)
+            ignLowCounter += 1
+            print(ignLowCounter)
+            if ignLowCounter > IGN_LOW_TIME:
+                if AMP == True: GPIO.output(AMP_PIN, 0)
+                print("Shutting Down")
+                call("sudo shutdown -h now", shell=True)
+        else:
+            print("Shutdown aborted")
+            ignLowCounter = 0
+            if AMP == True: GPIO.output(AMP_PIN, 1)
+            if OBD == True: GPIO.output(OBD_PIN, 1)
