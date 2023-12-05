@@ -99,7 +99,9 @@ def getLux():
 
 while True:
 
-    NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
+    #NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
+
+    NEW_BRIGHT = round(255*((45/400)**CURVE),1)
 
     if NEW_BRIGHT < 0.5:
             NEW_BRIGHT = 0.5
