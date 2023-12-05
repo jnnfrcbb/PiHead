@@ -81,7 +81,7 @@ def getLux():
     #round lux value
     luxRounded = round(Lux,1)
 
-    print("LuxRounded: " + luxRounded)
+    print("LuxRounded: " + str(luxRounded))
 
     #check if we have a full set of readings to average over
     if len(READ_VALUES) == AVG_COUNT:
@@ -98,7 +98,7 @@ def getLux():
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
     
-    print ("NEW_BRIGHT: " + NEW_BRIGHT)
+    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(NEW_BRIGHT))
