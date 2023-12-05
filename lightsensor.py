@@ -97,25 +97,25 @@ def getLux():
 
 #START LOOPING--------------------------------------------------------------------
 
-while True:
+#while True:
 
     #NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
 
-    NEW_BRIGHT = round(255*((45/400)**CURVE))
+NEW_BRIGHT = round(255*((45/400)**CURVE))
 
-    if NEW_BRIGHT < 0.5:
-            NEW_BRIGHT = 0.5
+if NEW_BRIGHT < 0.5:
+        NEW_BRIGHT = 0.5
 
-    print(NEW_BRIGHT)
+print(NEW_BRIGHT)
 
-    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(NEW_BRIGHT))
-    file.close()
+    #file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+    #file.write(str(NEW_BRIGHT))
+    #file.close()
 
-    if DAYNIGHT_PIN != -1:
-        if NEW_BRIGHT <= DAYNIGHT:
-            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
-        else:
-            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
+if DAYNIGHT_PIN != -1:
+    if NEW_BRIGHT <= DAYNIGHT:
+        GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
+    else:
+        GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
-    sleep(1)#AVG_TIME/AVG_COUNT)
+sleep(1)#AVG_TIME/AVG_COUNT)
