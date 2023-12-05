@@ -101,7 +101,7 @@ def getLux():
 
     #NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
 
-NEW_BRIGHT = round(255*((45/400)**CURVE))
+NEW_BRIGHT = 255*((45/400)**CURVE)
 
 print(NEW_BRIGHT)
 
