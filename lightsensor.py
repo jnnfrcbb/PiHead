@@ -2,15 +2,15 @@
 
 #Based on code from this thread by PlasmaFlow: https://bluewavestudio.io/community/showthread.php?tid=672
 
-#import smbus
-#import os
-#from time import sleep
-#import RPi.GPIO as GPIO
+import smbus
+import os
+from time import sleep
+import RPi.GPIO as GPIO
 
 #INIT VALUES----------------------------------------------------------------------
 
 #Default brightness level
-#BRIGHT_LEVEL = 125
+BRIGHT_LEVEL = 125
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
@@ -19,12 +19,12 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-#CURVE = 2.5
+CURVE = 2.5
 
 #If using day/night signal, setup GPIO
-#if DAYNIGHT_PIN != -1:
-#    GPIO.setmode(GPIO.BCM)
-#    GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
+if DAYNIGHT_PIN != -1:
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
 
 #I2C SETUP------------------------------------------------------------------------
@@ -117,9 +117,9 @@ def writeBrightness(NEW_BRIGHT):
 
 #START LOOPING--------------------------------------------------------------------
 
-writeBrightness(50)
-
 #while True:
+
+NEW_LEVEL = 25
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
 
@@ -127,7 +127,7 @@ writeBrightness(50)
     
     #if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
 #    if NEW_LEVEL != BRIGHT_LEVEL:
-#        writeBrightness(NEW_LEVEL)
+writeBrightness(NEW_LEVEL)
 #        BRIGHT_LEVEL = NEW_LEVEL
 
 #    sleep(AVG_TIME/AVG_COUNT)
