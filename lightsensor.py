@@ -121,7 +121,7 @@ def writeBrightness(NEW_BRIGHT):
 #while True:
 
 print(getLux())
-NEW_LEVEL = 10
+NEW_LEVEL = 25
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
 
