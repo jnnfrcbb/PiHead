@@ -95,35 +95,11 @@ def getLux():
     return sum(READ_VALUES)/len(READ_VALUES)
 
 
-# Function for writing brightness to file
-#def writeBrightness(NEW_BRIGHT):
-#
-#    if NEW_BRIGHT < 0.5:
-#            NEW_BRIGHT = 0.5
-#
-#    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
-#
-#    br = str(NEW_BRIGHT)
-#    print(br)
-
-#    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-#    file.write(br)
-#    file.close()
-
-#    if DAYNIGHT_PIN != -1:
-#        if NEW_BRIGHT <= DAYNIGHT:
-#            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
-#        else:
-#            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
-
-
 #START LOOPING--------------------------------------------------------------------
 
 while True:
 
-    NEW_LUX = getLux()
-
-    NEW_BRIGHT = round(255*((NEW_LUX/400)**CURVE),1)
+    NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
 
     if NEW_BRIGHT < 0.5:
             NEW_BRIGHT = 0.5
@@ -134,4 +110,10 @@ while True:
     file.write(str(NEW_BRIGHT))
     file.close()
 
-    sleep(AVG_TIME/AVG_COUNT)
+    if DAYNIGHT_PIN != -1:
+        if NEW_BRIGHT <= DAYNIGHT:
+            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
+        else:
+            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
+
+    sleep(1)#AVG_TIME/AVG_COUNT)
