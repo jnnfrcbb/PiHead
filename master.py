@@ -61,8 +61,8 @@ def removeString(fileString,removedString):
 BACKLIGHT = True
 AMP = False
 OBD = False
-#CANBUS = False
-#RTC = False 
+CANBUS = False
+RTC = False 
 SAFE_SHUTDOWN = True
 
 
@@ -86,8 +86,8 @@ os.system("sudo chmod -R a+rw /usr/share/openautopro")
 ## LIGHT SENSOR SETUP ##
 ########################
 
-#if BACKLIGHT == True:
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+if BACKLIGHT == True:
+    os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 ###################
