@@ -99,14 +99,14 @@ def getLux():
     if AVG_LUX < MIN_BRIGHT:
         AVG_LUX = MIN_BRIGHT
 
-    return round(AVG_LUX)
+    return AVG_LUX
 
 
 #START LOOPING--------------------------------------------------------------------
 
 while True:
 
-    NEW_BRIGHT = 255*((getLux()/400)**CURVE)
+    NEW_BRIGHT = round(255*((getLux()/400)**CURVE))
 
     print(NEW_BRIGHT)
 
