@@ -13,7 +13,7 @@ import RPi.GPIO as GPIO
 BRIGHT_LEVEL = 125
 
 #Minimum brightness level
-MIN_BRIGHT = 10
+MIN_BRIGHT = 20
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
@@ -48,7 +48,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 AVG_TIME=10
 
 #Number of readings to average over
-AVG_COUNT=20
+AVG_COUNT=40
 
 #Setup empty list for lux values
 READ_VALUES=[]
