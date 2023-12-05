@@ -114,6 +114,8 @@ while True:
         file.write(str(NEW_BRIGHT))
         file.close()
 
+        BRIGHT_LEVEL = NEW_BRIGHT
+
         if DAYNIGHT_PIN != -1:
             if NEW_BRIGHT <= DAYNIGHT:
                 GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
