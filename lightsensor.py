@@ -119,13 +119,16 @@ def getLux():
 
 #START LOOPING--------------------------------------------------------------------
 
-#while True:
+while True:
 
-NEW_LUX = getLux()
+    NEW_LUX = getLux()
 
-NEW_BRIGHT = round(255*((NEW_LUX/400)**CURVE),1)
+    NEW_BRIGHT = round(255*((NEW_LUX/400)**CURVE),1)
 
-print(NEW_BRIGHT)
+    if NEW_BRIGHT < 0.5:
+            NEW_BRIGHT = 0.5
+
+    print(NEW_BRIGHT)
 
 #NEW_LEVEL = getLux()
 
@@ -138,4 +141,4 @@ print(NEW_BRIGHT)
 #        writeBrightness(NEW_LEVEL)
 #        BRIGHT_LEVEL = NEW_LEVEL
 
-sleep(AVG_TIME/AVG_COUNT)
+    sleep(AVG_TIME/AVG_COUNT)
