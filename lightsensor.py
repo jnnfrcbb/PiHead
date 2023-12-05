@@ -101,6 +101,9 @@ def writeBrightness(NEW_BRIGHT):
     
     print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
+    if NEW_BRIGHT < 0.5:
+            NEW_BRIGHT = 0.5
+
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(NEW_BRIGHT))
     file.close()
