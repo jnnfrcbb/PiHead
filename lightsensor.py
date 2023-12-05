@@ -79,23 +79,21 @@ def getLux():
     else:
         Lux = 0
 
-#    #round lux value
-#    luxRounded = round(Lux,1)
+    #round lux value
+    luxRounded = round(Lux,1)
 
-#    print("LuxRounded: " + str(luxRounded))
+    #check if we have a full set of readings to average over
+    if len(READ_VALUES) == AVG_COUNT:
+        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
+        READ_VALUES.pop(0)
 
-#    #check if we have a full set of readings to average over
-#    if len(READ_VALUES) == AVG_COUNT:
-#        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
-#        READ_VALUES.pop(0)
+    #add new lux value
+    READ_VALUES.append(luxRounded)
+    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
-#    #add new lux value
-#    READ_VALUES.append(luxRounded)
-#    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
+    #return average of stored readings
+    return sum(READ_VALUES)/len(READ_VALUES)
 
-#    #return average of stored readings
-#    return sum(READ_VALUES)/len(READ_VALUES)
-    return Lux
 
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
@@ -114,21 +112,19 @@ def writeBrightness(NEW_BRIGHT):
 
     if DAYNIGHT_PIN != -1:
         if NEW_BRIGHT <= DAYNIGHT:
-            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
-            #os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
-            GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
+            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
         else:
-            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
-            #os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
-            GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
+            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
 
 #START LOOPING--------------------------------------------------------------------
 
 #while True:
 
+NEW_LUX = float(round(getLux(),1))
 
-writeBrightness(round(getLux(),1))
+print(NEW_LUX)
+
 #NEW_LEVEL = getLux()
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
@@ -137,7 +133,7 @@ writeBrightness(round(getLux(),1))
     
     #if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
 #    if NEW_LEVEL != BRIGHT_LEVEL:
-#writeBrightness(NEW_LEVEL)
+#        writeBrightness(NEW_LEVEL)
 #        BRIGHT_LEVEL = NEW_LEVEL
 
 sleep(AVG_TIME/AVG_COUNT)
