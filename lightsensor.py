@@ -19,7 +19,7 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 2.5
+CURVE = 1#2.5
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
@@ -99,9 +99,9 @@ def getLux():
 
 #while True:
 
-    #NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
+NEW_BRIGHT = round(255*((getLux()/400)**CURVE),1)
 
-NEW_BRIGHT = 255*((45/400)**CURVE)
+#NEW_BRIGHT = 255*((45/400)**CURVE)
 
 print(NEW_BRIGHT)
 
