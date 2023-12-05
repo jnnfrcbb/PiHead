@@ -121,9 +121,9 @@ def getLux():
 
 #while True:
 
-NEW_LUX = float(round(getLux(),1))
+NEW_LUX = getLux()
 
-NEW_BRIGHT = 255*((NEW_LUX/400)**CURVE)
+NEW_BRIGHT = round(255*((NEW_LUX/400)**CURVE),1)
 
 print(NEW_BRIGHT)
 
