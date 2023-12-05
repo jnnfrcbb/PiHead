@@ -23,6 +23,7 @@ CURVE = 2.5
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
@@ -98,11 +99,11 @@ def getLux():
 
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
-    
-    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
     if NEW_BRIGHT < 0.5:
             NEW_BRIGHT = 0.5
+
+    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(NEW_BRIGHT))
