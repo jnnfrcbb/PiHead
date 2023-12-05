@@ -92,7 +92,6 @@ def getLux():
 
     #add new lux value
     READ_VALUES.append(luxRounded)
-    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
