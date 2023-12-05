@@ -111,7 +111,7 @@ if NEW_BRIGHT < 1:
 print(NEW_BRIGHT)
 
 file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-#file.write(str(NEW_BRIGHT))
+file.write(str(NEW_BRIGHT))
 file.close()
 
 if DAYNIGHT_PIN != -1:
