@@ -126,7 +126,7 @@ def writeBrightness(NEW_BRIGHT):
 
 
 print (getLux)
-NEW_LEVEL = getLux 
+#NEW_LEVEL = getLux()
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
 
@@ -134,7 +134,7 @@ NEW_LEVEL = getLux
     
     #if (NEW_LEVEL > BRIGHT_LEVEL + 5) and (NEW_LEVEL < BRIGHT_LEVEL - 5):
 #    if NEW_LEVEL != BRIGHT_LEVEL:
-writeBrightness(NEW_LEVEL)
+#writeBrightness(NEW_LEVEL)
 #        BRIGHT_LEVEL = NEW_LEVEL
 
 sleep(AVG_TIME/AVG_COUNT)
