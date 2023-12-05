@@ -54,6 +54,18 @@ def removeString(fileString,removedString):
     return IsMod
 
 
+##############
+## SWITCHES ##
+##############
+
+BACKLIGHT = True
+AMP = False
+OBD = False
+CANBUS = False
+RTC = False 
+SAFE_SHUTDOWN = True
+
+
 #########################
 ## GENERAL PREPARATION ##
 #########################
@@ -74,7 +86,8 @@ os.system("sudo chmod -R a+rw /usr/share/openautopro")
 ## LIGHT SENSOR SETUP ##
 ########################
 
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+if BACKLIGHT == True:
+    os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 ###################
@@ -112,20 +125,22 @@ m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/o
 ## TURN ON AMP ##
 #################
 
-AMP_PIN=22
+if AMP == True:
+    AMP_PIN=22
 
-GPIO.setup(AMP_PIN,GPIO.OUT)
-GPIO.output(AMP_PIN, 1)
+    GPIO.setup(AMP_PIN,GPIO.OUT)
+    GPIO.output(AMP_PIN, 1)
 
 
 ########################
 ## TURN ON OBD READER ##
 ########################
 
-OBD_PIN=27
+if OBD == True:
+    OBD_PIN=27
 
-GPIO.setup(OBD_PIN,GPIO.OUT)
-GPIO.output(OBD_PIN, 1)
+    GPIO.setup(OBD_PIN,GPIO.OUT)
+    GPIO.output(OBD_PIN, 1)
 
 
 ##############
@@ -133,52 +148,56 @@ GPIO.output(OBD_PIN, 1)
 ##############
 
 ## CarPiHat CanBus interface ##
-#m = appendString("/etc/rc.local", "/sbin/ip link set can0 up type can bitrate 100000")
+if CANBUS == True:
+    m = appendString("/etc/rc.local", "/sbin/ip link set can0 up type can bitrate 100000")
 
-m = replaceString("/boot/config.txt", "#dtparam=spi=on", "dtparam=spi=on")
-m = replaceString("/boot/config.txt", "#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
+    m = replaceString("/boot/config.txt", "#dtparam=spi=on", "dtparam=spi=on")
+    m = replaceString("/boot/config.txt", "#dtparam=i2c_arm=on","dtparam=i2c_arm=on")
 
-#m = appendString("/boot/config.txt","#CarPiHat")
-#m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
-#m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
+    m = appendString("/boot/config.txt","#CarPiHat")
+    m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
+    m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
 # CarPiHat real time clock ##
-m = removeString("/etc/rc.local","exit 0")
-m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-m = appendString("/etc/rc.local","exit 0")
-m = appendString("/etc/modules","#CarPiHat")
-m = appendString("/etc/modules","rtc-ds1307")
+if RTC == True:
+    m = removeString("/etc/rc.local","exit 0")
+    m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
+    m = appendString("/etc/rc.local","exit 0")
+    m = appendString("/etc/modules","#CarPiHat")
+    m = appendString("/etc/modules","rtc-ds1307")
 
 
 ###################
 ## SAFE SHUTDOWN ##
 ###################
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+if SAFE_SHUTDOWN == True:
 
-IGN_PIN = 12
-EN_POWER_PIN = 25
-IGN_LOW_TIME = 5
+    m = appendString("/boot/config.txt","#CarPiHat")
+    m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
-GPIO.setup(IGN_PIN, GPIO.IN)
-GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
-GPIO.output(EN_POWER_PIN, 1)
+    IGN_PIN = 12
+    EN_POWER_PIN = 25
+    IGN_LOW_TIME = 5
 
-ignLowCounter = 0
+    GPIO.setup(IGN_PIN, GPIO.IN)
+    GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
+    GPIO.output(EN_POWER_PIN, 1)
 
-while ignLowCounter < (IGN_LOW_TIME + 1):
-    if GPIO.input(IGN_PIN) !=1:
-        GPIO.output(OBD_PIN, 0)
-        time.sleep(1)
-        ignLowCounter += 1
-        print(ignLowCounter)
-        if ignLowCounter > IGN_LOW_TIME:
-            GPIO.output(AMP_PIN, 0)
-            print("Shutting Down")
-            call("sudo shutdown -h now", shell=True)
-    else:
-        print("Shutdown aborted")
-        ignLowCounter = 0
-        GPIO.output(AMP_PIN, 1)
-        GPIO.output(OBD_PIN, 1)
+    ignLowCounter = 0
+
+    while ignLowCounter < (IGN_LOW_TIME + 1):
+        if GPIO.input(IGN_PIN) !=1:
+            GPIO.output(OBD_PIN, 0)
+            time.sleep(1)
+            ignLowCounter += 1
+            print(ignLowCounter)
+            if ignLowCounter > IGN_LOW_TIME:
+                GPIO.output(AMP_PIN, 0)
+                print("Shutting Down")
+                call("sudo shutdown -h now", shell=True)
+        else:
+            print("Shutdown aborted")
+            ignLowCounter = 0
+            GPIO.output(AMP_PIN, 1)
+            GPIO.output(OBD_PIN, 1)

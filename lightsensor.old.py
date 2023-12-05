@@ -7,11 +7,23 @@ import os
 from time import sleep
 import RPi.GPIO as GPIO
 
-#Default brightness level
-BRIGHT_LEVEL = 125
+
+#BRIGHTNESS CONSTANTS-------------------------------------------------------------
+
+# Switch levels for brightness sensor in lux
+LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
+
+# Set this display brightness by switch levels
+DISP_BRIGHTNESS = [17, 27, 40, 65, 90, 115, 140, 165, 195, 225, 255]
+
+# Starting step level
+step = DISP_BRIGHTNESS[5]
+
+
+#DAY/NIGHT SWITCHING--------------------------------------------------------------
 
 #Switch to night mode on this level or lower
-DAYNIGHT = 125
+DAYNIGHT_STEP = 4
 
 #GPIO pin to output day/night signal (-1 = GPIO output disabled)
 DAYNIGHT_PIN = 15     
@@ -39,7 +51,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 AVG_TIME=10
 
 #Number of readings to average over
-AVG_COUNT=40
+AVG_COUNT=20
 
 #Setup empty list for lux values
 READ_VALUES=[]
@@ -88,34 +100,45 @@ def getLux():
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
 
+
+#CALCULATING AND SETTING BRIGHTNESS-----------------------------------------------
+
+# Function for calculating step
+def getStep(luxValue):
+    for luxLevel in LUX_LEVEL:
+        if luxValue <= luxLevel:
+            break
+    return LUX_LEVEL.index(luxLevel)
+
 # Function for writing brightness to file
-def writeBrightness(NEW_BRIGHT):
+def writeStep(newStep):
     
-    print (NEW_BRIGHT)
+    if newStep != step:
 
-    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(NEW_BRIGHT))
-    file.close()
+        file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+        file.write(str(DISP_BRIGHTNESS[newStep]))
+        file.close()
 
-    if DAYNIGHT_PIN != -1:
-        if NEW_BRIGHT <= DAYNIGHT:
-            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
-            os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
-            GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
-        else:
-            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
-            os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
-            GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
-
-
+        if DAYNIGHT_PIN != -1:
+            if newStep <= DAYNIGHT_STEP:
+                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger night")
+                os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
+                GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
+            else:
+                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger day")
+                os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
+                GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
+    
+        step = newStep
+    
+    
 #START LOOPING--------------------------------------------------------------------
 
 while True:
 
-    NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),1)
+    #AVG_LUX = getLux()
+    #writeStep(getStep(AVG_LUX))
+    
+    writeStep(getStep(getLux))
 
-    if NEW_LEVEL != BRIGHT_LEVEL:
-        writeBrightness(NEW_LEVEL)
-        BRIGHT_LEVEL = NEW_LEVEL
-
-    sleep(AVG_TIME/AVG_COUNT)
+    sleep(AVG_TIME/AVG_COUNT) #0.25)
