@@ -22,7 +22,7 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 1#2
+CURVE = 2
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
@@ -45,7 +45,7 @@ i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Time to average readings over in seconds
-AVG_TIME=10
+AVG_TIME=20
 
 #Number of readings to average over
 AVG_COUNT=40
