@@ -13,10 +13,10 @@
 #BRIGHT_LEVEL = 125
 
 #Switch to night mode on this level or lower
-#DAYNIGHT = 125
+DAYNIGHT = 125
 
 #GPIO pin to output day/night signal (-1 = GPIO output disabled)
-#DAYNIGHT_PIN = 15     
+DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
 #CURVE = 2.5
@@ -96,26 +96,28 @@
 #    return float(sum(READ_VALUES)/len(READ_VALUES))
 
 # Function for writing brightness to file
-#def writeBrightness(NEW_BRIGHT):
+def writeBrightness(NEW_BRIGHT):
     
-#    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
+    print ("NEW_BRIGHT: " + str(NEW_BRIGHT))
 
-file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-file.write(str(100))
-file.close()
+    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+    file.write(str(NEW_BRIGHT))
+    file.close()
 
-#    if DAYNIGHT_PIN != -1:
-#        if NEW_BRIGHT <= DAYNIGHT:
-#            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
-#            #os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
-#            GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
-#        else:
-#            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
-#            #os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
-#            GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
+    if DAYNIGHT_PIN != -1:
+        if NEW_BRIGHT <= DAYNIGHT:
+            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger night")
+            #os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
+            GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
+        else:
+            #print("Lux = {} | ".format(NEW_BRIGHT) +  " -> trigger day")
+            #os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
+            GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
 
 
 #START LOOPING--------------------------------------------------------------------
+
+writeBrightness(50)
 
 #while True:
 
