@@ -78,22 +78,23 @@ def getLux():
     else:
         Lux = 0
 
-    #round lux value
-    luxRounded = round(Lux,1)
+#    #round lux value
+#    luxRounded = round(Lux,1)
 
-    print("LuxRounded: " + str(luxRounded))
+#    print("LuxRounded: " + str(luxRounded))
 
-    #check if we have a full set of readings to average over
-    if len(READ_VALUES) == AVG_COUNT:
-        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
-        READ_VALUES.pop(0)
+#    #check if we have a full set of readings to average over
+#    if len(READ_VALUES) == AVG_COUNT:
+#        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
+#        READ_VALUES.pop(0)
 
-    #add new lux value
-    READ_VALUES.append(luxRounded)
-    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
+#    #add new lux value
+#    READ_VALUES.append(luxRounded)
+#    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
-    #return average of stored readings
-    return float(sum(READ_VALUES)/len(READ_VALUES))
+#    #return average of stored readings
+#    return sum(READ_VALUES)/len(READ_VALUES)
+    return Lux
 
 # Function for writing brightness to file
 def writeBrightness(NEW_BRIGHT):
@@ -119,6 +120,7 @@ def writeBrightness(NEW_BRIGHT):
 
 #while True:
 
+print(getLux())
 NEW_LEVEL = 10
 
 #    #NEW_LEVEL = round(.0255*(((getLux()/400)*100)**2),2)
