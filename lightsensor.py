@@ -22,7 +22,7 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 2.5
+CURVE = 1#2.5
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
@@ -110,7 +110,7 @@ while True:
     print(NEW_BRIGHT)
     
     if NEW_BRIGHT != BRIGHT_LEVEL:
-        
+
         file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
         file.write(str(NEW_BRIGHT))
         file.close()
