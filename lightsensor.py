@@ -18,14 +18,14 @@ MIN_BRIGHT = 15
 #Maximum brightness level [max 255]
 MAX_BRIGHT = 255
 
+#Curve value for brightness (1 = linear lux:brightness ratio)
+CURVE = 0.4
+
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
 
 #GPIO pin to output day/night signal (-1 = GPIO output disabled)
 DAYNIGHT_PIN = 15     
-
-#Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 0.4
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
