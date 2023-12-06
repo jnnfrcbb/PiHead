@@ -15,6 +15,9 @@ BRIGHT_LEVEL = 125
 #Minimum brightness level
 MIN_BRIGHT = 15
 
+#Maximum brightness level [max 255]
+MAX_BRIGHT = 255
+
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
 
@@ -106,7 +109,7 @@ while True:
     #if NEW_BRIGHT < MIN_BRIGHT:
     #    NEW_BRIGHT = MIN_BRIGHT
     
-    NEW_BRIGHT = int(((255-MIN_BRIGHT)*((getLux()/400)**CURVE))+MIN_BRIGHT)
+    NEW_BRIGHT = int(((MAX_BRIGHT-MIN_BRIGHT)*((getLux()/400)**CURVE))+MIN_BRIGHT)
 
     print(NEW_BRIGHT)
     
