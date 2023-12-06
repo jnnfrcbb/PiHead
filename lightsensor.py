@@ -13,7 +13,7 @@ import RPi.GPIO as GPIO
 BRIGHT_LEVEL = 125
 
 #Minimum brightness level
-MIN_BRIGHT = 25
+MIN_BRIGHT = 20
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
@@ -22,7 +22,7 @@ DAYNIGHT = 125
 DAYNIGHT_PIN = 15     
 
 #Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 0.75
+CURVE = 0.4
 
 #If using day/night signal, setup GPIO
 if DAYNIGHT_PIN != -1:
@@ -100,12 +100,14 @@ def getLux():
 #START LOOPING--------------------------------------------------------------------
 
 while True:
-
-    NEW_BRIGHT = int(255*((getLux()/400)**CURVE))
-
-    if NEW_BRIGHT < MIN_BRIGHT:
-        NEW_BRIGHT = MIN_BRIGHT
     
+    #NEW_BRIGHT = int(255*((getLux()/400)**CURVE))
+
+    #if NEW_BRIGHT < MIN_BRIGHT:
+    #    NEW_BRIGHT = MIN_BRIGHT
+    
+    NEW_BRIGHT = int(((255-MIN_BRIGHT)*((getLux()/400)**CURVE))+MIN_BRIGHT)
+
     print(NEW_BRIGHT)
     
     if NEW_BRIGHT != BRIGHT_LEVEL:
