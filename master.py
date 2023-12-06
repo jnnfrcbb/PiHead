@@ -13,45 +13,41 @@ def appendString(fileString,writingString,signOff=""):
         signOffRemoved = removeString(fileString,signOff)
     with open(fileString, "a+") as editFile:
         fileData = editFile.read()
-        IsMod = False
         if not writingString in fileData:
             if len(fileData)> 0:
                 editFile.write("\n")
             editFile.write(writingString)
-            IsMod = True
-        editFile.close()
+            editFile.close()
+            Ret = True
+        else:
+            editFile.close()
+            Ret = False
         if signOff is not "":
             if signOffRemoved:
                 m = appendString(fileString,signOff)
-    return IsMod
+    return Ret
 
 def replaceString(fileString,beforeString,afterString):
     with open(fileString, "r") as editFile:
         fileData = editFile.read()
-        editFile.close()
-        IsMod = False
-        if beforeString in fileData and not afterString in fileData:
-            fileData = fileData.replace(beforeString,afterString)
-            IsMod = True
-    if IsMod:
-        with open(fileString, 'w') as modFile:
-            modFile.write(fileData)
-            modFile.close()
-    return IsMod
+        if beforeString in fileData and not afterString in fileData:          
+            editFile.write(fileData.replace(beforeString,afterString))            
+            editFile.close()
+            return True
+        else:
+            editFile.close()
+            return False
 
 def removeString(fileString,removedString):
     with open(fileString, "r") as editFile:
         fileData = editFile.read()
-        editFile.close()
-        IsMod = False
-        if removedString in fileData:
-            fileData = fileData.replace(removedString,"")
-            IsMod = True
-    if IsMod:
-        with open(fileString,"w") as modFile:
-            modFile.write(fileData)
-            modFile.close()
-    return IsMod
+        if removedString in fileData:       
+            editFile.write(fileData.replace(removedString,""))
+            editFile.close()
+            return True
+        else:
+            editFile.close()
+            return False
 
 
 #########################
