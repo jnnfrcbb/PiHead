@@ -143,12 +143,16 @@ GPIO.output(OBD_PIN, 1)
 #m = appendString("/boot/config.txt","dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=23")
 #m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
-# CarPiHat real time clock ##
-#m = removeString("/etc/rc.local","exit 0")
-#m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device hwclock -s")
-#m = appendString("/etc/rc.local","exit 0")
-#m = appendString("/etc/modules","#CarPiHat")
-#m = appendString("/etc/modules","rtc-ds1307")
+
+## CarPiHat real time clock ##
+m = removeString("/etc/rc.local","exit 0")
+m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device")
+m = appendString("/etc/rc.local", "sudo hwclock -s")
+m = appendString("/etc/rc.local", "date")
+m = appendString("/etc/rc.local","exit 0")
+
+m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 
 
 ###################
