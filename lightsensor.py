@@ -99,6 +99,8 @@ def getLux():
 
 #START LOOPING--------------------------------------------------------------------
 
+mB = 0
+
 while True:
 
     NEW_BRIGHT = int(255*((getLux()/400)**CURVE))
