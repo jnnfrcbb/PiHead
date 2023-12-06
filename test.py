@@ -1,5 +1,5 @@
 CURVE = 0.4
-MIN_BRIGHT = 20
+MIN_BRIGHT = 15
 LUX = 200
 
 for x in range(401):

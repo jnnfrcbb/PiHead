@@ -13,7 +13,7 @@ import RPi.GPIO as GPIO
 BRIGHT_LEVEL = 125
 
 #Minimum brightness level
-MIN_BRIGHT = 20
+MIN_BRIGHT = 15
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
