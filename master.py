@@ -4,7 +4,6 @@
 #add reference in /etc/rc.local
 
 import os
-import shutil
 import RPi.GPIO as GPIO
 from subprocess import call
 import time
