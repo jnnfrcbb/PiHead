@@ -144,10 +144,8 @@ m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c
 m = appendString("/etc/rc.local", "sudo hwclock -s")
 m = appendString("/etc/rc.local", "date")
 m = appendString("/etc/rc.local","exit 0")
-
 #m = appendString("/boot/config.txt","#CarPiHat")
-#m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
-
+m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 
 ###################
 ## SAFE SHUTDOWN ##
