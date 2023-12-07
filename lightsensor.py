@@ -85,8 +85,10 @@ def getLux():
     else:
         Lux = 0
 
-    #round lux value
-    luxRounded = round(Lux,1)
+    #return rounded lux value
+    return round(Lux,1)
+
+def avgLux(luxVal):
 
     #check if we have a full set of readings to average over
     if len(READ_VALUES) == AVG_COUNT:
@@ -94,11 +96,26 @@ def getLux():
         READ_VALUES.pop(0)
 
     #add new lux value
-    READ_VALUES.append(luxRounded)
+    READ_VALUES.append(luxVal)
 
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
 
+def setBrightness(newBright):
+    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+    file.write(str(newBright))
+    file.close()
+
+    if DAYNIGHT_PIN != -1:
+        if newBright <= DAYNIGHT:
+            GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
+        else:
+            GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
+
+#SET INITIAL BRIGHTNESS-----------------------------------------------------------
+
+BRIGHT_LEVEL = getLux()
+setBrightness(BRIGHT_LEVEL)
 
 #START LOOPING--------------------------------------------------------------------
 
@@ -109,22 +126,14 @@ while True:
     #if NEW_BRIGHT < MIN_BRIGHT:
     #    NEW_BRIGHT = MIN_BRIGHT
     
-    NEW_BRIGHT = int(((MAX_BRIGHT-MIN_BRIGHT)*((getLux()/400)**CURVE))+MIN_BRIGHT)
+    NEW_BRIGHT = int(((MAX_BRIGHT-MIN_BRIGHT)*((avgLux(getLux)/400)**CURVE))+MIN_BRIGHT)
 
     print(NEW_BRIGHT)
     
     if NEW_BRIGHT != BRIGHT_LEVEL:
 
-        file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-        file.write(str(NEW_BRIGHT))
-        file.close()
+        setBrightness(NEW_BRIGHT)
 
         BRIGHT_LEVEL = NEW_BRIGHT
-
-        if DAYNIGHT_PIN != -1:
-            if NEW_BRIGHT <= DAYNIGHT:
-                GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
-            else:
-                GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
     sleep(AVG_TIME/AVG_COUNT)
