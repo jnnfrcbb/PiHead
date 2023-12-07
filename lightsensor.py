@@ -18,6 +18,12 @@ MIN_BRIGHT = 15
 #Maximum brightness level [max 255]
 MAX_BRIGHT = 255
 
+#Time to average readings over in seconds
+AVG_TIME=20
+
+#Number of readings to average over
+AVG_COUNT=40
+
 #Curve value for brightness (1 = linear lux:brightness ratio)
 CURVE = 0.4
 
@@ -80,12 +86,6 @@ def getLux():
 
 
 #LUX AVERAGING--------------------------------------------------------------------
-
-#Time to average readings over in seconds
-AVG_TIME=20
-
-#Number of readings to average over
-AVG_COUNT=40
 
 #Setup empty list for lux values
 READ_VALUES=[]
