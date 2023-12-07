@@ -12,25 +12,25 @@ import RPi.GPIO as GPIO
 #Default brightness level
 BRIGHT_LVL = 125
 
-#Minimum brightness level
+#Minimum brightness level [min 0]
 BRIGHT_MIN = 15
 
 #Maximum brightness level [max 255]
 BRIGHT_MAX = 255
 
-#Curve value for brightness (1 = linear lux:brightness ratio)
+#Curve value for brightness [1 = linear lux:brightness ratio]
 BRIGHT_CRV = 0.4
 
-#Time to average readings over in seconds
+#Time to average readings over [seconds]
 AVG_TIME=20
 
 #Number of readings to average over
 AVG_COUNT=40
 
-#Switch to night mode on this level or lower
+#Switch to night mode level
 DAYNIGHT = 125
 
-#GPIO pin to output day/night signal (-1 = GPIO output disabled)
+#GPIO pin to output day/night signal [-1 = GPIO output disabled]
 DAYNIGHT_PIN = 15     
 
 #If using day/night signal, setup GPIO
