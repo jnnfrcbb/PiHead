@@ -121,7 +121,7 @@ def setBrightness(newBright):
     return newBright
 
 #initial brightness
-setBrightness(getLux())
+BRIGHT_LVL = setBrightness(getLux())
 
 
 #START LOOPING--------------------------------------------------------------------
