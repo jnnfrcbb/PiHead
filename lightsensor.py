@@ -40,7 +40,7 @@ if DAYNIGHT_PIN != -1:
     GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
 
-#LUX READING-----------------------------------------------------------------------
+#LUX READING----------------------------------------------------------------------
 
 #i2c setup
 BUS = 1
@@ -104,7 +104,7 @@ def avgLux(luxVal):
     return sum(LUX_VALUES)/len(LUX_VALUES)
 
 
-#SETTING BRIGHTNESS--------------------------------------------------------------
+#SETTING BRIGHTNESS---------------------------------------------------------------
 
 #function to calculate brightness
 def calcBrightness(newLux):
