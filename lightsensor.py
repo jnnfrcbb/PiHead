@@ -19,7 +19,7 @@ BRIGHT_MIN = 15
 BRIGHT_MAX = 255
 
 #Curve value for brightness [1 = linear lux:brightness ratio]
-BRIGHT_CRV = 0.4
+BRIGHT_CRV = 0.5
 
 #Time to average readings over [seconds]
 AVG_TIME=20
