@@ -45,18 +45,9 @@ i2cBus = smbus.SMBus(BUS)
 i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
 
 
-#LUX AVERAGING--------------------------------------------------------------------
+#LUX READING-----------------------------------------------------------------------
 
-#Time to average readings over in seconds
-AVG_TIME=20
-
-#Number of readings to average over
-AVG_COUNT=40
-
-#Setup empty list for lux values
-READ_VALUES=[]
-
-# Function for getting and averaging lux
+# Function for getting lux
 def getLux():
     # read global brightness read low byte
     LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8C)
@@ -88,6 +79,19 @@ def getLux():
     #return rounded lux value
     return round(Lux,1)
 
+
+#LUX AVERAGING--------------------------------------------------------------------
+
+#Time to average readings over in seconds
+AVG_TIME=20
+
+#Number of readings to average over
+AVG_COUNT=40
+
+#Setup empty list for lux values
+READ_VALUES=[]
+
+#function for averahing lux
 def avgLux(luxVal):
     #check if we have a full set of readings to average over
     if len(READ_VALUES) == AVG_COUNT:
@@ -100,6 +104,10 @@ def avgLux(luxVal):
     #return average of stored readings
     return sum(READ_VALUES)/len(READ_VALUES)
 
+
+#SETTING BRIGHTNESS--------------------------------------------------------------
+
+#function to set brightness
 def setBrightness(newBright):
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
     file.write(str(newBright))
@@ -111,10 +119,10 @@ def setBrightness(newBright):
         else:
             GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
-#SET INITIAL BRIGHTNESS-----------------------------------------------------------
-
+#initial brightness
 BRIGHT_LEVEL = getLux()
 setBrightness(BRIGHT_LEVEL)
+
 
 #START LOOPING--------------------------------------------------------------------
 
