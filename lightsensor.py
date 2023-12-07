@@ -18,14 +18,14 @@ BRIGHT_MIN = 15
 #Maximum brightness level [max 255]
 BRIGHT_MAX = 255
 
+#Curve value for brightness (1 = linear lux:brightness ratio)
+BRIGHT_CRV = 0.4
+
 #Time to average readings over in seconds
 AVG_TIME=20
 
 #Number of readings to average over
 AVG_COUNT=40
-
-#Curve value for brightness (1 = linear lux:brightness ratio)
-CURVE = 0.4
 
 #Switch to night mode on this level or lower
 DAYNIGHT = 125
@@ -127,12 +127,12 @@ setBrightness(BRIGHT_LVL)
 
 while True:
     
-    #BRIGHT_NEW = int(255*((getLux()/400)**CURVE))
+    #BRIGHT_NEW = int(255*((getLux()/400)**BRIGHT_CRV))
 
     #if BRIGHT_NEW < BRIGHT_MIN:
     #    BRIGHT_NEW = BRIGHT_MIN
     
-    BRIGHT_NEW = int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(getLux)/400)**CURVE))+BRIGHT_MIN)
+    BRIGHT_NEW = int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(getLux)/400)**BRIGHT_CRV))+BRIGHT_MIN)
 
     print(BRIGHT_NEW)
     
