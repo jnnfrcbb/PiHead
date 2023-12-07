@@ -106,6 +106,10 @@ def avgLux(luxVal):
 
 #SETTING BRIGHTNESS--------------------------------------------------------------
 
+#function to calculate brightness
+def calcBrightness(newLux):
+    return(int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(newLux)/400)**BRIGHT_CRV))+BRIGHT_MIN))
+
 #function to set brightness
 def setBrightness(newBright):
     file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
@@ -121,19 +125,14 @@ def setBrightness(newBright):
     return newBright
 
 #initial brightness
-BRIGHT_LVL = setBrightness(getLux())
+BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
 
 
 #START LOOPING--------------------------------------------------------------------
 
 while True:
     
-    #BRIGHT_NEW = int(255*((getLux()/400)**BRIGHT_CRV))
-
-    #if BRIGHT_NEW < BRIGHT_MIN:
-    #    BRIGHT_NEW = BRIGHT_MIN
-    
-    BRIGHT_NEW = int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(getLux)/400)**BRIGHT_CRV))+BRIGHT_MIN)
+    BRIGHT_NEW = calcBrightness(getLux())
 
     print(BRIGHT_NEW)
     

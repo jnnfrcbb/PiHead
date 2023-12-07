@@ -28,7 +28,7 @@ def appendString(fileString,writingString,signOff=""):
     return Ret
 
 def replaceString(fileString,beforeString,afterString):
-    with open(fileString, "r") as editFile:
+    with open(fileString, "r+") as editFile:
         fileData = editFile.read()
         if beforeString in fileData and not afterString in fileData:          
             editFile.write(fileData.replace(beforeString,afterString))            
@@ -39,7 +39,7 @@ def replaceString(fileString,beforeString,afterString):
             return False
 
 def removeString(fileString,removedString):
-    with open(fileString, "r") as editFile:
+    with open(fileString, "r+") as editFile:
         fileData = editFile.read()
         if removedString in fileData:       
             editFile.write(fileData.replace(removedString,""))
@@ -61,9 +61,10 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-os.system("sudo chmod a+rw /boot/config.txt")
-os.system("sudo chmod a+rw /etc/xdg/lxsession/LXDE-pi/autostart")
-os.system("sudo chmod -R a+rw /usr/share/openautopro")
+os.system("sudo chmod a+r+w+ /etc/rc.local")
+os.system("sudo chmod a+r+w+ /boot/config.txt")
+os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
+os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 
 ########################
@@ -144,7 +145,7 @@ m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c
 m = appendString("/etc/rc.local", "sudo hwclock -s")
 m = appendString("/etc/rc.local", "date")
 m = appendString("/etc/rc.local","exit 0")
-#m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","#CarPiHat")
 m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 
 
@@ -152,8 +153,8 @@ m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 ## SAFE SHUTDOWN ##
 ###################
 
-#m = appendString("/boot/config.txt","#CarPiHat")
-#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
+m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
 
 IGN_PIN = 12
 EN_POWER_PIN = 25
