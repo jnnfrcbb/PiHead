@@ -34,7 +34,9 @@ if DAYNIGHT_PIN != -1:
     GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
 
-#I2C SETUP------------------------------------------------------------------------
+#LUX READING-----------------------------------------------------------------------
+
+#i2c setup
 BUS = 1
 TSL2561_ADDR = 0x39     #the addresss of TSL2561 can be 0x29, 0x39 or 0x49
 
@@ -43,9 +45,6 @@ i2cBus = smbus.SMBus(BUS)
 # Start messure with 402 ms
 # (scale factor 1)
 i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
-
-
-#LUX READING-----------------------------------------------------------------------
 
 # Function for getting lux
 def getLux():
