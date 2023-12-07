@@ -10,13 +10,13 @@ import RPi.GPIO as GPIO
 #INIT VALUES----------------------------------------------------------------------
 
 #Default brightness level
-BRIGHT_LEVEL = 125
+BRIGHT_LVL = 125
 
 #Minimum brightness level
-MIN_BRIGHT = 15
+BRIGHT_MIN = 15
 
 #Maximum brightness level [max 255]
-MAX_BRIGHT = 255
+BRIGHT_MAX = 255
 
 #Time to average readings over in seconds
 AVG_TIME=20
@@ -88,20 +88,20 @@ def getLux():
 #LUX AVERAGING--------------------------------------------------------------------
 
 #Setup empty list for lux values
-READ_VALUES=[]
+LUX_VALUES=[]
 
 #function for averahing lux
 def avgLux(luxVal):
     #check if we have a full set of readings to average over
-    if len(READ_VALUES) == AVG_COUNT:
+    if len(LUX_VALUES) == AVG_COUNT:
         #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
-        READ_VALUES.pop(0)
+        LUX_VALUES.pop(0)
 
     #add new lux value
-    READ_VALUES.append(luxVal)
+    LUX_VALUES.append(luxVal)
 
     #return average of stored readings
-    return sum(READ_VALUES)/len(READ_VALUES)
+    return sum(LUX_VALUES)/len(LUX_VALUES)
 
 
 #SETTING BRIGHTNESS--------------------------------------------------------------
@@ -119,27 +119,27 @@ def setBrightness(newBright):
             GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
 
 #initial brightness
-BRIGHT_LEVEL = getLux()
-setBrightness(BRIGHT_LEVEL)
+BRIGHT_LVL = getLux()
+setBrightness(BRIGHT_LVL)
 
 
 #START LOOPING--------------------------------------------------------------------
 
 while True:
     
-    #NEW_BRIGHT = int(255*((getLux()/400)**CURVE))
+    #BRIGHT_NEW = int(255*((getLux()/400)**CURVE))
 
-    #if NEW_BRIGHT < MIN_BRIGHT:
-    #    NEW_BRIGHT = MIN_BRIGHT
+    #if BRIGHT_NEW < BRIGHT_MIN:
+    #    BRIGHT_NEW = BRIGHT_MIN
     
-    NEW_BRIGHT = int(((MAX_BRIGHT-MIN_BRIGHT)*((avgLux(getLux)/400)**CURVE))+MIN_BRIGHT)
+    BRIGHT_NEW = int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(getLux)/400)**CURVE))+BRIGHT_MIN)
 
-    print(NEW_BRIGHT)
+    print(BRIGHT_NEW)
     
-    if NEW_BRIGHT != BRIGHT_LEVEL:
+    if BRIGHT_NEW != BRIGHT_LVL:
 
-        setBrightness(NEW_BRIGHT)
+        setBrightness(BRIGHT_NEW)
 
-        BRIGHT_LEVEL = NEW_BRIGHT
+        BRIGHT_LVL = BRIGHT_NEW
 
     sleep(AVG_TIME/AVG_COUNT)
