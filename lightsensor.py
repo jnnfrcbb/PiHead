@@ -89,7 +89,6 @@ def getLux():
     return round(Lux,1)
 
 def avgLux(luxVal):
-
     #check if we have a full set of readings to average over
     if len(READ_VALUES) == AVG_COUNT:
         #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
