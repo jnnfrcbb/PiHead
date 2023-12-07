@@ -153,12 +153,12 @@ m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 ## SAFE SHUTDOWN ##
 ###################
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=25,active_low")
-
 IGN_PIN = 12
 EN_POWER_PIN = 25
 IGN_LOW_TIME = 5
+
+m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + EN_POWER_PIN + ",active_low")
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
