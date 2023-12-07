@@ -117,10 +117,11 @@ def setBrightness(newBright):
             GPIO.output(DAYNIGHT_PIN, 1) #output night mode GPIO
         else:
             GPIO.output(DAYNIGHT_PIN, 0) #output day mode GPIO
+    
+    return newBright
 
 #initial brightness
-BRIGHT_LVL = getLux()
-setBrightness(BRIGHT_LVL)
+setBrightness(getLux())
 
 
 #START LOOPING--------------------------------------------------------------------
@@ -138,8 +139,6 @@ while True:
     
     if BRIGHT_NEW != BRIGHT_LVL:
 
-        setBrightness(BRIGHT_NEW)
-
-        BRIGHT_LVL = BRIGHT_NEW
+        BRIGHT_LVL = setBrightness(BRIGHT_NEW)
 
     sleep(AVG_TIME/AVG_COUNT)
