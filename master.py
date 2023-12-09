@@ -61,10 +61,12 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-os.system("sudo chmod a+r+w+ /etc/rc.local")
-os.system("sudo chmod a+r+w+ /boot/config.txt")
-os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
-os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
+#os.system("sudo chmod a+r+w+ /etc/rc.local")
+#os.system("sudo chmod a+r+w+ /boot/config.txt")
+#os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
+#os.system("sudo chmod a+r+w+ /etc/xdg/openbox/lxde-pi-rc.xml")
+#os.system("sudo chmod a+r+w+ /etc/systemd/system/openautopro.splash.service")
+#os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 
 ########################
@@ -93,16 +95,16 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
 
-m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-b"><action name="bl_toggle"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
-os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
+#m = replaceString("/etc/xdg/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-b"><action name="bl_toggle"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
+#os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 
 
 ##################
 ## SPLASH SETUP ##
 ##################
 
-m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash1.h264","/home/pi/PiHead/Media/splash1.h264")
-m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash2.h264","/home/pi/PiHead/Media/splash2.h264")
+#m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash1.h264","/home/pi/PiHead/Media/splash1.h264")
+#m = replaceString("/etc/systemd/system/openautopro.splash.service","/usr/share/openautopro/splash2.h264","/home/pi/PiHead/Media/splash2.h264")
 
 
 #################
@@ -140,13 +142,13 @@ GPIO.output(OBD_PIN, 1)
 #m = appendString("/boot/config.txt","dtoverlay=spi-bcm2835-overlay")
 
 # CarPiHat real time clock ##
-m = removeString("/etc/rc.local","exit 0")
-m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device")
-m = appendString("/etc/rc.local", "sudo hwclock -s")
-m = appendString("/etc/rc.local", "date")
-m = appendString("/etc/rc.local","exit 0")
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
+#m = removeString("/etc/rc.local","exit 0")
+#m = appendString("/etc/rc.local", "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device")
+#m = appendString("/etc/rc.local", "sudo hwclock -s")
+#m = appendString("/etc/rc.local", "date")
+#m = appendString("/etc/rc.local","exit 0")
+#m = appendString("/boot/config.txt","#CarPiHat")
+#m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 
 
 ###################
@@ -157,8 +159,8 @@ IGN_PIN = 12
 EN_POWER_PIN = 25
 IGN_LOW_TIME = 5
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + EN_POWER_PIN + ",active_low")
+#m = appendString("/boot/config.txt","#CarPiHat")
+#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)

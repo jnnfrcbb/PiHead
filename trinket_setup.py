@@ -9,6 +9,6 @@ while not os.path.isdir(destinationFolder):
 
 print("trinket found")
 
-os.system("sudo chmod a+rw " + destinationFolder)
+os.system("sudo chmod a+r+w+ " + destinationFolder)
 
 os.system("cp -f " + source + " " + destinationFolder)
