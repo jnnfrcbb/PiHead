@@ -70,7 +70,7 @@ while True:
     print("SHIFT: FALSE")
     if VD0 < 0.1:
       print("BUTTON: OFF")
-      kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
+      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
     elif VD0 < 0.7:
       print("BUTTON: SOURCE")
       kbd.send(Keycode.M)  #VOICE
@@ -97,7 +97,7 @@ while True:
       kbd.send(Keycode.B)  #PLAY/PAUSE
     elif VD0 < 2.8:
       print("BUTTON: MODE")
-      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+      kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
   elif VD1 < 1:
     print("SHIFT: TRUE")
     if VD0 >= 1.4 and VD0 < 1.6:
