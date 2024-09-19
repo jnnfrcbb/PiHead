@@ -2,59 +2,39 @@
 
 #Based on code from this thread by PlasmaFlow: https://bluewavestudio.io/community/showthread.php?tid=672
 
-from inspect import modulesbyfile
 import smbus
 import os
-import subprocess
 from time import sleep
 import RPi.GPIO as GPIO
 
 
-#constants------------------------------------------------------------------------
+#BRIGHTNESS CONSTANTS-------------------------------------------------------------
 
 # Switch levels for brightness sensor in lux
-LUX_LEVEL_1=0.1     #5
-LUX_LEVEL_2=0.5     #20
-LUX_LEVEL_3=1       #80
-LUX_LEVEL_4=20      #180
-LUX_LEVEL_5=50      #250
-LUX_LEVEL_6=100     #300
-LUX_LEVEL_7=150     #350
-LUX_LEVEL_8=200     #400
-LUX_LEVEL_9=300     #450
-LUX_LEVEL_10=400    #500
+LUX_LEVEL = [0.1, 0.5, 1, 20, 50, 100, 150, 200, 300, 400]
 
 # Set this display brightness by switch levels
-DISP_BRIGHTNESS_0=23 #30
-DISP_BRIGHTNESS_1=46 #30
-DISP_BRIGHTNESS_2=69 #90
-DISP_BRIGHTNESS_3=92 #150
-DISP_BRIGHTNESS_4=115 #210
-DISP_BRIGHTNESS_5=138 #255
-DISP_BRIGHTNESS_6=161
-DISP_BRIGHTNESS_7=184
-DISP_BRIGHTNESS_8=207
-DISP_BRIGHTNESS_9=230
-DISP_BRIGHTNESS_10=255
+DISP_BRIGHTNESS = [17, 27, 40, 65, 90, 115, 140, 165, 195, 225, 255]
 
-# Check interval sensor 5,10,15,20,25,30
-TSL2561_CHECK_INTERVAL=5
-
-# Switch to night on this level or lower (-1 = disabled / 0-10)
-TSL2561_DAYNIGHT_ON_STEP=4
+# Starting step level
+step = DISP_BRIGHTNESS[5]
 
 
-#day/night switching--------------------------------------------------------------
+#DAY/NIGHT SWITCHING--------------------------------------------------------------
 
-OUT_PIN = 15
-DAYNIGHT_GPIO = 0
+#Switch to night mode on this level or lower
+DAYNIGHT_STEP = 4
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(OUT_PIN, GPIO.OUT)
+#GPIO pin to output day/night signal (-1 = GPIO output disabled)
+DAYNIGHT_PIN = 15     
+
+#If using day/night signal, setup GPIO
+if DAYNIGHT_PIN != -1:
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DAYNIGHT_PIN, GPIO.OUT)
 
 
-#I2C setup------------------------------------------------------------------------
-
+#I2C SETUP------------------------------------------------------------------------
 BUS = 1
 TSL2561_ADDR = 0x39     #the addresss of TSL2561 can be 0x29, 0x39 or 0x49
 
@@ -63,12 +43,21 @@ i2cBus = smbus.SMBus(BUS)
 # Start messure with 402 ms
 # (scale factor 1)
 i2cBus.write_byte_data(TSL2561_ADDR, 0x80, 0x03)
-lastvalue = 0
 
 
-#---------------------------------------------------------------------------------
+#LUX AVERAGING--------------------------------------------------------------------
 
-while True:
+#Time to average readings over in seconds
+AVG_TIME=10
+
+#Number of readings to average over
+AVG_COUNT=20
+
+#Setup empty list for lux values
+READ_VALUES=[]
+
+# Function for getting and averaging lux
+def getLux():
     # read global brightness read low byte
     LSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8C)
     # read high byte
@@ -79,8 +68,6 @@ while True:
     # read high byte
     MSB = i2cBus.read_byte_data(TSL2561_ADDR, 0x8F)
     Infrared = (MSB << 8) + LSB
-    # Calc visible spectrum
-    Visible = Ambient - Infrared
     # Calc factor Infrared/Ambient
     Ratio = 0
     Lux = 0
@@ -98,59 +85,60 @@ while True:
     else:
         Lux = 0
 
-    Luxrounded = round(Lux,1)
-    if lastvalue != Luxrounded:
-        print ("Lux = {}\n".format(Luxrounded))
-        os.system("echo {} > /tmp/tsl2561".format(Luxrounded))
-        lastvalue = Luxrounded
+    #round lux value
+    luxRounded = round(Lux,1)
 
-    if Luxrounded <= LUX_LEVEL_1:
-        step = 0
-        new_brightness = DISP_BRIGHTNESS_0
-    elif Luxrounded > LUX_LEVEL_1 and Luxrounded <= LUX_LEVEL_2:
-        step = 1
-        new_brightness = DISP_BRIGHTNESS_1
-    elif Luxrounded > LUX_LEVEL_2 and Luxrounded <= LUX_LEVEL_3:
-        step = 2
-        new_brightness = DISP_BRIGHTNESS_2
-    elif Luxrounded > LUX_LEVEL_3 and Luxrounded <= LUX_LEVEL_4:
-        step = 3
-        new_brightness = DISP_BRIGHTNESS_3
-    elif Luxrounded > LUX_LEVEL_4 and Luxrounded <= LUX_LEVEL_5:
-        step = 4
-        new_brightness = DISP_BRIGHTNESS_4
-    elif Luxrounded > LUX_LEVEL_5 and Luxrounded <= LUX_LEVEL_6:
-        step = 5
-        new_brightness = DISP_BRIGHTNESS_5
-    elif Luxrounded > LUX_LEVEL_6 and Luxrounded <= LUX_LEVEL_7:
-        step = 6
-        new_brightness = DISP_BRIGHTNESS_6
-    elif Luxrounded > LUX_LEVEL_7 and Luxrounded <= LUX_LEVEL_8:
-        step = 7
-        new_brightness = DISP_BRIGHTNESS_7
-    elif Luxrounded > LUX_LEVEL_8 and Luxrounded <= LUX_LEVEL_9:
-        step = 8
-        new_brightness = DISP_BRIGHTNESS_8
-    elif Luxrounded > LUX_LEVEL_9 and Luxrounded <= LUX_LEVEL_10:
-        step = 9
-        new_brightness = DISP_BRIGHTNESS_9
-    elif Luxrounded > LUX_LEVEL_9:
-        step = 10
-        new_brightness = DISP_BRIGHTNESS_10
+    #check if we have a full set of readings to average over
+    if len(READ_VALUES) == AVG_COUNT:
+        #if so, delete oldest reading (otherwise, let it work up to AVG_COUNT)
+        READ_VALUES.pop(0)
 
-    file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
-    file.write(str(new_brightness))
-    file.close()
+    #add new lux value
+    READ_VALUES.append(luxRounded)
+    os.system("echo {} > /tmp/tsl2561".format(luxRounded))
 
-    if DAYNIGHT_GPIO == 0:
-        if step <= TSL2561_DAYNIGHT_ON_STEP:
-            print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger night")
-            os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
-            GPIO.output(OUT_PIN, 1) ## output signal on GPIO to say night mode should activate
-        else:
-            if step > TSL2561_DAYNIGHT_ON_STEP:
-                print("Lux = {} | ".format(Luxrounded) + "Level " + str(step) + " -> trigger day")
+    #return average of stored readings
+    return sum(READ_VALUES)/len(READ_VALUES)
+
+
+#CALCULATING AND SETTING BRIGHTNESS-----------------------------------------------
+
+# Function for calculating step
+def getStep(luxValue):
+    for luxLevel in LUX_LEVEL:
+        if luxValue <= luxLevel:
+            break
+    return LUX_LEVEL.index(luxLevel)
+
+# Function for writing brightness to file
+def writeStep(newStep):
+    
+    if newStep != step:
+
+        file = open("/sys/class/backlight/rpi_backlight/brightness", "w")
+        file.write(str(DISP_BRIGHTNESS[newStep]))
+        file.close()
+
+        if DAYNIGHT_PIN != -1:
+            if newStep <= DAYNIGHT_STEP:
+                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger night")
+                os.system("touch /tmp/night_mode_enabled >/dev/null 2>&1")
+                GPIO.output(DAYNIGHT_PIN, 1) ## output signal on GPIO to say night mode should activate
+            else:
+                #print("Lux = {} | ".format(AVG_LUX) + "Level " + str(newStep) + " -> trigger day")
                 os.system("sudo rm /tmp/night_mode_enabled >/dev/null 2>&1")
-                GPIO.output(OUT_PIN, 0) ## output signal on GPIO to say day mode should activate
+                GPIO.output(DAYNIGHT_PIN, 0) ## output signal on GPIO to say day mode should activate
+    
+        step = newStep
+    
+    
+#START LOOPING--------------------------------------------------------------------
 
-    sleep (TSL2561_CHECK_INTERVAL)
+while True:
+
+    #AVG_LUX = getLux()
+    #writeStep(getStep(AVG_LUX))
+    
+    writeStep(getStep(getLux))
+
+    sleep(AVG_TIME/AVG_COUNT) #0.25)

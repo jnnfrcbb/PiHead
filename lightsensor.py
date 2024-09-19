@@ -90,7 +90,7 @@ def getLux():
 #Setup empty list for lux values
 LUX_VALUES=[]
 
-#function for averahing lux
+#function for averaging lux
 def avgLux(luxVal):
     #check if we have a full set of readings to average over
     if len(LUX_VALUES) == AVG_COUNT:

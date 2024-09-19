@@ -87,8 +87,8 @@ os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
 ## CONTROLLER_SERVICE ##
 ########################
 
-m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/volume_encoder.ini")
-m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/playback_encoder.ini")
+m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_volume.ini")
+m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_playback.ini")
 
 
 ##############################
@@ -147,6 +147,7 @@ GPIO.setup(OBD_PIN,GPIO.OUT)
 #m = appendString("/etc/rc.local", "sudo hwclock -s")
 #m = appendString("/etc/rc.local", "date")
 #m = appendString("/etc/rc.local","exit 0")
+
 #m = appendString("/boot/config.txt","#CarPiHat")
 #m = appendString("/boot/config.txt","dtoverlay=i2c-rtc,ds1307")
 
