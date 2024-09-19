@@ -61,17 +61,17 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-#os.system("sudo chmod a+r+w+ /etc/rc.local")
-#os.system("sudo chmod a+r+w+ /boot/config.txt")
+os.system("sudo chmod a+r+w+ /etc/rc.local")
+os.system("sudo chmod a+r+w+ /boot/config.txt")
 os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
-#os.system("sudo chmod a+r+w+ /etc/xdg/openbox/lxde-pi-rc.xml")
-#os.system("sudo chmod a+r+w+ /etc/systemd/system/openautopro.splash.service")
-#os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
+os.system("sudo chmod a+r+w+ /etc/xdg/openbox/lxde-pi-rc.xml")
+os.system("sudo chmod a+r+w+ /etc/systemd/system/openautopro.splash.service")
+os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 
-########################
-## LIGHT SENSOR SETUP ##
-########################
+##################
+## LIGHT SENSOR ##
+##################
 
 os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
@@ -114,7 +114,7 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 AMP_PIN=22
 
 GPIO.setup(AMP_PIN,GPIO.OUT)
-GPIO.output(AMP_PIN, 1)
+#GPIO.output(AMP_PIN, 1)
 
 
 ########################
@@ -124,7 +124,7 @@ GPIO.output(AMP_PIN, 1)
 OBD_PIN=27
 
 GPIO.setup(OBD_PIN,GPIO.OUT)
-GPIO.output(OBD_PIN, 1)
+#GPIO.output(OBD_PIN, 1)
 
 
 ##############

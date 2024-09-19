@@ -27,9 +27,9 @@
 | 20 | 39 | GND |   |   | 40 | GPIO 21 | Free (ENC1 SW) |
 
 
-Playback: GPIO 6 (B), 19 (G), 26 (Y)
+Playback: GPIO 6 (W), 19 (G), 26 (Y)
 
-Volume: GPIO 16 (B), 20 (G), 21 (Y)
+Volume: GPIO 16 (W), 20 (G), 21 (Y)
 
 RGB data: GPIO 18
 
