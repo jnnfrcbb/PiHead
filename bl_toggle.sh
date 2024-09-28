@@ -1,2 +1,2 @@
 #!/bin/bash
-python /home/pi/PiHead/bl_toggle.py
+sudo python /home/pi/PiHead/bl_toggle.py &
