@@ -80,7 +80,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## TRINKET SETUP ##
 ###################
 
-os.system("sudo python /home/pi/PiHead/trinket_setup.py &")
+os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 ########################

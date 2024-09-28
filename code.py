@@ -1,58 +1,59 @@
 import board
+import time
+import usb_hid
+import neopixel
+import digitalio
 from analogio import AnalogIn
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
-import time
-import neopixel
-import adafruit_dotstar as dotstar
 
-red = 255
-green = 40
-blue = 0
+######################
+## SETUP RGB STRIPS ##
+######################
 
-fpanelBrightness = 0.3
-doorBrightness = 0.25
+pins=[board.GP16,board.GP17,board.GP18,board.GP19]
+rgb_count=[9,10,10,10]
+bright_day=[0.25,0.25,0.5,0.5]
+bright_night=[0.1,0.1,0.1,0.1]
 
+colour=[255,40,0]
 
-#######################
-## SETUP ONBOARD LED ##
-#######################
+#DAY NIGHT SWITCH
+dn_switch = digitalio.DigitalInOut(board.GP22)
+dn_switch.switch_to_input(pull=digitalio.Pull.DOWN)
 
-led = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.2)
-led[0] = (red,green,blue)
+#LIGHTING
+i=0
 
-
-#################################
-## SETUP FRONT PANEL RGB STRIP ##
-#################################
-
-rgbCount = 10
-
-rgb = neopixel.NeoPixel(board.D2, rgbCount, brightness=fpanelBrightness)
-rgb.fill((red, green, blue))
+#populate strips
+pixels=[]
+while i<len(pins):
+    pixels.append(neopixel.NeoPixel(pins[i], rgb_count[i]))
+    i=i+1
 
 
 ####################
 ## SETUP KEYBOARD ##
 ####################
 
-kbd = Keyboard() #usb_hid.devices)
-
+kbd = Keyboard(usb_hid.devices)
 
 #########################
 ## SETUP ANALOG INPUTS ##
 #########################
 
-analog0in = AnalogIn(board.D0)
-analog1in = AnalogIn(board.D1)
+analog0in = AnalogIn(board.GP26)
+analog1in = AnalogIn(board.GP27)
 
 
 ##########################
 ## SETUP VOLTAGE READER ##
 ##########################
 
+boardVCC = 3.3
+
 def getVoltage(pin):
-    return float((pin.value * 3.3) / 65536)
+    return float((pin.value * boardVCC) / 65536)
 
 
 ####################
@@ -67,44 +68,54 @@ while True:
   print(VD0)
 
   if VD1 > 1:
-    print("SHIFT: FALSE")
+    #print("SHIFT: FALSE")
     if VD0 < 0.1:
-      print("BUTTON: OFF")
-      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+      print("BUTTON: MODE (SWITCH MODE)")
+      kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
     elif VD0 < 0.7:
-      print("BUTTON: SOURCE")
+      print("BUTTON: SOURCE (VOICE)")
       kbd.send(Keycode.M)  #VOICE
     elif VD0 < 1.1:
-      print("BUTTON: ATT")
+      print("BUTTON: ATT (HOME)")
       kbd.send(Keycode.H) #HOME
     elif VD0 < 1.4:
-      print("BUTTON: LIST")
+      print("BUTTON: LIST (MUTE)")
       kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
     elif VD0 < 1.65:
-      print("BUTTON: SEEK+")
+      print("BUTTON: SEEK+ (NEXT)")
       kbd.send(Keycode.N)  #NEXT TRACK
     elif VD0 < 1.9:
-      print("BUTTON: SEEK-")
+      print("BUTTON: SEEK- (PREVIOUS)")
       kbd.send(Keycode.V)  #PREVIOUS TRACK
     elif VD0 < 2.15:
-      print("BUTTON: VOL+")
+      print("BUTTON: VOL+ (VOLUME UP)")
       kbd.send(Keycode.F8) #VOLUME up
     elif VD0 < 2.4:
-      print("BUTTON: VOL-")
+      print("BUTTON: VOL- (VOLUME DOWN)")
       kbd.send(Keycode.F7) #VOLUME DOWN
     elif VD0 < 2.6:
-      print("BUTTON: SEL")
+      print("BUTTON: SEL (PLAY/PAUSE)")
       kbd.send(Keycode.B)  #PLAY/PAUSE
     elif VD0 < 2.8:
-      print("BUTTON: MODE")
-      kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
+      print("BUTTON: OFF (SCREEN)")
+      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
   elif VD1 < 1:
     print("SHIFT: TRUE")
     if VD0 >= 1.4 and VD0 < 1.6:
-      print("BUTTON: SHIFTUP")
+      print("BUTTON: SHIFTUP (MEDIA)")
       kbd.send(Keycode.J)  #LAUNCH MEDIA
     elif VD0 < 1.9:      
-      print("BUTTON: SHIFTDOWN")
+      print("BUTTON: SHIFTDOWN (NAVIGATION)")
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
-  time.sleep(0.275)
+  #light strips
+  i=0
+  while i<len(pins):
+      if dn_switch.value:
+          pixels[i].brightness = bright_night[i]
+      else:
+          pixels[i].brightness = bright_day[i]
+      pixels[i].fill((colour[0], colour[1], colour[2]))
+      i=i+1
+
+  time.sleep(0.15)
