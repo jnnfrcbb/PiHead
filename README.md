@@ -35,7 +35,8 @@ RGB data: GPIO 18
 
 RGB colours: GND = grey (to black); DATA = white (to white); VCC = green (to purple)
 
-Light Sensor: VCC = blue = 4; GND = green = 3; SCL = yellow = 1; SDA = orange = 2
+Light Sensor: SCL = blue ; SDA = green; GND = red; 3V = white
+
 
 ---
 

@@ -61,12 +61,12 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-os.system("sudo chmod a+r+w+ /etc/rc.local")
-os.system("sudo chmod a+r+w+ /boot/config.txt")
-os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
-os.system("sudo chmod a+r+w+ /etc/xdg/openbox/lxde-pi-rc.xml")
-os.system("sudo chmod a+r+w+ /etc/systemd/system/openautopro.splash.service")
-os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
+#os.system("sudo chmod a+r+w+ /etc/rc.local")
+#os.system("sudo chmod a+r+w+ /boot/config.txt")
+#os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
+#os.system("sudo chmod a+r+w+ /etc/xdg/openbox/lxde-pi-rc.xml")
+#os.system("sudo chmod a+r+w+ /etc/systemd/system/openautopro.splash.service")
+#os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 
 ##################
