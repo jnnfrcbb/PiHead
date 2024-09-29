@@ -73,22 +73,22 @@ GPIO.setmode(GPIO.BCM)
 ## LIGHT SENSOR ##
 ##################
 
-os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+#os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 ###################
 ## TRINKET SETUP ##
 ###################
 
-os.system("sudo python /home/pi/PiHead/micro_setup.py &")
+#os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 ########################
 ## CONTROLLER_SERVICE ##
 ########################
 
-m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_volume.ini")
-m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_playback.ini")
+#m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_volume.ini")
+#m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_playback.ini")
 
 
 ##############################
