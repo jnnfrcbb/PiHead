@@ -119,7 +119,7 @@ GPIO.setmode(GPIO.BCM)
 
 AMP_PIN=22
 
-#GPIO.setup(AMP_PIN,GPIO.OUT)
+GPIO.setup(AMP_PIN,GPIO.OUT)
 #GPIO.output(AMP_PIN, 1)
 
 
@@ -129,7 +129,7 @@ AMP_PIN=22
 
 OBD_PIN=27
 
-#GPIO.setup(OBD_PIN,GPIO.OUT)
+GPIO.setup(OBD_PIN,GPIO.OUT)
 #GPIO.output(OBD_PIN, 1)
 
 
