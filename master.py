@@ -73,7 +73,7 @@ GPIO.setmode(GPIO.BCM)
 ## LIGHT SENSOR ##
 ##################
 
-#os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 ###################
