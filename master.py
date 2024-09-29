@@ -80,15 +80,15 @@ GPIO.setmode(GPIO.BCM)
 ## TRINKET SETUP ##
 ###################
 
-#os.system("sudo python /home/pi/PiHead/micro_setup.py &")
+os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 ########################
 ## CONTROLLER_SERVICE ##
 ########################
 
-#m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_volume.ini")
-#m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_playback.ini")
+m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_volume.ini")
+m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /home/pi/PiHead/enc_playback.ini")
 
 
 ##############################
@@ -166,8 +166,8 @@ IGN_PIN = 12
 EN_POWER_PIN = 25
 IGN_LOW_TIME = 5
 
-#m = appendString("/boot/config.txt","#CarPiHat")
-#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
+m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
