@@ -95,14 +95,13 @@ m = appendString("/etc/xdg/lxsession/LXDE-pi/autostart","controller_service /hom
 ## HOTKEY FOR DISPLAY POWER ##
 ##############################
 
-#if os.path.exists("$HOME/.config/openbox/") == False:
-#    os.system("sudo mkdir -p $HOME/.config/openbox")
-#else:
-#    if os.path.exists("$HOME/.config/openbox/lxde-pi-rc.xml") == False:
-#        os.system("sudo cp /etc/xdg/openbox/lxde-pi-rc.xml $HOME/.config/openbox")
-
-#m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-B"><action name="Execute"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
-#os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
+if os.path.exists("$HOME/.config/openbox/") == False:
+    os.system("sudo mkdir -p $HOME/.config/openbox")
+else:
+    if os.path.exists("$HOME/.config/openbox/lxde-pi-rc.xml") == False:
+        os.system("sudo cp /etc/xdg/openbox/lxde-pi-rc.xml $HOME/.config/openbox")
+        m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-B"><action name="Execute"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
+        os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
 
 
 ##################
