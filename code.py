@@ -3,6 +3,7 @@ import time
 import usb_hid
 import neopixel
 import digitalio
+import rotaryio
 from analogio import AnalogIn
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
@@ -38,6 +39,41 @@ while i<len(pins):
 
 kbd = Keyboard(usb_hid.devices)
 
+
+###########################
+## SETUP ROTARY ENCODERS ##
+###########################
+
+rot_timeout = 10
+btn_timeout = 3
+
+pb_encoder = rotaryio.IncrementalEncoder(board.GP16, board.GP17) #todo: pins
+vol_encoder = rotaryio.IncrementalEncorder(board.GP12, board.GP11) #todo: pins
+
+pb_last_pos = 0
+vol_last_pos = 0
+
+pb_rot_count = -1
+vol_rot_count = -1
+
+pb_btn = digitalio.DigitalInOut(board.GP18) #todo: pins
+vol_btn = digitalio.DigitalInOut(board.GP10) #todo: pins
+
+pb_btn.direction = digitalio.Direction.INPUT
+vol_btn.pull = digitalio.Pull.UP
+
+pb_btn.direction = digitalio.Direction.INPUT
+vol_btn.pull = digitalio.Pull.UP
+
+pb_btn_state = None
+pb_btn_dbl = False
+vol_btn_state = None
+vol_btn_dbl = False
+
+pb_btn_count = -1
+vol_btn_count = -1
+
+
 #########################
 ## SETUP ANALOG INPUTS ##
 #########################
@@ -61,6 +97,9 @@ def getVoltage(pin):
 ####################
 
 while True:
+
+
+  ## Steering wheel control
 
   VD0 = getVoltage(analog0in) #AD
   VD1 = getVoltage(analog1in) #SHIFT
@@ -89,7 +128,7 @@ while True:
       kbd.send(Keycode.V)  #PREVIOUS TRACK
     elif VD0 < 2.15:
       print("BUTTON: VOL+ (VOLUME UP)")
-      kbd.send(Keycode.F8) #VOLUME up
+      kbd.send(Keycode.F8) #VOLUME UP
     elif VD0 < 2.4:
       print("BUTTON: VOL- (VOLUME DOWN)")
       kbd.send(Keycode.F7) #VOLUME DOWN
@@ -108,7 +147,86 @@ while True:
       print("BUTTON: SHIFTDOWN (NAVIGATION)")
       kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
-  #light strips
+
+  ## rotary encorders
+
+  #volume encoder
+  vol_position = vol_encoder.position
+  if vol_position != vol_last_pos:
+    if vol_position > vol_last_pos:
+       print("volume up")
+       kbd.send(Keycode.F8) #VOLUME UP
+    elif vol_position < vol_last_pos:
+       print ("volume down")
+       kbd.send(Keycode.F7) #VOLUME DOWN
+
+  if not vol_btn.value and vol_btn_state is None:
+    vol_btn_state = "pressed"
+  if vol_btn.value and vol_btn_state == "pressed":
+    if vol_btn_dbl == False:
+      vol_btn_dbl = True
+      vol_btn_count = 0
+    elif vol_btn_dbl == True:
+      print ("vol_double")
+      kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+      vol_btn_dbl = False
+      vol_btn_count = -1
+    vol_btn_state = None
+  
+  if vol_btn_count >= 0 and vol_btn_count < btn_timeout:
+    vol_btn_count += 1
+  elif vol_btn_count == btn_timeout:
+    print ("vol_single")
+    kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+    vol_btn_state = None
+    vol_btn_dbl = False
+    vol_btn_count = -1  
+
+  #playback encoder
+  pb_position = pb_encoder.position
+  if pb_position != pb_last_pos:
+    if pb_position > pb_last_pos + 1:
+      print ("next")
+      kbd.send(Keycode.N)  #NEXT TRACK
+      pb_last_pos = pb_position
+      pb_rot_count = 0
+    elif pb_position < pb_last_pos - 1:
+      print("previous")
+      kbd.send(Keycode.V)  #PREVIOUS TRACK
+      pb_last_pos = pb_position
+      pb_rot_count = 0
+  
+  if pb_rot_count >= 0 and pb_rot_count < rot_timeout:
+    pb_rot_count +=1
+  elif pb_rot_count == rot_timeout:
+    pb_encoder.position = 0
+    pb_last_pos = 0
+    pb_rot_count = -1
+    print("timeout pb rotary")
+  
+  if not pb_btn.value and pb_btn_state is None:
+    pb_btn_state = "pressed"
+  if pb_btn.value and pb_btn_state == "pressed":
+    if pb_btn_dbl == False:
+      pb_btn_dbl = True
+      pb_btn_count = 0
+    elif pb_btn_dbl == True:
+      print("pb_double")
+      kbd.send(Keycode.J)  #LAUNCH MEDIA
+      pb_btn_dbl = False
+      pb_btn_count = -1
+    pb_btn_state = None
+
+  if pb_btn_count >= 0 and pb_btn_count < btn_timeout:
+    pb_btn_count += 1
+  elif pb_btn_count == btn_timeout:
+    print ("pb_single")
+    kbd.send(Keycode.B)  #PLAY/PAUSE
+    pb_btn_state = None
+    pb_btn_dbl = False
+    pb_btn_count = -1
+
+  ## light strips
   i=0
   while i<len(pins):
       if dn_switch.value:

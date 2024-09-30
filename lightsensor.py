@@ -3,7 +3,6 @@
 #Based on code from this thread by PlasmaFlow: https://bluewavestudio.io/community/showthread.php?tid=672
 
 import smbus
-import os
 from time import sleep
 import RPi.GPIO as GPIO
 
@@ -25,7 +24,7 @@ BRIGHT_CRV = 0.5
 AVG_TIME=20
 
 #Number of readings to average over
-AVG_COUNT=40
+AVG_COUNT=20
 
 #Switch to night mode level
 DAYNIGHT = 125
