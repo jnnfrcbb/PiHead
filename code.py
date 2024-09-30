@@ -108,7 +108,7 @@ while True:
 
   if VD1 > 1:
     #print("SHIFT: FALSE")
-    if VD0 < 0.1:
+    if VD0 > 0 and VD0 < 0.1:
       print("BUTTON: MODE (SWITCH MODE)")
       kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
     elif VD0 < 0.7:
