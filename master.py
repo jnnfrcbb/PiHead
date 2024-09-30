@@ -88,7 +88,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## MICRO SETUP ##
 #################
 
-#os.system("sudo python /home/pi/PiHead/micro_setup.py &")
+os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 ##############################
