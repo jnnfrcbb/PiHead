@@ -106,7 +106,6 @@ else:
         os.system("sudo chmod a+x /home/pi/PiHead/reboot.sh")
 
 
-
 ##################
 ## SPLASH SETUP ##
 ##################
