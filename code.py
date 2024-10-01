@@ -305,6 +305,7 @@ while True:
                 vol_btn_long = -1
                 if enable_dev == True:
                     print("vol long press")
+                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) #REBOOT
         
         #playback encoder
         
