@@ -31,7 +31,7 @@ while c < 5:
     if internet():
         p = updateRepo("jnnfrcbb/PiHead")
         print (p)
-        #os.system("reboot")
+        os.system("reboot")
     else:
         time.sleep(30)
     c=c+1
