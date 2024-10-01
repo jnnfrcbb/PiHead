@@ -371,4 +371,4 @@ while True:
     ## END ##
     #########
         
-    time.sleep(0.075)
+    time.sleep(0.125)
