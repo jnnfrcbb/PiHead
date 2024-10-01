@@ -20,16 +20,11 @@
 | 13 | 25 | GND |   |   | 26 | GPIO 7 | Reverse |
 | 14 | 27 | Reserved |  |   | 28 | Reserved  |   |
 | 15 | 29 | GPIO 5 | Free |   | 30 | GND |   |
-| 16 | 31 | GPIO 6 | Free (ENC2 DT) |   | 32 | GPIO 12 | 12V Switched |
+| 16 | 31 | GPIO 6 | Free |   | 32 | GPIO 12 | 12V Switched |
 | 17 | 33 | GPIO 13 | Illumination |   | 34 | GND  |   |
-| 18 | 35 | GPIO 19 | Free (ENC2 CLK) |   | 36 | GPIO 16 | Free (ENC1 DT) |
-| 19 | 37 | GPIO 26 | Free (ENC2 SW) |   | 38 | GPIO 20 | Free (ENC1 CLK) |
-| 20 | 39 | GND |   |   | 40 | GPIO 21 | Free (ENC1 SW) |
-
-
-Playback: GPIO 6 (W), 19 (G), 26 (Y)
-
-Volume: GPIO 16 (W), 20 (G), 21 (Y)
+| 18 | 35 | GPIO 19 | Free |   | 36 | GPIO 16 | Free |
+| 19 | 37 | GPIO 26 | Free |   | 38 | GPIO 20 | Free |
+| 20 | 39 | GND |   |   | 40 | GPIO 21 | Free |
 
 RGB data: GPIO 18
 
