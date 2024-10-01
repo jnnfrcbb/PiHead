@@ -9,10 +9,10 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
 
-enable_dev= False
+enable_dev= True
 enable_enc = True
-enable_whl = True
-enable_rgb = True
+enable_whl = False
+enable_rgb = False
 
 ######################
 ## SETUP RGB STRIPS ##
@@ -56,6 +56,7 @@ if enable_enc == True:
 
     rot_timeout = 10
     btn_timeout = 4
+    btn_long_press = 10
 
     #volume encoder
     vol_out = digitalio.DigitalInOut(board.GP12)
@@ -76,6 +77,7 @@ if enable_enc == True:
     vol_btn_state = None
     vol_btn_dbl = False
     vol_btn_count = -1
+    vol_btn_long = -1
 
     #playback encoder
     pb_out = digitalio.DigitalInOut(board.GP8)
@@ -96,6 +98,7 @@ if enable_enc == True:
     pb_btn_state = None
     pb_btn_dbl = False
     pb_btn_count = -1
+    pb_btn_long = -1
 
 #########################
 ## SETUP ANALOG INPUTS ##
@@ -257,8 +260,12 @@ while True:
             vol_timeout = -1
             if enable_dev== True:
                 print("timeout vol rotary")
+          
         if not vol_btn.value and vol_btn_state is None:
             vol_btn_state = "pressed"
+            vol_btn_long = 0
+        elif vol_btn.value and vol_btn_state == -1:
+            vol_btn_state = None
         if vol_btn.value and vol_btn_state == "pressed":
             if vol_btn_dbl == False:
                 vol_btn_dbl = True
@@ -270,6 +277,7 @@ while True:
                     kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
                 vol_btn_dbl = False
                 vol_btn_count = -1
+                vol_btn_long = -1
             vol_btn_state = None
 
         if vol_btn_count >= 0 and vol_btn_count < btn_timeout:
@@ -284,6 +292,19 @@ while True:
             vol_btn_state = None
             vol_btn_dbl = False
             vol_btn_count = -1
+            vol_btn_long = -1
+            
+        if vol_btn_long >= 0 and vol_btn_long < btn_long_press:
+            vol_btn_long +=1
+            if enable_dev == True:
+                print(vol_btn_long)
+            if vol_btn_long == btn_long_press:
+                vol_btn_state = -1
+                vol_btn_dbl = False
+                vol_btn_count = -1                
+                vol_btn_long = -1
+                if enable_dev == True:
+                    print("vol long press")
         
         #playback encoder
         
@@ -333,8 +354,12 @@ while True:
             pb_timeout = -1
             if enable_dev== True:
                 print("timeout pb rotary")
+          
         if not pb_btn.value and pb_btn_state is None:
             pb_btn_state = "pressed"
+            pb_btn_long = 0
+        elif pb_btn.value and pb_btn_state == -1:
+            pb_btn_state = None
         if pb_btn.value and pb_btn_state == "pressed":
             if pb_btn_dbl == False:
                 pb_btn_dbl = True
@@ -346,6 +371,7 @@ while True:
                     kbd.send(Keycode.J)  #LAUNCH MEDIA
                 pb_btn_dbl = False
                 pb_btn_count = -1
+                pb_btn_long = -1
             pb_btn_state = None
 
         if pb_btn_count >= 0 and pb_btn_count < btn_timeout:
@@ -360,6 +386,19 @@ while True:
             pb_btn_state = None
             pb_btn_dbl = False
             pb_btn_count = -1
+            pb_btn_long = -1
+            
+        if pb_btn_long >= 0 and pb_btn_long < btn_long_press:
+            pb_btn_long +=1
+            if enable_dev == True:
+                print(pb_btn_long)
+            if pb_btn_long == btn_long_press:
+                pb_btn_state = -1
+                pb_btn_dbl = False
+                pb_btn_count = -1                
+                pb_btn_long = -1
+                if enable_dev == True:
+                    print("pb long press")
     
     
     ##################
