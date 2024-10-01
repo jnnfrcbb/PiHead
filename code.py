@@ -72,7 +72,7 @@ if enable_enc == True:
 
     vol_btn = digitalio.DigitalInOut(board.GP13) 
     vol_btn.direction = digitalio.Direction.INPUT
-    vol_btn.direction = digitalio.Direction.INPUT
+    #vol_btn.direction = digitalio.Direction.INPUT
 
     vol_btn_state = None
     vol_btn_dbl = False
@@ -93,7 +93,7 @@ if enable_enc == True:
 
     pb_btn = digitalio.DigitalInOut(board.GP9)
     pb_btn.direction = digitalio.Direction.INPUT
-    pb_btn.direction = digitalio.Direction.INPUT
+    #pb_btn.direction = digitalio.Direction.INPUT
 
     pb_btn_state = None
     pb_btn_dbl = False
