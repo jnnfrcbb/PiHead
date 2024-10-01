@@ -9,6 +9,8 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
 
+dev = True
+
 ######################
 ## SETUP RGB STRIPS ##
 ######################
@@ -124,44 +126,68 @@ while True:
     if VD1 > 1:
         #print("SHIFT: FALSE")
         if VD0 > 0 and VD0 < 0.1:
-            print("BUTTON: MODE (SWITCH MODE)")
-            #kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
+            if dev == True:
+                print("BUTTON: MODE (SWITCH MODE)")
+            else:
+                kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
         elif VD0 < 0.7:
-            print("BUTTON: SOURCE (VOICE)")
-            #kbd.send(Keycode.M)  #VOICE
+            if dev == True:
+                print("BUTTON: SOURCE (VOICE)")
+            else:
+                kbd.send(Keycode.M)  #VOICE
         elif VD0 < 1.1:
-            print("BUTTON: ATT (HOME)")
-            #kbd.send(Keycode.H) #HOME
+            if dev == True:
+                print("BUTTON: ATT (HOME)")
+            else:
+                kbd.send(Keycode.H) #HOME
         elif VD0 < 1.4:
-            print("BUTTON: LIST (MUTE)")
-            #kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+            if dev == True:
+                print("BUTTON: LIST (MUTE)")
+            else:
+                kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
         elif VD0 < 1.65:
-            print("BUTTON: SEEK+ (NEXT)")
-            #kbd.send(Keycode.N)  #NEXT TRACK
+            if dev == True:
+                print("BUTTON: SEEK+ (NEXT)")
+            else:
+                kbd.send(Keycode.N)  #NEXT TRACK
         elif VD0 < 1.9:
-            print("BUTTON: SEEK- (PREVIOUS)")
-            #kbd.send(Keycode.V)  #PREVIOUS TRACK
+            if dev == True:
+                print("BUTTON: SEEK- (PREVIOUS)")
+            else:
+                kbd.send(Keycode.V)  #PREVIOUS TRACK
         elif VD0 < 2.15:
-            print("BUTTON: VOL+ (VOLUME UP)")
-            #kbd.send(Keycode.F8) #VOLUME UP
+            if dev == True:
+                print("BUTTON: VOL+ (VOLUME UP)")
+            else:
+                kbd.send(Keycode.F8) #VOLUME UP
         elif VD0 < 2.4:
-            print("BUTTON: VOL- (VOLUME DOWN)")
-            #kbd.send(Keycode.F7) #VOLUME DOWN
+            if dev == True:
+                print("BUTTON: VOL- (VOLUME DOWN)")
+            else:
+                kbd.send(Keycode.F7) #VOLUME DOWN
         elif VD0 < 2.6:
-            print("BUTTON: SEL (PLAY/PAUSE)")
-            #kbd.send(Keycode.B)  #PLAY/PAUSE
+            if dev == True:
+                print("BUTTON: SEL (PLAY/PAUSE)")
+            else:
+                kbd.send(Keycode.B)  #PLAY/PAUSE
         elif VD0 < 2.8:
-            print("BUTTON: OFF (SCREEN)")
-            #kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+            if dev == True:
+                print("BUTTON: OFF (SCREEN)")
+            else:
+                kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
     elif VD1 < 1:
         if VD0 > 1:
             print("SHIFT: TRUE")
             if VD0 >= 1.4 and VD0 < 1.6:
-                print("BUTTON: SHIFTUP (MEDIA)")
-                #kbd.send(Keycode.J)  #LAUNCH MEDIA
-            elif VD0 < 1.9:      
-                print("BUTTON: SHIFTDOWN (NAVIGATION)")
-                #kbd.send(Keycode.F) #LAUNCH NAVIGATION
+                if dev == True:
+                    print("BUTTON: SHIFTUP (MEDIA)")
+                else:
+                    kbd.send(Keycode.J)  #LAUNCH MEDIA
+            elif VD0 < 1.9:
+                if dev == True: 
+                    print("BUTTON: SHIFTDOWN (NAVIGATION)")
+                else:
+                    kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
     ##############
     ## ENCODERS ##
@@ -180,8 +206,10 @@ while True:
                 vol_rot_count = 0
                 vol_direction = 0
                 vol_timeout = -1
-                #kbd.send(Keycode.F8) #VOLUME UP
-                print ("volume up")
+                if dev == True:
+                    print ("volume up")
+                else:
+                    kbd.send(Keycode.F8) #VOLUME UP
             else:
                 vol_timeout = 0
                 vol_direction = 1
@@ -195,8 +223,11 @@ while True:
                 vol_rot_count = 0
                 vol_direction = 0
                 vol_timeout = -1
-                #kbd.send(Keycode.F7) #VOLUME DOWN
-                print ("volume down")
+                if dev == True:
+                    print ("volume down")
+                else:
+                    
+                    kbd.send(Keycode.F7) #VOLUME DOWN
             else:
                 vol_timeout = 0
                 vol_direction = -1
@@ -209,8 +240,8 @@ while True:
         vol_last_pos = 0
         vol_rot_count = 0
         vol_timeout = -1
-        print("timeout vol rotary")
-      
+        if dev == True:
+            print("timeout vol rotary")
     if not vol_btn.value and vol_btn_state is None:
         vol_btn_state = "pressed"
     if vol_btn.value and vol_btn_state == "pressed":
@@ -218,18 +249,23 @@ while True:
             vol_btn_dbl = True
             vol_btn_count = 0
         elif vol_btn_dbl == True:
-            print("vol_double")
-            #kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+            if dev == True:
+                print("vol_double")
+            else:              
+                kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
             vol_btn_dbl = False
             vol_btn_count = -1
         vol_btn_state = None
 
     if vol_btn_count >= 0 and vol_btn_count < btn_timeout:
         vol_btn_count += 1
-        print(vol_btn_count)
+        if dev == True:
+            print(vol_btn_count)
     elif vol_btn_count == btn_timeout:
-        print ("vol_single")
-        #kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+        if dev == True:
+            print ("vol_single")        
+        else:                 
+            kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
         vol_btn_state = None
         vol_btn_dbl = False
         vol_btn_count = -1
@@ -247,8 +283,10 @@ while True:
                 pb_rot_count = 0
                 pb_direction = 0
                 pb_timeout = -1
-                #kbd.send(Keycode.N)  #NEXT TRACK
-                print ("next")
+                if dev == True:
+                   print ("next") 
+                else:
+                    kbd.send(Keycode.N)  #NEXT TRACK
             else:
                 pb_timeout = 0
                 pb_direction = 1
@@ -262,8 +300,10 @@ while True:
                 pb_rot_count = 0
                 pb_direction = 0
                 pb_timeout = -1
-                #kbd.send(Keycode.V)  #PREVIOUS TRACK
-                print ("previous")
+                if dev == True:
+                    print ("previous")
+                else:
+                    kbd.send(Keycode.V)  #PREVIOUS TRACK
             else:
                 pb_timeout = 0
                 pb_direction = -1
@@ -276,8 +316,8 @@ while True:
         pb_last_pos = 0
         pb_rot_count = 0
         pb_timeout = -1
-        print("timeout pb rotary")
-      
+        if dev == True:
+            print("timeout pb rotary")
     if not pb_btn.value and pb_btn_state is None:
         pb_btn_state = "pressed"
     if pb_btn.value and pb_btn_state == "pressed":
@@ -285,18 +325,23 @@ while True:
             pb_btn_dbl = True
             pb_btn_count = 0
         elif pb_btn_dbl == True:
-            print("pb_double")
-            #kbd.send(Keycode.J)  #LAUNCH MEDIA
+            if dev == True:
+                print("pb_double")
+            else:
+                kbd.send(Keycode.J)  #LAUNCH MEDIA
             pb_btn_dbl = False
             pb_btn_count = -1
         pb_btn_state = None
 
     if pb_btn_count >= 0 and pb_btn_count < btn_timeout:
         pb_btn_count += 1
-        print(pb_btn_count)
+        if dev == True:
+            print(pb_btn_count)
     elif pb_btn_count == btn_timeout:
-        print ("pb_single")
-        #kbd.send(Keycode.B)  #PLAY/PAUSE
+        if dev == True:
+            print ("pb_single")    
+        else:
+            kbd.send(Keycode.B)  #PLAY/PAUSE
         pb_btn_state = None
         pb_btn_dbl = False
         pb_btn_count = -1
