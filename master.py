@@ -103,8 +103,7 @@ else:
         m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-B"><action name="Execute"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
         os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
         m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-R"><action name="Execute"><command>/home/pi/PiHead/reboot.sh</command></action></keybind>')
-        
-os.system("sudo chmod a+x /home/pi/PiHead/reboot.sh")
+        os.system("sudo chmod a+x /home/pi/PiHead/reboot.sh")
 
 
 
