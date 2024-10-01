@@ -9,10 +9,10 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
 
-enable_dev= True
+enable_dev= False
 enable_enc = True
-enable_whl = False
-enable_rgb = False
+enable_whl = True
+enable_rgb = True
 
 ######################
 ## SETUP RGB STRIPS ##
