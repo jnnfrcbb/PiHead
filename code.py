@@ -9,16 +9,16 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
 
-dev = True
-encoders = False
-wheel_control = False
-rgb = True
+dev = False
+enable_enc = False
+enable_whl = False
+enable_rgb = True
 
 ######################
 ## SETUP RGB STRIPS ##
 ######################
 
-if rgb == True:
+if enable_rgb == True:
 
     pins=[board.GP16,board.GP17,board.GP18,board.GP19]
     rgb_count=[9,10,10,10]
@@ -49,10 +49,10 @@ kbd = Keyboard(usb_hid.devices)
 
 
 ###########################
-## SETUP ROTARY ENCODERS ##
+## SETUP ROTARY enable_enc ##
 ###########################
 
-if encoders == True:
+if enable_enc == True:
 
     rot_timeout = 10
     btn_timeout = 4
@@ -101,7 +101,7 @@ if encoders == True:
 ## SETUP ANALOG INPUTS ##
 #########################
 
-if wheel_control == True:
+if enable_whl == True:
 
     analog0in = AnalogIn(board.GP26)
     analog1in = AnalogIn(board.GP27)
@@ -111,7 +111,7 @@ if wheel_control == True:
 ## SETUP VOLTAGE READER ##
 ##########################
 
-if wheel_control == True:
+if enable_whl == True:
 
     boardVCC = 3.3
 
@@ -129,7 +129,7 @@ while True:
     ## STEERING WHEEL CONTROL ##
     ############################
 
-    if wheel_control == True:
+    if enable_whl == True:
 
         VD0 = getVoltage(analog0in) #AD
         VD1 = getVoltage(analog1in) #SHIFT
@@ -203,10 +203,10 @@ while True:
                         kbd.send(Keycode.F) #LAUNCH NAVIGATION
     
     ##############
-    ## ENCODERS ##
+    ## enable_enc ##
     ##############
 
-    if encoders == True:
+    if enable_enc == True:
     
         #volume encoder
         
@@ -299,7 +299,7 @@ while True:
                     pb_direction = 0
                     pb_timeout = -1
                     if dev == True:
-                    print ("next") 
+                        print ("next") 
                     else:
                         kbd.send(Keycode.N)  #NEXT TRACK
                 else:
@@ -366,7 +366,7 @@ while True:
     ## LIGHT STRIPS ##
     ##################
         
-    if rgb == True:
+    if enable_rgb == True:
 
         i=0
         while i<len(pins):
