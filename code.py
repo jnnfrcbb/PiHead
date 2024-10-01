@@ -49,6 +49,10 @@ rot_timeout = 10
 btn_timeout = 4
 
 #volume encoder
+vol_out = digitalio.DigitalInOut(board.GP12)
+vol_out.direction = digitalio.Direction.OUTPUT
+vol_out.value = True
+
 vol_enc = rotaryio.IncrementalEncoder(board.GP15, board.GP14)
 vol_rot_limit = 1 #number of clicks to send command
 vol_last_pos = 0
@@ -65,6 +69,10 @@ vol_btn_dbl = False
 vol_btn_count = -1
 
 #playback encoder
+pb_out = digitalio.DigitalInOut(board.GP8)
+pb_out.direction = digitalio.Direction.OUTPUT
+pb_out.value = True
+
 pb_enc = rotaryio.IncrementalEncoder(board.GP11, board.GP10)
 pb_rot_limit = 2 #number of clicks to send command
 pb_last_pos = 0
