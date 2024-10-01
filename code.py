@@ -56,7 +56,7 @@ if enable_enc == True:
 
     rot_timeout = 10
     btn_timeout = 4
-    btn_long_press = 10
+    btn_long_press = 15
 
     #volume encoder
     vol_out = digitalio.DigitalInOut(board.GP12)
