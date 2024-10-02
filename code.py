@@ -179,7 +179,7 @@ if enable_whl == True:
             return True
         return ret
 
-    def whl_v_proc(VD0, VD1, exec):
+    def whl_proc(VD0, VD1, exec):
         ret = 0
         if VD1 > 1:
             if VD0 < 0.03: #< 0.1:
@@ -300,7 +300,7 @@ while True:
         if whl_input() == True and whl_state == None:
             whl_v[0] = getVoltage(analog0in) #AD
             whl_v[1] = getVoltage(analog1in) #SHIFT
-            w = whl_v_proc(whl_v[0], whl_v[1], False)
+            w = whl_proc(whl_v[0], whl_v[1], False)
             if w == 1:
                 whl_state = "pressed"
             elif w == 2:
@@ -308,13 +308,13 @@ while True:
         elif whl_input() == True and whl_state == "hold":
             whl_v[0] = getVoltage(analog0in) #AD
             whl_v[1] = getVoltage(analog1in) #SHIFT
-            w = whl_v_proc(whl_v[0], whl_v[1], True)
+            w = whl_proc(whl_v[0], whl_v[1], True)
             if w == 1:
                 whl_state = "pressed"
             elif w == 2:
                 whl_state = "hold"
         elif whl_input() == False and not whl_state == None:
-            w = whl_v_proc(whl_v[0], whl_v[1], True)
+            w = whl_proc(whl_v[0], whl_v[1], True)
             whl_v[0] = -1
             whl_v[1] = -1
             whl_state = None
