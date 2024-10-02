@@ -12,3 +12,5 @@ print("microcontroller found")
 os.system("sudo chmod a+r+w+ " + destinationFolder)
 
 os.system("cp -f " + source + " " + destinationFolder)
+
+print ("microcontroller updated")
