@@ -91,7 +91,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 #os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 source = "/home/pi/PiHead/code.py"
-destinationFolder = "/media/pi/CIRCUITPY/"
+destinationFolder = "/media/pi/CIRCUITPY"
 
 if os.path.isdir(destinationFolder):
     os.system("sudo chmod a+r+w+ " + destinationFolder)
