@@ -8,10 +8,12 @@ from analogio import AnalogIn
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
+
 enable_dev= False
 enable_enc = True
 enable_whl = True
 enable_rgb = True
+
 
 ######################
 ## SETUP RGB STRIPS ##
@@ -38,14 +40,13 @@ if enable_rgb == True:
     while i<len(pins):
         pixels.append(neopixel.NeoPixel(pins[i], rgb_count[i]))
         i=i+1
-    
-    
+
+
 ####################
 ## SETUP KEYBOARD ##
 ####################
 
 kbd = Keyboard(usb_hid.devices)
-
 
 ###########################
 ## SETUP ROTARY ENCODERS ##
@@ -155,6 +156,7 @@ if enable_enc == True:
                 proc = "enc btn " + str(enc_index) + " long"
         return proc
 
+
 #########################
 ## SETUP ANALOG INPUTS ##
 #########################
@@ -169,13 +171,110 @@ if enable_whl == True:
     def getVoltage(pin):
         return float((pin.value * boardVCC) / 65536)
 
+    def whl_input():
+        ret = False
+        VD0 = getVoltage(analog0in)
+        if VD0 <= 2.8:
+            return True
+        return ret
 
-####################
-## PROCESS INPUTS ##
-####################
+    def whl_v_proc(VD0, VD1, exec):
+        ret = 0
+        if VD1 > 1:
+            if VD0 < 0.03: #< 0.1:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: MODE (SWITCH MODE)")
+                    else:
+                        kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
+                ret = 1
+            elif VD0 > 0.5 and VD0 < 0.62: #< 0.7:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: SOURCE (VOICE)")
+                    else:
+                        kbd.send(Keycode.M)  #VOICE
+                ret = 1
+            elif VD0 > 1 and VD0 < 1.05: #1.1:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: ATT (HOME)")
+                    else:
+                        kbd.send(Keycode.H) #HOME
+                ret = 1
+            elif VD0 >1.3 and VD0 < 1.35: #< 1.4:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: LIST (MUTE)")
+                    else:
+                        kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+                ret = 1
+            elif VD0 > 1.5 and VD0 < 1.6: #< 1.65:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: SEEK+ (NEXT)")
+                    else:
+                        kbd.send(Keycode.N)  #NEXT TRACK
+                ret = 1
+            elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: SEEK- (PREVIOUS)")
+                    else:
+                        kbd.send(Keycode.V)  #PREVIOUS TRACK
+                ret = 1
+            elif VD0 > 2 and VD0 < 2.1: #< 2.15:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: VOL+ (VOLUME UP)")
+                    else:
+                        kbd.send(Keycode.F8) #VOLUME UP
+                ret = 2
+            elif VD0 > 2.3 and VD0 < 2.35: #< 2.4:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: VOL- (VOLUME DOWN)")
+                    else:
+                        kbd.send(Keycode.F7) #VOLUME DOWN
+                ret = 2
+            elif VD0 > 2.5 and VD0 < 2.55: #< 2.6:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: SEL (PLAY/PAUSE)")
+                    else:
+                        kbd.send(Keycode.B)  #PLAY/PAUSE
+                ret = 1
+            elif VD0 > 2.7 and VD0 < 2.75: #< 2.8:
+                if exec == True:
+                    if enable_dev== True:
+                        print("BUTTON: OFF (SCREEN)")
+                    else:
+                        kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+                ret = 1
+        elif VD1 < 1:
+            if VD0 > 1:
+                if VD0 >= 1.5 and VD0 < 1.6:
+                    if exec == True:
+                        if enable_dev== True:
+                            print("BUTTON: SHIFTUP (MEDIA)")
+                        else:
+                            kbd.send(Keycode.J)  #LAUNCH MEDIA
+                    ret = 1
+                elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
+                    if exec == True:
+                        if enable_dev== True: 
+                            print("BUTTON: SHIFTDOWN (NAVIGATION)")
+                        else:
+                            kbd.send(Keycode.F) #LAUNCH NAVIGATION
+                    ret = 1
+        return ret
+
+    whl_state = None
+
+    whl_v = [-1, -1]
 
 while True:
-    
+
     ##################
     ## LIGHT STRIPS ##
     ##################
@@ -190,84 +289,34 @@ while True:
                 pixels[i].brightness = bright_day[i]
             pixels[i].fill((colour[0], colour[1], colour[2]))
             i=i+1
-            
-            
+
     ############################
     ## STEERING WHEEL CONTROL ##
     ############################
 
     if enable_whl == True:
 
-        VD0 = getVoltage(analog0in) #AD
-        VD1 = getVoltage(analog1in) #SHIFT
-        
-        #if enable_dev == True:
-        #    print(VD0)
-
-        if VD1 > 1:
-            if VD0 < 0.03: #< 0.1:
-                if enable_dev== True:
-                    print("BUTTON: MODE (SWITCH MODE)")
-                else:
-                    kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
-            elif VD0 > 0.5 and VD0 < 0.62: #< 0.7:
-                if enable_dev== True:
-                    print("BUTTON: SOURCE (VOICE)")
-                else:
-                    kbd.send(Keycode.M)  #VOICE
-            elif VD0 > 1 and VD0 < 1.05: #1.1:
-                if enable_dev== True:
-                    print("BUTTON: ATT (HOME)")
-                else:
-                    kbd.send(Keycode.H) #HOME
-            elif VD0 >1.3 and VD0 < 1.35: #< 1.4:
-                if enable_dev== True:
-                    print("BUTTON: LIST (MUTE)")
-                else:
-                    kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
-            elif VD0 > 1.5 and VD0 < 1.6: #< 1.65:
-                if enable_dev== True:
-                    print("BUTTON: SEEK+ (NEXT)")
-                else:
-                    kbd.send(Keycode.N)  #NEXT TRACK
-            elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
-                if enable_dev== True:
-                    print("BUTTON: SEEK- (PREVIOUS)")
-                else:
-                    kbd.send(Keycode.V)  #PREVIOUS TRACK
-            elif VD0 > 2 and VD0 < 2.1: #< 2.15:
-                if enable_dev== True:
-                    print("BUTTON: VOL+ (VOLUME UP)")
-                else:
-                    kbd.send(Keycode.F8) #VOLUME UP
-            elif VD0 > 2.3 and VD0 < 2.35: #< 2.4:
-                if enable_dev== True:
-                    print("BUTTON: VOL- (VOLUME DOWN)")
-                else:
-                    kbd.send(Keycode.F7) #VOLUME DOWN
-            elif VD0 > 2.5 and VD0 < 2.55: #< 2.6:
-                if enable_dev== True:
-                    print("BUTTON: SEL (PLAY/PAUSE)")
-                else:
-                    kbd.send(Keycode.B)  #PLAY/PAUSE
-            elif VD0 > 2.7 and VD0 < 2.75: #< 2.8:
-                if enable_dev== True:
-                    print("BUTTON: OFF (SCREEN)")
-                else:
-                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
-        elif VD1 < 1:
-            if VD0 > 1:
-                print("SHIFT: TRUE")
-                if VD0 >= 1.5 and VD0 < 1.6:
-                    if enable_dev== True:
-                        print("BUTTON: SHIFTUP (MEDIA)")
-                    else:
-                        kbd.send(Keycode.J)  #LAUNCH MEDIA
-                elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
-                    if enable_dev== True: 
-                        print("BUTTON: SHIFTDOWN (NAVIGATION)")
-                    else:
-                        kbd.send(Keycode.F) #LAUNCH NAVIGATION
+        if whl_input() == True and whl_state == None:
+            whl_v[0] = getVoltage(analog0in) #AD
+            whl_v[1] = getVoltage(analog1in) #SHIFT
+            w = whl_v_proc(whl_v[0], whl_v[1], False)
+            if w == 1:
+                whl_state = "pressed"
+            elif w == 2:
+                whl_state = "hold"
+        elif whl_input() == True and whl_state == "hold":
+            whl_v[0] = getVoltage(analog0in) #AD
+            whl_v[1] = getVoltage(analog1in) #SHIFT
+            w = whl_v_proc(whl_v[0], whl_v[1], True)
+            if w == 1:
+                whl_state = "pressed"
+            elif w == 2:
+                whl_state = "hold"
+        elif whl_input() == False and not whl_state == None:
+            w = whl_v_proc(whl_v[0], whl_v[1], True)
+            whl_v[0] = -1
+            whl_v[1] = -1
+            whl_state = None
 
 
     ##############
@@ -370,5 +419,5 @@ while True:
     #########
     ## END ##
     #########
-        
-    time.sleep(0.075)
+
+    time.sleep(0.1)
