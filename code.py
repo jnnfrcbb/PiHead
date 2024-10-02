@@ -14,7 +14,7 @@ enable_enc = True
 enable_whl = True
 enable_rgb = True
 
-slp_time = 0.05 #sleep time for loop
+slp_time = 0.025 #sleep time for loop
 
 ######################
 ## SETUP RGB STRIPS ##
@@ -57,9 +57,9 @@ kbd = Keyboard(usb_hid.devices)
 if enable_enc == True:
 
     ## set parameters
-    rot_timeout = 30
-    btn_timeout = 10
-    btn_long_press = 30
+    rot_timeout = 60
+    btn_timeout = 20
+    btn_long_press = 60
 
     ## set up encoders
     ## 0 = volume; 1 = playback
