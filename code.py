@@ -14,7 +14,7 @@ enable_enc = True
 enable_whl = True
 enable_rgb = True
 
-slp_time = 0.025 #sleep time for loop
+slp_time = 0.05 #sleep time for loop
 
 ######################
 ## SETUP RGB STRIPS ##
