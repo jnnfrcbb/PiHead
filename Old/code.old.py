@@ -8,7 +8,6 @@ from analogio import AnalogIn
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
-
 enable_dev= False
 enable_enc = True
 enable_whl = True
@@ -54,51 +53,107 @@ kbd = Keyboard(usb_hid.devices)
 
 if enable_enc == True:
 
-    rot_timeout = 10
-    btn_timeout = 4
-    btn_long_press = 10
+    ## set parameters
+    rot_timeout = 15
+    btn_timeout = 5
+    btn_long_press = 15
 
-    #volume encoder
-    vol_out = digitalio.DigitalInOut(board.GP12)
-    vol_out.direction = digitalio.Direction.OUTPUT
-    vol_out.value = True
+    ## set up encoders
+    ## 0 = volume; 1 = playback
+    enc_3v = [board.GP12, board.GP8] #3V in
+    enc_sw = [board.GP13, board.GP9] #button pin
+    enc_clk = [board.GP15,board.GP11] #rotary pin 1
+    enc_dt = [board.GP14,board.GP10] #rotary pin 2
 
-    vol_enc = rotaryio.IncrementalEncoder(board.GP15, board.GP14)
-    vol_rot_limit = 1 #number of clicks to send command
-    vol_last_pos = 0
-    vol_direction = 0
-    vol_rot_count = 0
-    vol_timeout = -1
+    enc_rot_limit = [1,2] #number of clicks to trigger
+            
+    ## set up encoder variables
+    enc_pwr = []
 
-    vol_btn = digitalio.DigitalInOut(board.GP13) 
-    vol_btn.direction = digitalio.Direction.INPUT
-    #vol_btn.direction = digitalio.Direction.INPUT
+    enc_rot = []
+    enc_rot_pos = []
+    enc_rot_last_pos = []
+    enc_rot_direction = []
+    enc_rot_count = []
+    enc_rot_timeout = []
 
-    vol_btn_state = None
-    vol_btn_dbl = False
-    vol_btn_count = -1
-    vol_btn_long = -1
+    enc_btn = []
+    enc_btn_state = []
+    enc_btn_dbl = []
+    enc_btn_count = []
+    enc_btn_long = []
 
-    #playback encoder
-    pb_out = digitalio.DigitalInOut(board.GP8)
-    pb_out.direction = digitalio.Direction.OUTPUT
-    pb_out.value = True
+    enc_out = []
 
-    pb_enc = rotaryio.IncrementalEncoder(board.GP11, board.GP10)
-    pb_rot_limit = 2 #number of clicks to send command
-    pb_last_pos = 0
-    pb_direction = 0
-    pb_rot_count = 0
-    pb_timeout = -1
+    e = 0
 
-    pb_btn = digitalio.DigitalInOut(board.GP9)
-    pb_btn.direction = digitalio.Direction.INPUT
-    #pb_btn.direction = digitalio.Direction.INPUT
+    while e < len(enc_3v):
+        enc_pwr.append (digitalio.DigitalInOut(enc_3v[e]))
+        enc_pwr[e].direction = digitalio.Direction.OUTPUT
+        enc_pwr[e].value = True
 
-    pb_btn_state = None
-    pb_btn_dbl = False
-    pb_btn_count = -1
-    pb_btn_long = -1
+        enc_rot.append(rotaryio.IncrementalEncoder(enc_clk[e], enc_dt[e]))
+        enc_rot_pos.append(0)
+        enc_rot_last_pos.append(0)
+        enc_rot_direction.append(0)
+        enc_rot_count.append(0)
+        enc_rot_timeout.append(-1)
+
+        enc_btn.append (digitalio.DigitalInOut(enc_sw[e]))
+        enc_btn[e].direction = digitalio.Direction.INPUT
+        enc_btn_state.append(None)
+        enc_btn_dbl.append(False)
+        enc_btn_count.append(-1)
+        enc_btn_long.append(-1)
+
+        enc_out.append(0)
+
+        e+=1
+
+    ## set up encoder outputs
+    def enc_proc(enc_index, enc_value):
+        proc = None
+        if enc_index == 0:
+            if enc_value == 1: #rot_left
+                proc = "enc rot " + str(enc_index) + " left"
+                if enable_dev == False:
+                    kbd.send(Keycode.F7) #VOLUME DOWN
+            elif enc_value == 2: #rot_right
+                proc = "enc rot " + str(enc_index) + " right"
+                if enable_dev == False:
+                    kbd.send(Keycode.F8) #VOLUME UP
+            elif enc_value == 3: #btn_single
+                proc = "enc btn " + str(enc_index) + " single"
+                if enable_dev == False:
+                    kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+            elif enc_value == 4: #btn_double
+                proc = "enc btn " + str(enc_index) + " double"
+                if enable_dev == False:
+                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+            elif enc_value == 5: #btn_long
+                proc = "enc btn " + str(enc_index) + " long"
+                if enable_dev == False:
+                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) #REBOOT
+        elif enc_index == 1:
+            if enc_value == 1: #rot_left
+                proc = "enc rot " + str(enc_index) + " left"
+                if enable_dev == False:
+                    kbd.send(Keycode.V)  #PREVIOUS TRACK
+            elif enc_value == 2: #rot_right
+                proc = "enc rot " + str(enc_index) + " right"
+                if enable_dev == False:
+                    kbd.send(Keycode.N)  #NEXT TRACK
+            elif enc_value == 3: #btn_single
+                proc = "enc btn " + str(enc_index) + " single"
+                if enable_dev == False:
+                    kbd.send(Keycode.B)  #PLAY/PAUSE
+            elif enc_value == 4: #btn_double
+                proc = "enc btn " + str(enc_index) + " double"
+                if enable_dev == False:
+                    kbd.send(Keycode.J)  #LAUNCH MEDIA
+            elif enc_value == 5: #btn_long
+                proc = "enc btn " + str(enc_index) + " long"
+        return proc
 
 #########################
 ## SETUP ANALOG INPUTS ##
@@ -120,7 +175,23 @@ if enable_whl == True:
 ####################
 
 while True:
+    
+    ##################
+    ## LIGHT STRIPS ##
+    ##################
+        
+    if enable_rgb == True:
 
+        i=0
+        while i<len(pins):
+            if dn_switch.value:
+                pixels[i].brightness = bright_night[i]
+            else:
+                pixels[i].brightness = bright_day[i]
+            pixels[i].fill((colour[0], colour[1], colour[2]))
+            i=i+1
+            
+            
     ############################
     ## STEERING WHEEL CONTROL ##
     ############################
@@ -130,8 +201,8 @@ while True:
         VD0 = getVoltage(analog0in) #AD
         VD1 = getVoltage(analog1in) #SHIFT
         
-        if enable_dev == True:
-            print(VD0)
+        #if enable_dev == True:
+        #    print(VD0)
 
         if VD1 > 1:
             if VD0 < 0.03: #< 0.1:
@@ -197,222 +268,107 @@ while True:
                         print("BUTTON: SHIFTDOWN (NAVIGATION)")
                     else:
                         kbd.send(Keycode.F) #LAUNCH NAVIGATION
-    
+
+
     ##############
     ## ENCODERS ##
     ##############
-
+    
     if enable_enc == True:
     
-        #volume encoder
-        
-        vol_pos = vol_enc.position
-        if vol_pos != vol_last_pos:
-            if vol_pos > vol_last_pos:
-                if vol_direction == -1: #reset direction if changed
-                    vol_rot_count = 1
-                else:
-                    vol_rot_count +=1
-                if vol_rot_count == vol_rot_limit:
-                    vol_rot_count = 0
-                    vol_direction = 0
-                    vol_timeout = -1
-                    if enable_dev== True:
-                        print ("volume up")
-                    else:
-                        kbd.send(Keycode.F8) #VOLUME UP
-                else:
-                    vol_timeout = 0
-                    vol_direction = 1
-                vol_last_pos = vol_pos
-            elif vol_pos < vol_last_pos:
-                if vol_direction == 1: #reset direction if changed
-                    vol_rot_count = 1
-                else:
-                    vol_rot_count +=1
-                if vol_rot_count == vol_rot_limit:
-                    vol_rot_count = 0
-                    vol_direction = 0
-                    vol_timeout = -1
-                    if enable_dev== True:
-                        print ("volume down")
-                    else:
-                        
-                        kbd.send(Keycode.F7) #VOLUME DOWN
-                else:
-                    vol_timeout = 0
-                    vol_direction = -1
-                vol_last_pos = vol_pos
+        while e < len(enc_3v):
             
-        if vol_timeout >= 0 and vol_timeout < rot_timeout:
-            vol_timeout +=1
-        elif vol_timeout == rot_timeout:
-            vol_enc.position = 0
-            vol_last_pos = 0
-            vol_rot_count = 0
-            vol_timeout = -1
-            if enable_dev== True:
-                print("timeout vol rotary")
-          
-        if not vol_btn.value and vol_btn_state is None:
-            vol_btn_state = "pressed"
-            vol_btn_long = 0
-        elif vol_btn.value and vol_btn_state == -1:
-            vol_btn_state = None
-        if vol_btn.value and vol_btn_state == "pressed":
-            if vol_btn_dbl == False:
-                vol_btn_dbl = True
-                vol_btn_count = 0
-            elif vol_btn_dbl == True:
-                if enable_dev== True:
-                    print("vol_double")
-                else:              
-                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
-                vol_btn_dbl = False
-                vol_btn_count = -1
-                vol_btn_long = -1
-            vol_btn_state = None
+            enc_out[e] = 0
 
-        if vol_btn_count >= 0 and vol_btn_count < btn_timeout:
-            vol_btn_count += 1
-            if enable_dev== True:
-                print(vol_btn_count)
-        elif vol_btn_count == btn_timeout:
-            if enable_dev== True:
-                print ("vol_single")        
-            else:                 
-                kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
-            vol_btn_state = None
-            vol_btn_dbl = False
-            vol_btn_count = -1
-            vol_btn_long = -1
+            enc_rot_pos[e] = enc_rot[e].position
+            if enc_rot_pos[e] != enc_rot_last_pos[e]:
+                if enc_rot_pos[e] > enc_rot_last_pos[e]:
+                    if enc_rot_direction[e] == -1:
+                        enc_rot_count[e] = 1
+                    else:
+                        enc_rot_count[e] += 1
+                    if enc_rot_count[e] == enc_rot_limit[e]:
+                        enc_rot_count[e] = 0
+                        enc_rot_direction[e] = 0
+                        enc_rot_timeout[e] = -1
+                        enc_out[e] = 2 #right
+                    else:
+                        enc_rot_timeout[e] = 0
+                        enc_rot_direction[e] = 1
+                    enc_rot_last_pos[e] = enc_rot_pos[e]
+                elif enc_rot_pos[e] < enc_rot_last_pos[e]:
+                    if enc_rot_direction[e] == 1:
+                        enc_rot_count[e] = 1
+                    else:
+                        enc_rot_count[e] +=1
+                    if enc_rot_count[e] == enc_rot_limit[e]:
+                        enc_rot_count[e] = 0
+                        enc_rot_direction[e] = 0
+                        enc_rot_timeout[e] = -1
+                        enc_out[e] = 1 #left
+                    else:
+                        enc_rot_timeout[e] = 0
+                        enc_rot_direction[e] = -1
+                    enc_rot_last_pos[e] = enc_rot_pos[e]
             
-        if vol_btn_long >= 0 and vol_btn_long < btn_long_press:
-            vol_btn_long +=1
-            if enable_dev == True:
-                print(vol_btn_long)
-            if vol_btn_long == btn_long_press:
-                vol_btn_state = -1
-                vol_btn_dbl = False
-                vol_btn_count = -1                
-                vol_btn_long = -1
+            if enc_rot_timeout[e] >= 0 and enc_rot_timeout[e] < rot_timeout:
+                enc_rot_timeout[e] +=1
+            elif enc_rot_timeout[e] == rot_timeout:
+                enc_rot[e].position = 0
+                enc_rot_last_pos[e] = 0
+                enc_rot_count[e] = 0
+                enc_rot_timeout[e] = -1
                 if enable_dev == True:
-                    print("vol long press")
-                else:
-                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) #REBOOT
-        
-        #playback encoder
-        
-        pb_pos = pb_enc.position
-        if pb_pos != pb_last_pos:
-            if pb_pos > pb_last_pos:
-                if pb_direction == -1: #reset direction if changed
-                    pb_rot_count = 1
-                else:
-                    pb_rot_count +=1
-                if pb_rot_count == pb_rot_limit:
-                    pb_rot_count = 0
-                    pb_direction = 0
-                    pb_timeout = -1
-                    if enable_dev== True:
-                        print ("next") 
-                    else:
-                        kbd.send(Keycode.N)  #NEXT TRACK
-                else:
-                    pb_timeout = 0
-                    pb_direction = 1
-                pb_last_pos = pb_pos
-            elif pb_pos < pb_last_pos:
-                if pb_direction == 1: #reset direction if changed
-                    pb_rot_count = 1
-                else:
-                    pb_rot_count +=1
-                if pb_rot_count == pb_rot_limit:
-                    pb_rot_count = 0
-                    pb_direction = 0
-                    pb_timeout = -1
-                    if enable_dev== True:
-                        print ("previous")
-                    else:
-                        kbd.send(Keycode.V)  #PREVIOUS TRACK
-                else:
-                    pb_timeout = 0
-                    pb_direction = -1
-                pb_last_pos = pb_pos
-            
-        if pb_timeout >= 0 and pb_timeout < rot_timeout:
-            pb_timeout +=1
-        elif pb_timeout == rot_timeout:
-            pb_enc.position = 0
-            pb_last_pos = 0
-            pb_rot_count = 0
-            pb_timeout = -1
-            if enable_dev== True:
-                print("timeout pb rotary")
-          
-        if not pb_btn.value and pb_btn_state is None:
-            pb_btn_state = "pressed"
-            pb_btn_long = 0
-        elif pb_btn.value and pb_btn_state == -1:
-            pb_btn_state = None
-        if pb_btn.value and pb_btn_state == "pressed":
-            if pb_btn_dbl == False:
-                pb_btn_dbl = True
-                pb_btn_count = 0
-            elif pb_btn_dbl == True:
-                if enable_dev== True:
-                    print("pb_double")
-                else:
-                    kbd.send(Keycode.J)  #LAUNCH MEDIA
-                pb_btn_dbl = False
-                pb_btn_count = -1
-                pb_btn_long = -1
-            pb_btn_state = None
+                    print ("enc rot " + str(e) + " timeout")
 
-        if pb_btn_count >= 0 and pb_btn_count < btn_timeout:
-            pb_btn_count += 1
-            if enable_dev== True:
-                print(pb_btn_count)
-        elif pb_btn_count == btn_timeout:
-            if enable_dev== True:
-                print ("pb_single")    
-            else:
-                kbd.send(Keycode.B)  #PLAY/PAUSE
-            pb_btn_state = None
-            pb_btn_dbl = False
-            pb_btn_count = -1
-            pb_btn_long = -1
+            if not enc_btn[e].value and enc_btn_state[e] is None:
+                enc_btn_state[e] = "pressed"
+                enc_btn_long[e] = 0
+            elif enc_btn[e].value and enc_btn_state[e] == -1:
+                enc_btn_state[e] = None
+            if enc_btn[e].value and enc_btn_state[e] == "pressed":
+                if enc_btn_dbl[e] == False:
+                    enc_btn_dbl[e] = True
+                    enc_btn_count[e] = 0
+                elif enc_btn_dbl[e] == True:
+                    enc_out[e] = 4 #double
+                    enc_btn_dbl[e] = False
+                    enc_btn_count[e] = -1
+                    enc_btn_long[e] = -1
+                enc_btn_state[e] = None
+        
+            if enc_btn_count[e] >= 0 and enc_btn_count[e] < btn_timeout:
+                enc_btn_count[e] += 1
+                #print (enc_btn_count[e])
+            elif enc_btn_count[e] == btn_timeout:
+                enc_out[e] = 3 #single
+                enc_btn_state[e] = None
+                enc_btn_dbl[e] = False
+                enc_btn_count[e] = -1
+                enc_btn_long[e] = -1
+
+            if enc_btn_long[e] >= 0 and enc_btn_long[e] < btn_long_press:
+                enc_btn_long[e] += 1
+                if enc_btn_long[e] == btn_long_press:
+                    enc_btn_state[e] = -1
+                    enc_btn_dbl[e] = False
+                    enc_btn_count[e] = -1
+                    enc_btn_long[e] = -1
+                    enc_out[e] = 5 #long
             
-        if pb_btn_long >= 0 and pb_btn_long < btn_long_press:
-            pb_btn_long +=1
-            if enable_dev == True:
-                print(pb_btn_long)
-            if pb_btn_long == btn_long_press:
-                pb_btn_state = -1
-                pb_btn_dbl = False
-                pb_btn_count = -1                
-                pb_btn_long = -1
+            if enc_out[e] > 0:
                 if enable_dev == True:
-                    print("pb long press")
-    
-    
-    ##################
-    ## LIGHT STRIPS ##
-    ##################
-        
-    if enable_rgb == True:
+                    print(enc_proc(e, enc_out[e]))
+                else:
+                    enc_proc(e, enc_out[e])
 
-        i=0
-        while i<len(pins):
-            if dn_switch.value:
-                pixels[i].brightness = bright_night[i]
-            else:
-                pixels[i].brightness = bright_day[i]
-            pixels[i].fill((colour[0], colour[1], colour[2]))
-            i=i+1
+            e += 1
+            
+        e = 0
+
     
     #########
     ## END ##
     #########
         
-    time.sleep(0.1)
+    time.sleep(0.15)
