@@ -88,15 +88,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## MICRO SETUP ##
 #################
 
-#os.system("sudo python /home/pi/PiHead/micro_setup.py &")
-
-source = "/home/pi/PiHead/code.py"
-destinationFolder = "/media/pi/CIRCUITPY/"
-
-if os.path.isdir(destinationFolder):
-    print("micro exists")
-    os.system("sudo chmod a+r+w+ " + destinationFolder)
-    os.system("cp -f " + source + " " + destinationFolder)
+os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 ##############################
