@@ -48,6 +48,7 @@ if enable_rgb == True:
 
 kbd = Keyboard(usb_hid.devices)
 
+
 ###########################
 ## SETUP ROTARY ENCODERS ##
 ###########################
