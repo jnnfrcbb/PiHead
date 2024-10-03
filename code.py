@@ -70,7 +70,7 @@ if enable_enc == True:
 
     enc_rot_limit = [1,2] #number of clicks to trigger
             
-    ## set up encoder variables
+    ## set up encoder variable arrays
     enc_pwr = []
 
     enc_rot = []
