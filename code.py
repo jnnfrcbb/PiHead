@@ -181,7 +181,7 @@ if enable_whl == True:
         return ret
 
     def whl_proc(VD0, VD1, exec):
-        ret = 0
+        ret = 0 #0 = no input; 1 = press; 2 = hold
         if VD1 > 1:
             if VD0 < 0.03: #< 0.1:
                 if exec == True:
@@ -271,7 +271,8 @@ if enable_whl == True:
                     ret = 1
         return ret
 
-    whl_state = None
+    #whl_state = None
+    whl_state = 0
 
     whl_v = [-1, -1]
 
@@ -295,9 +296,8 @@ while True:
     ############################
     ## STEERING WHEEL CONTROL ##
     ############################
-
+    """
     if enable_whl == True:
-
         if whl_input() == True and whl_state == None:
             whl_v[0] = getVoltage(analog0in) #AD
             whl_v[1] = getVoltage(analog1in) #SHIFT
@@ -314,11 +314,26 @@ while True:
                 whl_state = "pressed"
             elif w == 2:
                 whl_state = "hold"
-        elif whl_input() == False and not whl_state == None:
+        elif whl_input() == False and not whl_state == None: 
             w = whl_proc(whl_v[0], whl_v[1], True)
             whl_v[0] = -1
             whl_v[1] = -1
             whl_state = None
+        """
+    if enable_whl == True:
+        if whl_input() == True and whl_state == 0:
+            whl_v[0] = getVoltage(analog0in) #AD
+            whl_v[1] = getVoltage(analog1in) #SHIFT
+            whl_state = whl_proc(whl_v[0],whl_v[1], False)
+        elif whl_input() == True and whl_state == 2:
+            whl_v[0] = getVoltage(analog0in) #AD
+            whl_v[1] = getVoltage(analog1in) #SHIFT
+            whl_state = whl_proc(whl_v[0],whl_v[1], True)         
+        elif whl_input() == False and not whl_state == 0:
+            w = whl_proc(whl_v[0], whl_v[1], True)
+            whl_v[0] = -1
+            whl_v[1] = -1
+            whl_state = 0
 
     ##############
     ## ENCODERS ##
