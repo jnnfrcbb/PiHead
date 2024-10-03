@@ -14,7 +14,7 @@ enable_enc = True
 enable_whl = True
 enable_rgb = True
 
-slp_time = 0.1 #sleep time for loop
+slp_time = 0.025 #sleep time for loop
 
 ######################
 ## SETUP RGB STRIPS ##
@@ -57,9 +57,9 @@ kbd = Keyboard(usb_hid.devices)
 if enable_enc == True:
 
     ## set parameters
-    rot_timeout = 15
-    btn_timeout = 5
-    btn_long_press = 15
+    rot_timeout = 60
+    btn_timeout = 20
+    btn_long_press = 60
 
     ## set up encoders
     ## 0 = volume; 1 = playback
@@ -182,6 +182,8 @@ if enable_whl == True:
 
     def whl_proc(VD0, VD1, exec):
         ret = 0 #0 = no input; 1 = press; 2 = hold
+        whl_v[0] = VD0
+        whl_v[1] = VD1
         if VD1 > 1:
             if VD0 < 0.03: #< 0.1:
                 if exec == True:
@@ -296,39 +298,13 @@ while True:
     ############################
     ## STEERING WHEEL CONTROL ##
     ############################
-    """
-    if enable_whl == True:
-        if whl_input() == True and whl_state == None:
-            whl_v[0] = getVoltage(analog0in) #AD
-            whl_v[1] = getVoltage(analog1in) #SHIFT
-            w = whl_proc(whl_v[0], whl_v[1], False)
-            if w == 1:
-                whl_state = "pressed"
-            elif w == 2:
-                whl_state = "hold"
-        elif whl_input() == True and whl_state == "hold":
-            whl_v[0] = getVoltage(analog0in) #AD
-            whl_v[1] = getVoltage(analog1in) #SHIFT
-            w = whl_proc(whl_v[0], whl_v[1], True)
-            if w == 1:
-                whl_state = "pressed"
-            elif w == 2:
-                whl_state = "hold"
-        elif whl_input() == False and not whl_state == None: 
-            w = whl_proc(whl_v[0], whl_v[1], True)
-            whl_v[0] = -1
-            whl_v[1] = -1
-            whl_state = None
-        """
+ 
     if enable_whl == True:
         if whl_input() == True and whl_state == 0:
-            whl_v[0] = getVoltage(analog0in) #AD
-            whl_v[1] = getVoltage(analog1in) #SHIFT
-            whl_state = whl_proc(whl_v[0],whl_v[1], False)
+            whl_state = whl_proc(getVoltage(analog0in),getVoltage(analog1in), False)
         elif whl_input() == True and whl_state == 2:
-            whl_v[0] = getVoltage(analog0in) #AD
-            whl_v[1] = getVoltage(analog1in) #SHIFT
-            whl_state = whl_proc(whl_v[0],whl_v[1], True)         
+            whl_state = whl_proc(getVoltage(analog0in),getVoltage(analog1in), True)
+            time.sleep(0.075)
         elif whl_input() == False and not whl_state == 0:
             w = whl_proc(whl_v[0], whl_v[1], True)
             whl_v[0] = -1
