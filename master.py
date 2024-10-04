@@ -85,6 +85,12 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 #################
+## TEMP SENSOR ##
+#################
+
+#edit: "/home/pi/.openauto/config/openauto_system.ini" -> General -> TemperatureSensorDescriptor
+
+#################
 ## MICRO SETUP ##
 #################
 
