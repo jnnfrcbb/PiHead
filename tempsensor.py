@@ -2,6 +2,12 @@ import os
 import glob
 import time
 
+## find sensor addres:
+## sudo modprobe w1-gpio
+## sudo modprobe w1-therm
+## cd /sys/bus/w1/devices/
+## ls [find: 28-xxxxxxxxxxxx]
+
 os.system("modprobe w1-gpio")
 os.system("modprobe w1-therm")
 

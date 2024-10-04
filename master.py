@@ -88,9 +88,9 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 ## TEMP SENSOR ##
 #################
 
-#edit: "/home/pi/.openauto/config/openauto_system.ini" -> General -> TemperatureSensorDescriptor
+#edit: "/home/pi/.openauto/config/openauto_system.ini" -> General -> TemperatureSensorDescriptor -> "/sys/bus/w1/devices/28-cb4af21d64ff/w1_slave"
 
-#os.system("sudo python /home/pi/PiHead/tempsensor.py &")
+os.system("sudo python /home/pi/PiHead/tempsensor.py &")
 
 
 #################
