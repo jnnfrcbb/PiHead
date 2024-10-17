@@ -49,6 +49,87 @@ if enable_rgb == True:
 
 kbd = Keyboard(usb_hid.devices)
 
+def call_key(key):
+    if key == 0:                    #REBOOT
+        if enable_dev == False:
+            kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) 
+        else:
+            print("reboot")
+    elif key == 1:                  #SCREEN POWER TOGGLE
+        if enable_dev == False:
+            kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) 
+        else:
+            print("toggle screen")
+    elif key == 2:                  #HOME
+        if enable_dev == False:
+            kbd.send(Keycode.H)  
+        else:
+            print("home")
+    elif key == 3:                  #SWITCH MODE
+        if enable_dev == False:
+            kbd.send(Keycode.CONTROL, Keycode.F3)   
+        else:
+            print("switch mode")
+    elif key == 4:                  #LAUNCH MEDIA
+        if enable_dev == False:
+            kbd.send(Keycode.J)  
+        else:
+            print("show media")
+    elif key == 5:                  #LAUNCH NAVIGATION
+        if enable_dev == False:
+            kbd.send(Keycode.F) 
+        else:
+            print("show navigation")
+    elif key == 6:                  #PHONE
+        if enable_dev == False:
+            kbd.send(Keycode.P)  
+        else:
+            print("show phone")
+    elif key == 7:                  #PHONE
+        if enable_dev == False:
+            kbd.send(Keycode.F2)  
+        else:
+            print("toggle night")
+    elif key == 9:                  #VOICE
+        if enable_dev == False:
+            kbd.send(Keycode.M)  
+        else:
+            print("voice")
+
+    ##PLAYBACK
+    elif key == 10:                 #PLAY/PAUSE
+        if enable_dev == False:
+            kbd.send(Keycode.B)  
+        else:
+            print("play/pause")
+    elif key == 11:                 #PREVIOUS TRACK
+        if enable_dev == False:
+            kbd.send(Keycode.V)  
+        else:
+            print("previous track")
+    elif key == 12:                 #NEXT TRACK
+        if enable_dev == False:
+            kbd.send(Keycode.N)  
+        else:
+            print("next track")
+
+    ##VOLUME
+    elif key == 20:                 #TOGGLE MUTE
+        if enable_dev == False:
+            kbd.send(Keycode.CONTROL, Keycode.F11) 
+        else:
+            print("volume mute")
+    elif key == 21:                 #VOLUME DOWN
+        if enable_dev == False:
+            kbd.send(Keycode.F7) 
+        else:
+            print("volume down")
+    elif key == 22:                 #VOLUME UP
+        if enable_dev == False:
+            kbd.send(Keycode.F8) 
+        else:
+            print("volume up")
+
 
 ###########################
 ## SETUP ROTARY ENCODERS ##
@@ -119,41 +200,32 @@ if enable_enc == True:
         if enc_index == 0:
             if enc_value == 1: #rot_left
                 proc = "enc rot " + str(enc_index) + " left"
-                if enable_dev == False:
-                    kbd.send(Keycode.F7) #VOLUME DOWN
+                call_key(21)
             elif enc_value == 2: #rot_right
                 proc = "enc rot " + str(enc_index) + " right"
-                if enable_dev == False:
-                    kbd.send(Keycode.F8) #VOLUME UP
+                call_key(22)
             elif enc_value == 3: #btn_single
                 proc = "enc btn " + str(enc_index) + " single"
-                if enable_dev == False:
-                    kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+                call_key(20)
             elif enc_value == 4: #btn_double
                 proc = "enc btn " + str(enc_index) + " double"
-                if enable_dev == False:
-                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+                call_key(1)
             elif enc_value == 5: #btn_long
                 proc = "enc btn " + str(enc_index) + " long"
-                if enable_dev == False:
-                    kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) #REBOOT
+                call_key(0)
         elif enc_index == 1:
             if enc_value == 1: #rot_left
                 proc = "enc rot " + str(enc_index) + " left"
-                if enable_dev == False:
-                    kbd.send(Keycode.V)  #PREVIOUS TRACK
+                call_key(11)
             elif enc_value == 2: #rot_right
                 proc = "enc rot " + str(enc_index) + " right"
-                if enable_dev == False:
-                    kbd.send(Keycode.N)  #NEXT TRACK
+                call_key(12)
             elif enc_value == 3: #btn_single
                 proc = "enc btn " + str(enc_index) + " single"
-                if enable_dev == False:
-                    kbd.send(Keycode.B)  #PLAY/PAUSE
+                call_key(10)
             elif enc_value == 4: #btn_double
                 proc = "enc btn " + str(enc_index) + " double"
-                if enable_dev == False:
-                    kbd.send(Keycode.J)  #LAUNCH MEDIA
+                call_key(4)
             elif enc_value == 5: #btn_long
                 proc = "enc btn " + str(enc_index) + " long"
         return proc
@@ -185,91 +257,55 @@ if enable_whl == True:
         whl_v[0] = VD0
         whl_v[1] = VD1
         if VD1 > 1:
-            if VD0 < 0.03: #< 0.1:
+            if VD0 < 0.03: #BUTTON: MODE (SWITCH MODE)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: MODE (SWITCH MODE)")
-                    else:
-                        kbd.send(Keycode.CONTROL, Keycode.F3)  #SWITCH MODE
+                    call_key(3)
                 ret = 1
-            elif VD0 > 0.5 and VD0 < 0.62: #< 0.7:
+            elif VD0 > 0.5 and VD0 < 0.62: #BUTTON: SOURCE (VOICE)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: SOURCE (VOICE)")
-                    else:
-                        kbd.send(Keycode.M)  #VOICE
+                    call_key(9)
                 ret = 1
-            elif VD0 > 1 and VD0 < 1.05: #1.1:
+            elif VD0 > 1 and VD0 < 1.05: #BUTTON: ATT (HOME)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: ATT (HOME)")
-                    else:
-                        kbd.send(Keycode.H) #HOME
+                    call_key(2)
                 ret = 1
-            elif VD0 >1.3 and VD0 < 1.35: #< 1.4:
+            elif VD0 >1.3 and VD0 < 1.35: #BUTTON: LIST (MUTE)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: LIST (MUTE)")
-                    else:
-                        kbd.send(Keycode.CONTROL, Keycode.F11) #TOGGLE MUTE
+                    call_key(20)
                 ret = 1
-            elif VD0 > 1.5 and VD0 < 1.6: #< 1.65:
+            elif VD0 > 1.5 and VD0 < 1.6: #BUTTON: SEEK+ (NEXT)"
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: SEEK+ (NEXT)")
-                    else:
-                        kbd.send(Keycode.N)  #NEXT TRACK
+                    call_key(12)
                 ret = 1
-            elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
+            elif VD0 > 1.8 and VD0 < 1.85: #BUTTON: SEEK- (PREVIOUS)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: SEEK- (PREVIOUS)")
-                    else:
-                        kbd.send(Keycode.V)  #PREVIOUS TRACK
+                    call_key(11)
                 ret = 1
-            elif VD0 > 2 and VD0 < 2.1: #< 2.15:
+            elif VD0 > 2 and VD0 < 2.1: #BUTTON: VOL+ (VOLUME UP)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: VOL+ (VOLUME UP)")
-                    else:
-                        kbd.send(Keycode.F8) #VOLUME UP
+                    call_key(22)
                 ret = 2
-            elif VD0 > 2.3 and VD0 < 2.35: #< 2.4:
+            elif VD0 > 2.3 and VD0 < 2.35: #BUTTON: VOL- (VOLUME DOWN)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: VOL- (VOLUME DOWN)")
-                    else:
-                        kbd.send(Keycode.F7) #VOLUME DOWN
+                    call_key(21)
                 ret = 2
-            elif VD0 > 2.5 and VD0 < 2.55: #< 2.6:
+            elif VD0 > 2.5 and VD0 < 2.55: #BUTTON: SEL (PLAY/PAUSE)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: SEL (PLAY/PAUSE)")
-                    else:
-                        kbd.send(Keycode.B)  #PLAY/PAUSE
+                    call_key(10)
                 ret = 1
-            elif VD0 > 2.7 and VD0 < 2.75: #< 2.8:
+            elif VD0 > 2.7 and VD0 < 2.75: #BUTTON: OFF (SCREEN)
                 if exec == True:
-                    if enable_dev== True:
-                        print("BUTTON: OFF (SCREEN)")
-                    else:
-                        kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.B) #SCREEN POWER TOGGLE
+                    call_key(1)
                 ret = 1
         elif VD1 < 1:
             if VD0 > 1:
-                if VD0 >= 1.5 and VD0 < 1.6:
+                if VD0 >= 1.5 and VD0 < 1.6: #BUTTON: SHIFTUP (MEDIA)
                     if exec == True:
-                        if enable_dev== True:
-                            print("BUTTON: SHIFTUP (MEDIA)")
-                        else:
-                            kbd.send(Keycode.J)  #LAUNCH MEDIA
+                        call_key(4)
                     ret = 1
-                elif VD0 > 1.8 and VD0 < 1.85: #< 1.9:
+                elif VD0 > 1.8 and VD0 < 1.85: #BUTTON: SHIFTDOWN (NAVIGATION)
                     if exec == True:
-                        if enable_dev== True: 
-                            print("BUTTON: SHIFTDOWN (NAVIGATION)")
-                        else:
-                            kbd.send(Keycode.F) #LAUNCH NAVIGATION
+                        call_key(5)
                     ret = 1
         return ret
 

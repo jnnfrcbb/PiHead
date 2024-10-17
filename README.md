@@ -176,8 +176,8 @@ ControllerTimeout=1000
 <br/>
 
 ### OpenAutoPro keystrokes:
-|Key|Input|
-|----|----|
+|Key|Input|Code|
+|----|----|----|
 |Up arrow|Navigate up|
 |Down arrow|Navigate down|
 |Left arrow|navigate left|
@@ -186,23 +186,23 @@ ControllerTimeout=1000
 |2|Scroll/rotate right|
 |Enter|Select|
 |Escape|Back/Cancel|
-|H|Home|
-|P|Phone menu/answer call|
+|H|Home|2|
+|P|Phone menu/answer call|6|
 |O|Hang up call|
 |X|Play|
 |C|Pause|
-|V|Previous track|
-|B|Toggle play|
-|N|Next track|
-|G|Phone menu/answer call|
-|J|Media menu|
+|V|Previous track|11|
+|B|Toggle play|10|
+|N|Next track|12|
+|G|Phone menu/answer call|6|
+|J|Media menu|4|
 
 <br/>
 
 ### Android Auto keystrokes:
 
-|Key|Input|
-|---|---|
+|Key|Input|Code|
+|---|---|---|
 |Up arrow|Navigate up|
 |Down arrow|Navigate down|
 |Left arrow|Navigate left|
@@ -211,25 +211,25 @@ ControllerTimeout=1000
 |2|Scroll/rotate right|
 |Enter|Select|
 |Escape|Back/Cancel|
-|H|Home|
-|P|Phone menu/answer call|
+|H|Home|2|
+|P|Phone menu/answer call|6|
 |O|Hang up call|
 |X|Play|
 |C|Pause|
-|V|Previous track|
-|B|Toggle play|
-|N|Next track|
-|M|Voice command|
-|F|Launch navigation|
-|G|Phone menu/anwer call|
-|J|Launch media|
+|V|Previous track|11|
+|B|Toggle play|10|
+|N|Next track|12|
+|M|Voice command|9|
+|F|Launch navigation|5|
+|G|Phone menu/anwer call|6|
+|J|Launch media|4|
 
 <br/>
 
 ### Autobox (Apple CarPlay) keystrokes:
 
-|Key|Input|
-|---|---|
+|Key|Input|Code|
+|---|---|---|
 |Up arrow|Navigate up|
 |Down arrow|Navigate down|
 |1|Scroll/rotate left|
@@ -239,23 +239,23 @@ ControllerTimeout=1000
 |H|Home|
 |X|Play|
 |C|Pause|
-|V|Previous track|
-|B|Toggle play|
-|N|Next track|
-|M|Voice command|
+|V|Previous track|11|
+|B|Toggle play|10|
+|N|Next track|12|
+|M|Voice command|9|
 
 <br/>
 
 ### Global keystrokes:
 
-|Key|Input|
-|---|---|
-|F2|Toggle Android Auto night mode|
-|Ctrl+F3|Mode (toggle between active applications, projections and OpenAuto Pro interface)|
+|Key|Input|Code|
+|---|---|---|
+|F2|Toggle Android Auto night mode|7|
+|Ctrl+F3|Mode (toggle between active applications, projections and OpenAuto Pro interface)|3|
 |F6|Expand/Collapse TopBar|
-|F7|Volume down|
-|F8|Volume up|
+|F7|Volume down|21|
+|F8|Volume up|22|
 |F9|Brightness down|
 |F10|Brightness up|
-|Ctrl+F11|Toggle mute|
+|Ctrl+F11|Toggle mute|20|
 |F12|Bring OpenAuto Pro to front|
