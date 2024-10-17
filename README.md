@@ -22,7 +22,7 @@
 | 15 | 29 | GPIO 5 | Free |   | 30 | GND |   |
 | 16 | 31 | GPIO 6 | Free |   | 32 | GPIO 12 | 12V Switched |
 | 17 | 33 | GPIO 13 | Illumination |   | 34 | GND  |   |
-| 18 | 35 | GPIO 19 | Free |   | 36 | GPIO 16 | Free |
+| 18 | 35 | GPIO 19 | Free (Fan control) |   | 36 | GPIO 16 | Free |
 | 19 | 37 | GPIO 26 | Free |   | 38 | GPIO 20 | Free |
 | 20 | 39 | GND |   |   | 40 | GPIO 21 | Free |
 

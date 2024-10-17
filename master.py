@@ -86,6 +86,13 @@ os.system("sudo python /home/pi/PiHead/tempsensor.py &")
 
 
 #################
+## FAN CONTROL ##
+#################
+
+os.system("sudo python /home/pi/PiHead/fan_control.py &")
+
+
+#################
 ## MICRO SETUP ##
 #################
 
