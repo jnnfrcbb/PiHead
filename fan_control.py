@@ -7,7 +7,7 @@ import subprocess
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-fanGPIO = 19 ##GPIO 12, 13, 18, 19 = hardware PWM
+fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 
 GPIO.setup(fanGPIO,GPIO.out)
 fan = GPIO.PWM(fanGPIO,100)
