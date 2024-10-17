@@ -50,6 +50,8 @@ if enable_rgb == True:
 kbd = Keyboard(usb_hid.devices)
 
 def call_key(key):
+
+    ##SYSTEM
     if key == 0:                    #REBOOT
         if enable_dev == False:
             kbd.send(Keycode.CONTROL, Keycode.ALT, Keycode.R) 
