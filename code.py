@@ -187,6 +187,7 @@ if enable_enc == True:
 
         enc_btn.append (digitalio.DigitalInOut(enc_sw[e]))
         enc_btn[e].direction = digitalio.Direction.INPUT
+        enc_btn[e].pull = digitalio.Pull.UP
         enc_btn_state.append(None)
         enc_btn_dbl.append(False)
         enc_btn_count.append(-1)
