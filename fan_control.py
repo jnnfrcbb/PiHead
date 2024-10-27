@@ -2,7 +2,7 @@
 
 import RPi.GPIO as GPIO
 import time
-import subprocess
+#import subprocess
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -20,14 +20,13 @@ fan = GPIO.PWM(fanGPIO,100)
 fan.start(defSpeed)
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
-    output = 50 #subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
     temp_str = output#.stdout.decode()
+
+    output = open('/sys/class/backlight/rpi_backlight/bl_power', 'w')
+
+    temp_str = int(output)/1000
+
     return temp_str
-    #try:
-    #    return float(temp_str.split('=')[1].split('\'')[0])
-    #except (IndexError, ValueError):
-    #    return int(defSpeed)
-    #    #raise RuntimeError('Could not get temperature')
 
 def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
     delta1 = range1[1] - range1[0]
@@ -36,7 +35,7 @@ def renormalize(n, range1, range2):         # Function to scale the read tempera
 
 while True:
     
-    temp = get_temp()                       # Get the current CPU temperature
+    temp =  get_temp()                       # Get the current CPU temperature
 
     if temp < minTemp:                      # Constrain temperature to set range limits
         temp = minTemp
@@ -58,21 +57,5 @@ def get_temp():                             # Function to read in the CPU temper
     except (IndexError, ValueError):
         return int(defSpeed)
         #raise RuntimeError('Could not get temperature')
-    
-def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
-    delta1 = range1[1] - range1[0]
-    delta2 = range2[1] - range2[0]
-    return (delta2 * (n - range1[0]) / delta1) + range2[0]
-
-while True:                                    # Execute loop forever
-    temp = get_temp()                       # Get the current CPU temperature
-    if temp < minTemp:                      # Constrain temperature to set range limits
-        temp = minTemp
-    elif temp > maxTemp:
-        temp = maxTemp
-    newSpeed = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
-    print(str(temp) + " : " + str(newSpeed))
-    fan.ChangeDutyCycle(newSpeed)               # Set fan duty based on temperature, from minSpeed to maxSpeed
-    time.sleep(5)                           # Sleep for 5 seconds
 
 """
