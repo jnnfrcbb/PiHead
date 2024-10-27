@@ -20,8 +20,8 @@ fan = GPIO.PWM(fanGPIO,100)
 fan.start(defSpeed)
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
-    output = subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
-    temp_str = output.stdout.decode()
+    output = 50 #subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
+    temp_str = output#.stdout.decode()
     return temp_str
     #try:
     #    return float(temp_str.split('=')[1].split('\'')[0])
