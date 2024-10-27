@@ -29,11 +29,23 @@ def get_temp():                             # Function to read in the CPU temper
     #    return int(defSpeed)
     #    #raise RuntimeError('Could not get temperature')
 
+def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
+    delta1 = range1[1] - range1[0]
+    delta2 = range2[1] - range2[0]
+    return (delta2 * (n - range1[0]) / delta1) + range2[0]
+
 while True:
     
-    print(get_temp())
-    
-    fan.ChangeDutyCycle(defSpeed)
+    temp = get_temp()                       # Get the current CPU temperature
+
+    if temp < minTemp:                      # Constrain temperature to set range limits
+        temp = minTemp
+    elif temp > maxTemp:
+        temp = maxTemp
+        
+    newSpeed = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
+
+    fan.ChangeDutyCycle(newSpeed)
 
     time.sleep(1)
 
