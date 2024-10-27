@@ -41,6 +41,8 @@ while True:
         temp = maxTemp
     newSpeed = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
 
+    print(str(temp) + " : " + str(newSpeed))
+            
     fan.ChangeDutyCycle(newSpeed)    # Set fan duty based on temperature, from minSpeed to maxSpeed
 
     time.sleep(5)
