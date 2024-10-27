@@ -7,16 +7,18 @@ import subprocess
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
+minTemp = 25
+maxTemp = 80
+defSpeed = 50
+minSpeed = 0
+maxSpeed = 100
+
 fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 
 GPIO.setup(fanGPIO,GPIO.OUT)
 fan = GPIO.PWM(fanGPIO,100)
-fan.start(50)
+fan.start(defSpeed)
 
-minTemp = 25
-maxTemp = 80
-minSpeed = 0
-maxSpeed = 100
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
     output = subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
@@ -24,7 +26,7 @@ def get_temp():                             # Function to read in the CPU temper
     try:
         return float(temp_str.split('=')[1].split('\'')[0])
     except (IndexError, ValueError):
-        return int(maxTemp)
+        return int(defSpeed)
         #raise RuntimeError('Could not get temperature')
     
 def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
