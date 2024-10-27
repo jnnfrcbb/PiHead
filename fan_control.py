@@ -26,7 +26,7 @@ def get_temp():                             # Function to read in the CPU temper
     temp_str = int(output)/1000
     #output.close()
 
-    return temp_str
+    return defSpeed
 
 def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
     delta1 = range1[1] - range1[0]
