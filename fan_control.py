@@ -24,7 +24,7 @@ def get_temp():                             # Function to read in the CPU temper
 
     output = open('/sys/class/thermal/thermal_zone0/temp', 'r')
     temp_str = int(output)/1000
-    #output.close()
+    output.close()
 
     return defSpeed
 
