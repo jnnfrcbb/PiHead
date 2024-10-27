@@ -24,7 +24,7 @@ def get_temp():                             # Function to read in the CPU temper
     try:
         return float(temp_str.split('=')[1].split('\'')[0])
     except (IndexError, ValueError):
-        return float(maxTemp)
+        return int(maxTemp)
         #raise RuntimeError('Could not get temperature')
     
 def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
