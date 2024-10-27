@@ -20,8 +20,6 @@ fan = GPIO.PWM(fanGPIO,100)
 fan.start(defSpeed)
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
-    temp_str = output#.stdout.decode()
-
     output = open('/sys/class/thermal/thermal_zone0/temp', 'r')
     temp_str = int(output)/1000
     output.close()
