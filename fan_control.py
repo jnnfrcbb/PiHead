@@ -32,14 +32,13 @@ def renormalize(n, range1, range2):         # Function to scale the read tempera
     delta2 = range2[1] - range2[0]
     return (delta2 * (n - range1[0]) / delta1) + range2[0]
 
-while 1:                                    # Execute loop forever
+while True:                                    # Execute loop forever
     temp = get_temp()                       # Get the current CPU temperature
     if temp < minTemp:                      # Constrain temperature to set range limits
         temp = minTemp
     elif temp > maxTemp:
         temp = maxTemp
-    print(temp)
-    temp = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
-    print(temp)
-    fan.ChangeDutyCycle(temp)               # Set fan duty based on temperature, from minSpeed to maxSpeed
+    newSpeed = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
+    print(temp + " : " + newSpeed)
+    fan.ChangeDutyCycle(newSpeed)               # Set fan duty based on temperature, from minSpeed to maxSpeed
     time.sleep(5)                           # Sleep for 5 seconds
