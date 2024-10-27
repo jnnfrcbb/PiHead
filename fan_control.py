@@ -20,7 +20,8 @@ fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 #fan.start(defSpeed)
 
 GPIO.setup(18,GPIO.OUT)
-
+fan = GPIO.PWM(18,1000)
+fan.start(50)
 
 """
 
