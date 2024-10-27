@@ -15,9 +15,9 @@ maxSpeed = 100
 
 fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 
-GPIO.setup(fanGPIO,GPIO.OUT)
-fan = GPIO.PWM(fanGPIO,100)
-fan.start(defSpeed)
+#GPIO.setup(fanGPIO,GPIO.OUT)
+#fan = GPIO.PWM(fanGPIO,100)
+#fan.start(defSpeed)
 
 
 """
