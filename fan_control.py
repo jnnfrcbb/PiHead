@@ -23,6 +23,10 @@ GPIO.setup(12,GPIO.OUT)
 fan = GPIO.PWM(12,1000)
 fan.start(50)
 
+while True:
+    fan.ChangeDutyCycle(50)
+    time.sleep(1)
+
 """
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
