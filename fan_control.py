@@ -37,6 +37,8 @@ while 1:                                    # Execute loop forever
         temp = minTemp
     elif temp > maxTemp:
         temp = maxTemp
+    print(temp)
     temp = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
+    print(temp)
     fan.ChangeDutyCycle(temp)               # Set fan duty based on temperature, from minSpeed to maxSpeed
     time.sleep(5)                           # Sleep for 5 seconds

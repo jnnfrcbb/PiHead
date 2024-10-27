@@ -61,6 +61,8 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
+
+os.system("sudo chmod a+r+w+ /home/pi/PiHead/reboot.sh")
 #os.system("sudo chmod a+r+w+ /etc/rc.local")
 #os.system("sudo chmod a+r+w+ /boot/config.txt")
 #os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
