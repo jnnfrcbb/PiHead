@@ -15,16 +15,25 @@ maxSpeed = 100
 
 fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 
-#GPIO.setup(fanGPIO,GPIO.OUT)
-#fan = GPIO.PWM(fanGPIO,100)
-#fan.start(defSpeed)
-
 GPIO.setup(fanGPIO,GPIO.OUT)
 fan = GPIO.PWM(fanGPIO,100)
 fan.start(defSpeed)
 
+def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
+    output = subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
+    temp_str = output.stdout.decode()
+    try:
+        return float(temp_str.split('=')[1].split('\'')[0])
+    except (IndexError, ValueError):
+        return int(defSpeed)
+        #raise RuntimeError('Could not get temperature')
+
 while True:
+    
+    print(get_temp())
+    
     fan.ChangeDutyCycle(defSpeed)
+    
     time.sleep(1)
 
 """
