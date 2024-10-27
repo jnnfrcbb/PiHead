@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 minTemp = 25
@@ -19,8 +19,8 @@ fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 #fan = GPIO.PWM(fanGPIO,100)
 #fan.start(defSpeed)
 
-GPIO.setup(12,GPIO.OUT)
-fan = GPIO.PWM(12,1000)
+GPIO.setup(fanGPIO,GPIO.OUT)
+fan = GPIO.PWM(fanGPIO,1000)
 fan.start(50)
 
 while True:
