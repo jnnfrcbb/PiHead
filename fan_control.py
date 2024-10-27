@@ -4,8 +4,8 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 minTemp = 25
 maxTemp = 80
@@ -19,6 +19,8 @@ GPIO.setup(fanGPIO,GPIO.OUT)
 fan = GPIO.PWM(fanGPIO,100)
 fan.start(defSpeed)
 
+
+"""
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
     output = subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True)
@@ -44,3 +46,5 @@ while True:                                    # Execute loop forever
     print(str(temp) + " : " + str(newSpeed))
     fan.ChangeDutyCycle(newSpeed)               # Set fan duty based on temperature, from minSpeed to maxSpeed
     time.sleep(5)                           # Sleep for 5 seconds
+
+"""
