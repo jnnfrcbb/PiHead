@@ -20,11 +20,11 @@ fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 #fan.start(defSpeed)
 
 GPIO.setup(fanGPIO,GPIO.OUT)
-fan = GPIO.PWM(fanGPIO,1000)
-fan.start(50)
+fan = GPIO.PWM(fanGPIO,100)
+fan.start(defSpeed)
 
 while True:
-    fan.ChangeDutyCycle(50)
+    fan.ChangeDutyCycle(defSpeed)
     time.sleep(1)
 
 """
