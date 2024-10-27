@@ -23,8 +23,8 @@ def get_temp():                             # Function to read in the CPU temper
     temp_str = output#.stdout.decode()
 
     output = open('/sys/class/backlight/rpi_backlight/bl_power', 'w')
-
     temp_str = int(output)/1000
+    output.close()
 
     return temp_str
 
