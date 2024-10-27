@@ -21,7 +21,7 @@ fan.start(defSpeed)
 
 def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
     output = open('/sys/class/thermal/thermal_zone0/temp', 'r')
-    print(output)
+    print(output.read)
     output.close()
 
     return defSpeed
