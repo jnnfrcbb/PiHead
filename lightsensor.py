@@ -80,6 +80,7 @@ def getLux():
     else:
         Lux = 0
 
+    print(round(Lux,1))
     #return rounded lux value
     return round(Lux,1)
 
