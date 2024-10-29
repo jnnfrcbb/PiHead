@@ -27,7 +27,7 @@ AVG_TIME=20
 AVG_COUNT=20
 
 #Switch to night mode level
-DAYNIGHT = 155
+DAYNIGHT = 85
 
 #GPIO pin to output day/night signal [-1 = GPIO output disabled]
 DAYNIGHT_PIN = 15     
