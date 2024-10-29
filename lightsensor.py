@@ -90,6 +90,12 @@ def getLux():
 #Setup empty list for lux values
 LUX_VALUES=[]
 
+#populate list with default brightness
+i = 0
+while i < AVG_COUNT:
+    LUX_VALUES.append(BRIGHT_LVL)
+    i+=1
+
 #function for averaging lux
 def avgLux(luxVal):
     #check if we have a full set of readings to average over
