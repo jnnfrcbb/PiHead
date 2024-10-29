@@ -61,8 +61,6 @@ GPIO.setmode(GPIO.BCM)
 ## SET PERMISSIONS ##
 #####################
 
-
-os.system("sudo chmod a+r+w+x+ /home/pi/PiHead/reboot.sh")
 #os.system("sudo chmod a+r+w+ /etc/rc.local")
 #os.system("sudo chmod a+r+w+ /boot/config.txt")
 #os.system("sudo chmod a+r+w+ /etc/xdg/lxsession/LXDE-pi/autostart")
@@ -105,9 +103,11 @@ os.system("sudo chmod a+r+w+ /home/pi/PiHead/micro_setup.py")
 os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
-##############################
-## HOTKEY FOR DISPLAY POWER ##
-##############################
+#############
+## HOTKEYS ##
+#############
+
+os.system("sudo chmod a+r+w+x+ /home/pi/PiHead/reboot.sh")
 
 if os.path.exists("$HOME/.config/openbox/") == False:
     os.system("sudo mkdir -p $HOME/.config/openbox")
