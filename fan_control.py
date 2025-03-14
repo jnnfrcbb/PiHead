@@ -1,4 +1,5 @@
-##Based on Michael Klements's code found here: https://github.com/mklements/PWMFanControl/blob/main/FanProportional.py
+##PWM control based on Michael Klements's code found here: https://github.com/mklements/PWMFanControl/blob/main/FanProportional.py
+##RPM reading based on DriftKingTW's code found here: https://blog.driftking.tw/en/2019/11/Using-Raspberry-Pi-to-Control-a-PWM-Fan-and-Monitor-its-Speed/
 
 import RPi.GPIO as GPIO
 import time
@@ -12,23 +13,30 @@ defSpeed = 50
 minSpeed = 0
 maxSpeed = 100
 
-fanGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
+pwmGPIO = 18 ##GPIO 12, 13, 18, 19 = hardware PWM
 
-GPIO.setup(fanGPIO,GPIO.OUT)
-fan = GPIO.PWM(fanGPIO,100)
+
+# Setup PWM pin
+GPIO.setup(pwmGPIO,GPIO.OUT)
+fan = GPIO.PWM(pwmGPIO,100)
 fan.start(defSpeed)
 
-def get_temp():                             # Function to read in the CPU temperature and return it as a float in degrees celcius
+
+# Read CPU temperature and return it as a float in degrees celcius
+def get_temp():                             
     output = open('/sys/class/thermal/thermal_zone0/temp', 'r')
     defSpeed = int(output.read())/1000
     output.close()
 
     return defSpeed
 
-def renormalize(n, range1, range2):         # Function to scale the read temperature to the fan speed range
+
+# Scale the read temperature to the fan speed range
+def renormalize(n, range1, range2):         
     delta1 = range1[1] - range1[0]
     delta2 = range2[1] - range2[0]
     return (delta2 * (n - range1[0]) / delta1) + range2[0]
+
 
 while True:
     
