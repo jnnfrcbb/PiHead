@@ -24,7 +24,7 @@ if enable_rgb == True:
 
     pins=[board.GP16,board.GP17,board.GP18,board.GP19]
     rgb_count=[9,10,10,10]
-    bright_day=[0.5,0.25,0.5,0.5]
+    bright_day=[0.5,0.5,0.5,0.5]
     bright_night=[0.25,0.1,0.1,0.1]
 
     colour=[255,40,0]
