@@ -18,7 +18,7 @@ BRIGHT_MIN = 15
 BRIGHT_MAX = 255
 
 #Curve value for brightness [1 = linear lux:brightness ratio]
-BRIGHT_CRV = 0.5
+BRIGHT_CRV = 0.4
 
 #Time to average readings over [seconds]
 AVG_TIME=20
@@ -131,7 +131,7 @@ def setBrightness(newBright):
     return newBright
 
 #initial brightness
-BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
+setBrightness(BRIGHT_LVL) #BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
 
 
 #START LOOPING--------------------------------------------------------------------
