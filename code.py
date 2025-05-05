@@ -246,12 +246,15 @@ if enable_whl == True:
     boardVCC = 3.3
 
     def getVoltage(pin):
-        return float((pin.value * boardVCC) / 65536)
+        ret = float((pin.value * boardVCC) / 65536)
+        print ("pin: " + pin + " | " + ret)
+        return ret
 
     def whl_input():
         ret = False
         VD0 = getVoltage(analog0in)
-        if VD0 <= 2.8:
+        VD1 = getVoltage(analog1in)
+        if VD0 <= 2.8 or VD1 < 1:
             return True
         return ret
 
