@@ -16,20 +16,22 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         print(ex)
         return False
 
-def updateRepo(repoAddress):
+def updateRepo(userName,repoName):
     updated = 0
-    if os.path.isdir(repoAddress):
-        url = "git pull https://github.com/" + repoAddress
+    repoAddress = "https://github.com/" + userName + "/" + repoName
+    if os.path.isdir(repoName):
+        os.system("cd " + repoName)
+        url = "git pull " + repoAddress
         updated = os.system(url)
     else:
-        url = "git clone https://github.com/" + repoAddress
+        url = "git clone " + repoAddress
         updated = os.system(url)
     return updated
 
 c=0
 while c < 5:
     if internet():
-        p = updateRepo("jnnfrcbb/PiHead")
+        p = updateRepo("jnnfrcbb","PiHead")
         print (p)
         if "up-to-date" not in p:
             os.system("reboot")
