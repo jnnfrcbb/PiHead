@@ -31,7 +31,8 @@ while c < 5:
     if internet():
         p = updateRepo("jnnfrcbb/PiHead")
         print (p)
-        os.system("reboot")
+        if "up-to-date" not in p:
+            os.system("reboot")
     else:
         time.sleep(30)
     c=c+1
