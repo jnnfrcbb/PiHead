@@ -21,7 +21,7 @@ BRIGHT_MAX = 255
 BRIGHT_CRV = 0.4
 
 #Time to average readings over [seconds]
-AVG_TIME=20
+AVG_TIME=10
 
 #Number of readings to average over
 AVG_COUNT=20
