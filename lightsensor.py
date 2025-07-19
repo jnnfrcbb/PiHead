@@ -80,7 +80,6 @@ def getLux():
     else:
         Lux = 0
 
-    print(round(Lux,1))
     #return rounded lux value
     return round(Lux,1)
 
@@ -142,7 +141,7 @@ while True:
 
     print(BRIGHT_NEW)
     
-    if BRIGHT_NEW != BRIGHT_LVL:
+    if BRIGHT_NEW <= BRIGHT_LVL -5 or BRIGHT_NEW >= BRIGHT_LVL + 5:
 
         BRIGHT_LVL = setBrightness(BRIGHT_NEW)
 

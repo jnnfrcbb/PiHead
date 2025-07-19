@@ -21,7 +21,7 @@ def updateRepo(userName,repoName):
     repoAddress = "https://github.com/" + userName + "/" + repoName
     if os.path.isdir(repoName):
         os.system("cd " + repoName)
-        url = "git pull " + repoAddress
+        url = "git pull"# + repoAddress
         updated = os.system(url)
     else:
         url = "git clone " + repoAddress
