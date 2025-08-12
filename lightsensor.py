@@ -20,11 +20,15 @@ BRIGHT_MAX = 255
 #Curve value for brightness [1 = linear lux:brightness ratio]
 BRIGHT_CRV = 0.4
 
+#Delta between readings to change brightness
+BRIGHT_DELTA = 5
+
 #Time to average readings over [seconds]
-AVG_TIME=10
+AVG_TIME=30
 
 #Number of readings to average over
-AVG_COUNT=20
+AVG_COUNT=15
+
 
 #Switch to night mode level
 DAYNIGHT = 85
@@ -141,7 +145,7 @@ while True:
 
     print(BRIGHT_NEW)
     
-    if BRIGHT_NEW <= BRIGHT_LVL -5 or BRIGHT_NEW >= BRIGHT_LVL + 5:
+    if BRIGHT_NEW <= (BRIGHT_LVL - BRIGHT_DELTA) or BRIGHT_NEW >= (BRIGHT_LVL + BRIGHT_DELTA):
 
         BRIGHT_LVL = setBrightness(BRIGHT_NEW)
 
