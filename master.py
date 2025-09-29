@@ -69,20 +69,20 @@ GPIO.setmode(GPIO.BCM)
 #os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 
-#################
-## FAN CONTROL ##
-#################
-
-os.system("sudo chmod a+r+w+ /home/pi/PiHead/fan_control.py")
-os.system("sudo python /home/pi/PiHead/fan_control.py &")
-
-
 ##################
 ## LIGHT SENSOR ##
 ##################
 
-os.system("sudo chmod a+r+w+ /home/pi/PiHead/lightsensor.py")
+#os.system("sudo chmod a+r+w+ /home/pi/PiHead/lightsensor.py")
 os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+
+
+#################
+## FAN CONTROL ##
+#################
+
+#os.system("sudo chmod a+r+w+ /home/pi/PiHead/fan_control.py")
+os.system("sudo python /home/pi/PiHead/fan_control.py &")
 
 
 #################
@@ -91,7 +91,7 @@ os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 #edit: "/home/pi/.openauto/config/openauto_system.ini" -> General -> TemperatureSensorDescriptor -> "/sys/bus/w1/devices/28-cb4af21d64ff/w1_slave"
 
-os.system("sudo chmod a+r+w+ /home/pi/PiHead/tempsensor.py")
+#os.system("sudo chmod a+r+w+ /home/pi/PiHead/tempsensor.py")
 os.system("sudo python /home/pi/PiHead/tempsensor.py &")
 
 
@@ -99,7 +99,7 @@ os.system("sudo python /home/pi/PiHead/tempsensor.py &")
 ## MICRO SETUP ##
 #################
 
-os.system("sudo chmod a+r+w+ /home/pi/PiHead/micro_setup.py")
+#os.system("sudo chmod a+r+w+ /home/pi/PiHead/micro_setup.py")
 os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
@@ -107,7 +107,7 @@ os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 ## HOTKEYS ##
 #############
 
-os.system("sudo chmod a+r+w+x+ /home/pi/PiHead/reboot.sh")
+#os.system("sudo chmod a+r+w+x+ /home/pi/PiHead/reboot.sh")
 
 if os.path.exists("$HOME/.config/openbox/") == False:
     os.system("sudo mkdir -p $HOME/.config/openbox")
@@ -132,9 +132,9 @@ else:
 ## TURN ON AMP ##
 #################
 
-AMP_PIN=22
+#AMP_PIN=22
 
-GPIO.setup(AMP_PIN,GPIO.OUT)
+#GPIO.setup(AMP_PIN,GPIO.OUT)
 #GPIO.output(AMP_PIN, 1)
 
 
@@ -142,9 +142,9 @@ GPIO.setup(AMP_PIN,GPIO.OUT)
 ## TURN ON OBD READER ##
 ########################
 
-OBD_PIN=27
+#OBD_PIN=27
 
-GPIO.setup(OBD_PIN,GPIO.OUT)
+#GPIO.setup(OBD_PIN,GPIO.OUT)
 #GPIO.output(OBD_PIN, 1)
 
 

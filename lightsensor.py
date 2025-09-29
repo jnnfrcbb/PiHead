@@ -12,7 +12,7 @@ import RPi.GPIO as GPIO
 BRIGHT_LVL = 125
 
 #Minimum brightness level [min 0]
-BRIGHT_MIN = 15
+BRIGHT_MIN = 25
 
 #Maximum brightness level [max 255]
 BRIGHT_MAX = 255
@@ -24,11 +24,10 @@ BRIGHT_CRV = 0.4
 BRIGHT_DELTA = 5
 
 #Time to average readings over [seconds]
-AVG_TIME=30
+AVG_TIME=20
 
 #Number of readings to average over
-AVG_COUNT=15
-
+AVG_COUNT=10
 
 #Switch to night mode level
 DAYNIGHT = 85
@@ -133,11 +132,11 @@ def setBrightness(newBright):
     
     return newBright
 
-#initial brightness
-BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
-
 
 #START LOOPING--------------------------------------------------------------------
+
+#initial brightness
+BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
 
 while True:
     
