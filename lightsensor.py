@@ -24,10 +24,10 @@ BRIGHT_CRV = 0.4
 BRIGHT_DELTA = 5
 
 #Time to average readings over [seconds]
-AVG_TIME=20
+AVG_TIME=30
 
 #Number of readings to average over
-AVG_COUNT=10
+AVG_COUNT=90
 
 #Switch to night mode level
 DAYNIGHT = 85
