@@ -27,7 +27,7 @@ BRIGHT_DELTA = 5
 AVG_TIME=30
 
 #Number of readings to average over
-AVG_COUNT=90
+AVG_COUNT=120
 
 #Switch to night mode level
 DAYNIGHT = 85
