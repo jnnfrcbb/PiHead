@@ -74,7 +74,7 @@ os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 ##################
 
 #os.system("sudo chmod a+r+w+ /home/pi/PiHead/lightsensor.py")
-##os.system("sudo python /home/pi/PiHead/lightsensor.py &")
+os.system("sudo python /home/pi/PiHead/lightsensor.py &")
 
 
 #################
@@ -82,7 +82,7 @@ os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 #################
 
 #os.system("sudo chmod a+r+w+ /home/pi/PiHead/fan_control.py")
-##os.system("sudo python /home/pi/PiHead/fan_control.py &")
+os.system("sudo python /home/pi/PiHead/fan_control.py &")
 
 
 #################
@@ -92,7 +92,7 @@ os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 #edit: "/home/pi/.openauto/config/openauto_system.ini" -> General -> TemperatureSensorDescriptor -> "/sys/bus/w1/devices/28-cb4af21d64ff/w1_slave"
 
 #os.system("sudo chmod a+r+w+ /home/pi/PiHead/tempsensor.py")
-##os.system("sudo python /home/pi/PiHead/tempsensor.py &")
+os.system("sudo python /home/pi/PiHead/tempsensor.py &")
 
 
 #################
@@ -100,7 +100,7 @@ os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 #################
 
 #os.system("sudo chmod a+r+w+ /home/pi/PiHead/micro_setup.py")
-##os.system("sudo python /home/pi/PiHead/micro_setup.py &")
+os.system("sudo python /home/pi/PiHead/micro_setup.py &")
 
 
 #############
@@ -109,15 +109,15 @@ os.system("sudo chmod -R a+r+w+ /usr/share/openautopro")
 
 #os.system("sudo chmod a+r+w+x+ /home/pi/PiHead/reboot.sh")
 
-##if os.path.exists("$HOME/.config/openbox/") == False:
-##   os.system("sudo mkdir -p $HOME/.config/openbox")
-##else:
-##    if os.path.exists("$HOME/.config/openbox/lxde-pi-rc.xml") == False:
-##        os.system("sudo cp /etc/xdg/openbox/lxde-pi-rc.xml $HOME/.config/openbox")
-##        m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-B"><action name="Execute"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
-##        os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
-##        m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-R"><action name="Execute"><command>/home/pi/PiHead/reboot.sh</command></action></keybind>')
-##        os.system("sudo chmod a+x /home/pi/PiHead/reboot.sh")
+if os.path.exists("$HOME/.config/openbox/") == False:
+  os.system("sudo mkdir -p $HOME/.config/openbox")
+else:
+    if os.path.exists("$HOME/.config/openbox/lxde-pi-rc.xml") == False:
+        os.system("sudo cp /etc/xdg/openbox/lxde-pi-rc.xml $HOME/.config/openbox")
+        m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-B"><action name="Execute"><command>/home/pi/PiHead/bl_toggle.sh</command></action></keybind>')
+        os.system("sudo chmod a+x /home/pi/PiHead/bl_toggle.sh")
+        m = replaceString("$HOME/.config/openbox/lxde-pi-rc.xml","<chainQuitKey>C-g</chainQuitKey>",'<chainQuitKey>C-g</chainQuitKey><keybind key="C-A-R"><action name="Execute"><command>/home/pi/PiHead/reboot.sh</command></action></keybind>')
+        os.system("sudo chmod a+x /home/pi/PiHead/reboot.sh")
 
 
 ##################
@@ -181,8 +181,8 @@ IGN_PIN = 12
 EN_POWER_PIN = 25
 IGN_LOW_TIME = 5
 
-#m = appendString("/boot/config.txt","#CarPiHat")
-#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
+m = appendString("/boot/config.txt","#CarPiHat")
+m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
