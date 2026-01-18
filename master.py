@@ -181,8 +181,8 @@ IGN_PIN = 12
 EN_POWER_PIN = 25
 IGN_LOW_TIME = 5
 
-m = appendString("/boot/config.txt","#CarPiHat")
-m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
+#m = appendString("/boot/config.txt","#CarPiHat")
+#m = appendString("/boot/config.txt","dtoverlay=gpio-poweroff,gpiopin=" + str(EN_POWER_PIN) + ",active_low")
 
 GPIO.setup(IGN_PIN, GPIO.IN)
 GPIO.setup(EN_POWER_PIN, GPIO.OUT, initial=GPIO.HIGH)
@@ -192,16 +192,16 @@ ignLowCounter = 0
 
 while ignLowCounter < (IGN_LOW_TIME + 1):
     if GPIO.input(IGN_PIN) !=1:
-        GPIO.output(OBD_PIN, 0)
+#        GPIO.output(OBD_PIN, 0)
         time.sleep(1)
         ignLowCounter += 1
         print(ignLowCounter)
         if ignLowCounter > IGN_LOW_TIME:
-            GPIO.output(AMP_PIN, 0)
+#            GPIO.output(AMP_PIN, 0)
             print("Shutting Down")
             call("sudo shutdown -h now", shell=True)
     else:
         print("Shutdown aborted")
         ignLowCounter = 0
-        GPIO.output(AMP_PIN, 1)
-        GPIO.output(OBD_PIN, 1)
+#        GPIO.output(AMP_PIN, 1)
+#        GPIO.output(OBD_PIN, 1)
