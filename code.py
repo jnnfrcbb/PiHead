@@ -200,37 +200,38 @@ if enable_enc == True:
     ## set up encoder outputs
     def enc_proc(enc_index, enc_value):
         proc = None
-        if enc_index == 0:
-            if enc_value == 1: #rot_left
-                proc = "enc rot " + str(enc_index) + " left"
-                call_key(21)
-            elif enc_value == 2: #rot_right
-                proc = "enc rot " + str(enc_index) + " right"
-                call_key(22)
-            elif enc_value == 3: #btn_single
-                proc = "enc btn " + str(enc_index) + " single"
-                call_key(20)
-            elif enc_value == 4: #btn_double
-                proc = "enc btn " + str(enc_index) + " double"
-                call_key(1)
-            elif enc_value == 5: #btn_long
+        if enc_index == 0:                                      #volume encoder
+            if enc_value == 1:                                  #rot_left
+                proc = "enc rot " + str(enc_index) + " left"    
+                call_key(21)                                    #volume down
+            elif enc_value == 2:                                #rot_right
+                proc = "enc rot " + str(enc_index) + " right"   
+                call_key(22)                                    #volume up
+            elif enc_value == 3:                                #btn_single
+                proc = "enc btn " + str(enc_index) + " single"  
+                call_key(20)                                    #toggle mute
+            elif enc_value == 4:                                #btn_double
+                proc = "enc btn " + str(enc_index) + " double"  
+                call_key(1)                                     #toggle screen
+            elif enc_value == 5:                                #btn_long
                 proc = "enc btn " + str(enc_index) + " long"
-                call_key(0)
-        elif enc_index == 1:
-            if enc_value == 1: #rot_left
+                call_key(0)                                     #reboot
+        elif enc_index == 1:                                    #playback encoder
+            if enc_value == 1:                                  #rot_left
                 proc = "enc rot " + str(enc_index) + " left"
-                call_key(11)
-            elif enc_value == 2: #rot_right
+                call_key(11)                                    #previous track
+            elif enc_value == 2:                                #rot_right
                 proc = "enc rot " + str(enc_index) + " right"
-                call_key(12)
-            elif enc_value == 3: #btn_single
+                call_key(12)                                    #next track
+            elif enc_value == 3:                                #btn_single
                 proc = "enc btn " + str(enc_index) + " single"
-                call_key(10)
-            elif enc_value == 4: #btn_double
+                call_key(10)                                    #play/pause
+            elif enc_value == 4:                                #btn_double
                 proc = "enc btn " + str(enc_index) + " double"
-                call_key(4)
-            elif enc_value == 5: #btn_long
+                call_key(4)                                     #launch media
+            elif enc_value == 5:                                #btn_long
                 proc = "enc btn " + str(enc_index) + " long"
+                call_key(9)                                     #voice
         return proc
 
 

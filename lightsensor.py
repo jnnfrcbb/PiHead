@@ -115,8 +115,13 @@ def avgLux(luxVal):
 #SETTING BRIGHTNESS---------------------------------------------------------------
 
 #function to calculate brightness
-def calcBrightness(newLux):
-    return(int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(newLux)/400)**BRIGHT_CRV))+BRIGHT_MIN))
+def calcBrightness(newLux,useAvg):
+    if useAvg == 1:
+        curLux = (avgLux(newLux)/400)
+    elif useAvg == 0:
+        curLux = (newLux/400)
+    return(int(((BRIGHT_MAX-BRIGHT_MIN)*((curLux)**BRIGHT_CRV))+BRIGHT_MIN))
+    #return(int(((BRIGHT_MAX-BRIGHT_MIN)*((avgLux(newLux)/400)**BRIGHT_CRV))+BRIGHT_MIN))
 
 #function to set brightness
 def setBrightness(newBright):
@@ -136,11 +141,11 @@ def setBrightness(newBright):
 #START LOOPING--------------------------------------------------------------------
 
 #initial brightness
-BRIGHT_LVL = setBrightness(calcBrightness(getLux()))
+BRIGHT_LVL = setBrightness(calcBrightness(getLux(),0))
 
 while True:
     
-    BRIGHT_NEW = calcBrightness(getLux())
+    BRIGHT_NEW = calcBrightness(getLux(),1)
 
     print(BRIGHT_NEW)
     
